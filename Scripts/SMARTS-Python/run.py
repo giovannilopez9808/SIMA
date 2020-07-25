@@ -2,7 +2,7 @@ import numpy as np
 import os
 #<-------------------------Funcion que le da el formato a SMARTS------------------------>
 def escribir(day,month,year,hour,ozono,aod):
-    file=open("Code/data.inp.txt","w")
+    file=open("data.inp.txt","w")
     file.write(" 'AOD="+str(aod)+"'\n")
     file.write(" 2\n")
     file.write(" 25.750 0.512 0\n")
@@ -35,12 +35,12 @@ def escribir(day,month,year,hour,ozono,aod):
     file.close()
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../../Stations/"
-stations=["NORESTE"]
+stations=["noreste"]
 DR_lim,aod_i=7,0.025
 for station in stations:
     carp=car+station
     AOD_file=open(carp+"/AOD.txt","w")
-    data=np.loadtxt(carp+"/datos.txt")
+    data=np.loadtxt(carp+"/datos.txt",skiprows=1)
     date,day,month,year,o3=data[:,0],data[:,1],data[:,2],data[:,3],data[:,4];del data
     n=np.size(year)
     #<-----------------------------Ciclo para variar los dias--------------------------------------->
@@ -56,13 +56,16 @@ for station in stations:
             hour_i,resul=12,np.zeros(180)
             for min in range(180):
                 escribir(day_i,month_i,year_i,round(hour_i+min/60,4),o3_i,aod)
-                os.system("cd Code && ./smarts.out && cd ..")
-                resul[min]=np.sum(np.loadtxt("Code/data.ext.txt",skiprows=121)[:,1])
-                os.system("rm Code/data.inp.txt")
+                os.system("./smarts.out")
+                mod=np.loadtxt("data.ext.txt",skiprows=121,max_rows=601)
+                resul[min]=np.sum(mod[:,1])   
+                os.system("rm data*")
             #<-------------------------Posicion del valor mas alto------------------------------------>
             pos=(np.where(np.max(resul)==resul)[0])[0]
             #<-----------------------Promedio de datos minuto a minuto------------------------------>
             data_mod=np.mean(resul[pos-30:pos+31])
+            print(data,data_mod)
+            a=input()
             DR=100*(data_mod-data)/data
             if abs(DR)<DR_lim:
                 AOD_file.write(str(int(date[i]))+" "+str(aod)+"\n")

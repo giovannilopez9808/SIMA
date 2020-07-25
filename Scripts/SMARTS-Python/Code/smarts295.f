@@ -180,16 +180,6 @@ c
       pix4=pinb*4.
       RPD=pinb/180.
 c
-c===================================
-c
-c     To obtain the command-line "batch" version, remove the comment sign
-c     "c" on line 189!
-c
-       batch=.FALSE.
-c       batch=.TRUE.
-c
-c===================================
-c
 c      RANGE1=1./340.85
       epsiln=1e-3
       epsilm=1e-6
@@ -216,16 +206,7 @@ c
 c
 c**********************************************************************
 c
- 314  format(/,35('*'),/,a48,/,35('*'))
 c
-      if(batch)goto 3003
-c
-!<------------------Omitido para dar un valor dentro del codigo---------------------->
-      YesNo="n"
-      !Read(5,*) YesNo
-      If(YesNo.eq.'Y'.or.YesNo.eq.'y'.or.YesNo.eq.'yes'.
-     1  or.YesNo.eq.'YES')goto 3003
- 312  continue
       Path="."
       Usernm="data"
       Iname=Index(Usernm,' ') - 1
@@ -233,7 +214,7 @@ c
       FileOut=Usernm(1:Iname)//'.out.txt'
       FileExt=Usernm(1:Iname)//'.ext.txt'
       FileScn=Usernm(1:Iname)//'.scn.txt'
-      
+
       if(Path.eq.'.')goto 3002
       mname=Index(Path,' ')-1
       FileIn ='\'//FileIn
@@ -258,24 +239,24 @@ c
  3003 continue
       OPEN (UNIT=14,FILE=FileIn,STATUS='OLD')
       OPEN (UNIT=16,FILE=FileOut)
-      OPEN (UNIT=22,FILE='../Gases/Abs_O2.dat',STATUS='OLD')
-      OPEN (UNIT=25,FILE='../Gases/Abs_O4.dat',STATUS='OLD')
-      OPEN (UNIT=26,FILE='../Gases/Abs_N2.dat',STATUS='OLD')
-      OPEN (UNIT=27,FILE='../Gases/Abs_N2O.dat',STATUS='OLD')
-      OPEN (UNIT=28,FILE='../Gases/Abs_NO.dat',STATUS='OLD')
-      OPEN (UNIT=29,FILE='../Gases/Abs_NO2.dat',STATUS='OLD')
-      OPEN (UNIT=30,FILE='../Gases/Abs_NO3.dat',STATUS='OLD')
-      OPEN (UNIT=31,FILE='../Gases/Abs_HNO3.dat',STATUS='OLD')
-      OPEN (UNIT=32,FILE='../Gases/Abs_SO2U.dat',STATUS='OLD')
-      OPEN (UNIT=33,FILE='../Gases/Abs_SO2I.dat',STATUS='OLD')
-      OPEN (UNIT=34,FILE='../Gases/Abs_CO.dat',STATUS='OLD')
-      OPEN (UNIT=35,FILE='../Gases/Abs_CO2.dat',STATUS='OLD')
-      OPEN (UNIT=36,FILE='../Gases/Abs_CH4.dat',STATUS='OLD')
-      OPEN (UNIT=37,FILE='../Gases/Abs_NH3.dat',STATUS='OLD')
-      OPEN (UNIT=38,FILE='../Gases/Abs_BrO.dat',STATUS='OLD')
-      OPEN (UNIT=39,FILE='../Gases/Abs_CH2O.dat',STATUS='OLD')
-      OPEN (UNIT=40,FILE='../Gases/Abs_HNO2.dat',STATUS='OLD')
-      OPEN (UNIT=41,FILE='../Gases/Abs_ClNO.dat',STATUS='OLD')
+      OPEN (UNIT=22,FILE='Gases/Abs_O2.dat',STATUS='OLD')
+      OPEN (UNIT=25,FILE='Gases/Abs_O4.dat',STATUS='OLD')
+      OPEN (UNIT=26,FILE='Gases/Abs_N2.dat',STATUS='OLD')
+      OPEN (UNIT=27,FILE='Gases/Abs_N2O.dat',STATUS='OLD')
+      OPEN (UNIT=28,FILE='Gases/Abs_NO.dat',STATUS='OLD')
+      OPEN (UNIT=29,FILE='Gases/Abs_NO2.dat',STATUS='OLD')
+      OPEN (UNIT=30,FILE='Gases/Abs_NO3.dat',STATUS='OLD')
+      OPEN (UNIT=31,FILE='Gases/Abs_HNO3.dat',STATUS='OLD')
+      OPEN (UNIT=32,FILE='Gases/Abs_SO2U.dat',STATUS='OLD')
+      OPEN (UNIT=33,FILE='Gases/Abs_SO2I.dat',STATUS='OLD')
+      OPEN (UNIT=34,FILE='Gases/Abs_CO.dat',STATUS='OLD')
+      OPEN (UNIT=35,FILE='Gases/Abs_CO2.dat',STATUS='OLD')
+      OPEN (UNIT=36,FILE='Gases/Abs_CH4.dat',STATUS='OLD')
+      OPEN (UNIT=37,FILE='Gases/Abs_NH3.dat',STATUS='OLD')
+      OPEN (UNIT=38,FILE='Gases/Abs_BrO.dat',STATUS='OLD')
+      OPEN (UNIT=39,FILE='Gases/Abs_CH2O.dat',STATUS='OLD')
+      OPEN (UNIT=40,FILE='Gases/Abs_HNO2.dat',STATUS='OLD')
+      OPEN (UNIT=41,FILE='Gases/Abs_ClNO.dat',STATUS='OLD')
       read(22,*)dummy
       read(25,*)dummy
       read(26,*)dummy
@@ -485,7 +466,7 @@ C
       goto 998      
  327  continue
       if(w.le.0.)goto 776
-      OPEN (UNIT=21,FILE='../Gases/Abs_H2O.dat',STATUS='OLD')
+      OPEN (UNIT=21,FILE='Gases/Abs_H2O.dat',STATUS='OLD')
       read(21,*)dummy
  776  continue
       TEMPO=TEMPA
@@ -504,8 +485,8 @@ C
  348  continue
       AbO3=O3REF
       UOC=AbO3
-      OPEN (UNIT=23,FILE='../Gases/Abs_O3UV.dat',STATUS='OLD')
-      OPEN (UNIT=24,FILE='../Gases/Abs_O3IR.dat',STATUS='OLD')
+      OPEN (UNIT=23,FILE='Gases/Abs_O3UV.dat',STATUS='OLD')
+      OPEN (UNIT=24,FILE='Gases/Abs_O3IR.dat',STATUS='OLD')
       read(23,*)dummy
       read(24,*)dummy
       goto 335
@@ -515,8 +496,8 @@ C
  331  continue
       READ(14,*) IALT,AbO3
       if(AbO3.le.0.)goto 335
-      OPEN (UNIT=23,FILE='../Gases/Abs_O3UV.dat',STATUS='OLD')
-      OPEN (UNIT=24,FILE='../Gases/Abs_O3IR.dat',STATUS='OLD')
+      OPEN (UNIT=23,FILE='Gases/Abs_O3UV.dat',STATUS='OLD')
+      OPEN (UNIT=24,FILE='Gases/Abs_O3IR.dat',STATUS='OLD')
       read(23,*)dummy
       read(24,*)dummy
 C
@@ -675,25 +656,25 @@ C
       READ(14,*)Ispctr
       
       if(Ispctr.lt.-1.or.Ispctr.gt.8)Ispctr=0
-      if(ispctr.eq.-1)OPEN (UNIT=15,FILE='../Solar/Spctrm_U.dat',
+      if(ispctr.eq.-1)OPEN (UNIT=15,FILE='Solar/Spctrm_U.dat',
      1 STATUS='OLD')
-      if(ispctr.eq.0)OPEN (UNIT=15,FILE='../Solar/Spctrm_0.dat',
+      if(ispctr.eq.0)OPEN (UNIT=15,FILE='Solar/Spctrm_0.dat',
      1 STATUS='OLD')
-      if(ispctr.eq.1)OPEN (UNIT=15,FILE='../Solar/Spctrm_1.dat',
+      if(ispctr.eq.1)OPEN (UNIT=15,FILE='Solar/Spctrm_1.dat',
      1 STATUS='OLD')
-      if(ispctr.eq.2)OPEN (UNIT=15,FILE='../Solar/Spctrm_2.dat',
+      if(ispctr.eq.2)OPEN (UNIT=15,FILE='Solar/Spctrm_2.dat',
      1 STATUS='OLD')
-      if(ispctr.eq.3)OPEN (UNIT=15,FILE='../Solar/Spctrm_3.dat',
+      if(ispctr.eq.3)OPEN (UNIT=15,FILE='Solar/Spctrm_3.dat',
      1 STATUS='OLD')
-      if(ispctr.eq.4)OPEN (UNIT=15,FILE='../Solar/Spctrm_4.dat',
+      if(ispctr.eq.4)OPEN (UNIT=15,FILE='Solar/Spctrm_4.dat',
      1 STATUS='OLD')
-      if(ispctr.eq.5)OPEN (UNIT=15,FILE='../Solar/Spctrm_5.dat',
+      if(ispctr.eq.5)OPEN (UNIT=15,FILE='Solar/Spctrm_5.dat',
      1 STATUS='OLD')
-      if(ispctr.eq.6)OPEN (UNIT=15,FILE='../Solar/Spctrm_6.dat',
+      if(ispctr.eq.6)OPEN (UNIT=15,FILE='Solar/Spctrm_6.dat',
      1 STATUS='OLD')
-      if(ispctr.eq.7)OPEN (UNIT=15,FILE='../Solar/Spctrm_7.dat',
+      if(ispctr.eq.7)OPEN (UNIT=15,FILE='Solar/Spctrm_7.dat',
      1 STATUS='OLD')
-      if(ispctr.eq.8)OPEN (UNIT=15,FILE='../Solar/Spctrm_8.dat',
+      if(ispctr.eq.8)OPEN (UNIT=15,FILE='Solar/Spctrm_8.dat',
      1 STATUS='OLD')
 c
 C
@@ -1234,7 +1215,7 @@ C
       READ(14,*)ILLUM
       IF(ILLUM.EQ.0)GOTO 408
       If(Illum.ge.1)Goto 403
-      OPEN (UNIT=19,FILE='../CIE_data/VLambda.dat',STATUS='OLD')
+      OPEN (UNIT=19,FILE='CIE_data/VLambda.dat',STATUS='OLD')
       Read(19,*)dummy
 C
 C      PHOTOMETRIC DATA
@@ -1246,7 +1227,7 @@ C
       Close (Unit=19,status='keep')
       Goto 408
  403  continue
-      OPEN (UNIT=19,FILE='../CIE_data/VMLambda.dat',STATUS='OLD')
+      OPEN (UNIT=19,FILE='CIE_data/VMLambda.dat',STATUS='OLD')
       Read(19,*)dummy
       Do 404 IV=1,513
       READ(19,*)wvli,VL(IV)
@@ -3560,7 +3541,6 @@ c
       CLOSE (UNIT=41,STATUS='KEEP')
 c
 c
-      STOP
       END
 c
 c
@@ -3606,67 +3586,67 @@ c
 c      Nfile=Max(19,18+Ialbd)
  3    continue
       If(Ialbd.ne.3)goto 4
-      Open (UNIT=20,FILE='../Albedo/SNOW.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/SNOW.DAT',STATUS='OLD')
       Name='FRESH_SNOW'
       Goto 300
  4    continue
       If(Ialbd.ne.4)goto 5
-      Open (UNIT=20,FILE='../Albedo/NEVE.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/NEVE.DAT',STATUS='OLD')
       Name='MOUNTAIN_NEVE'
       Goto 300
  5    continue
       If(Ialbd.ne.5)goto 6
-      Open (UNIT=20,FILE='../Albedo/BASALT.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/BASALT.DAT',STATUS='OLD')
       Name='BASALT_ROCK'
       Goto 300
  6    continue
       If(Ialbd.ne.6)goto 7
-      Open (UNIT=20,FILE='../Albedo/DRY_SAND.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/DRY_SAND.DAT',STATUS='OLD')
       Name='DRY_SAND'
       Goto 300
  7    continue
       If(Ialbd.ne.7)goto 8
-      Open (UNIT=20,FILE='../Albedo/WITESAND.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/WITESAND.DAT',STATUS='OLD')
       Name='WHITE_SANDS'
       Goto 300
  8    continue
       If(Ialbd.ne.8)goto 9
-      Open (UNIT=20,FILE='../Albedo/SOIL.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/SOIL.DAT',STATUS='OLD')
       Name='SOIL'
       Goto 300
  9    continue
       If(Ialbd.ne.9)goto 10
-      Open (UNIT=20,FILE='../Albedo/Dry_clay.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Dry_clay.dat',STATUS='OLD')
       Name='DRY_CLAY_SOIL'
       Goto 300
  10   continue
       If(Ialbd.ne.10)goto 11
-      Open (UNIT=20,FILE='../Albedo/WETCLAY.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/WETCLAY.DAT',STATUS='OLD')
       Name='WET_CLAY_SOIL'
       Goto 300
  11   continue
       If(Ialbd.ne.11)goto 12
-      Open (UNIT=20,FILE='../Albedo/ALFALFA.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/ALFALFA.DAT',STATUS='OLD')
       Name='ALFALFA'
       Goto 300
  12   continue
       If(Ialbd.ne.12)goto 13
-      Open (UNIT=20,FILE='../Albedo/GRASS.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/GRASS.DAT',STATUS='OLD')
       Name='GRASS'
       Goto 300
  13   continue
       If(Ialbd.ne.13)goto 14
-      Open (UNIT=20,FILE='../Albedo/RYEGRASS.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/RYEGRASS.DAT',STATUS='OLD')
       Name='RYE_GRASS'
       Goto 300
  14   continue
       If(Ialbd.ne.14)goto 15
-      Open (UNIT=20,FILE='../Albedo/MEADOW1.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/MEADOW1.DAT',STATUS='OLD')
       Name='ALPINE_MEADOW'
       Goto 300
  15   continue
       If(Ialbd.ne.15)goto 16
-      Open (UNIT=20,FILE='../Albedo/MEADOW2.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/MEADOW2.DAT',STATUS='OLD')
       Name='LUSH_MEADOW'
       Goto 300
  16   continue
@@ -3676,252 +3656,252 @@ c      Nfile=Max(19,18+Ialbd)
       Goto 300
  17   continue
       If(Ialbd.ne.17)goto 18
-      Open (UNIT=20,FILE='../Albedo/PINETREE.DAT',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/PINETREE.DAT',STATUS='OLD')
       Name='PONDEROSA_PINE_TREE'
       Goto 300
  18   continue
       If(Ialbd.ne.18)goto 19
-      Open (UNIT=20,FILE='../Albedo/CONCRETE.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/CONCRETE.dat',STATUS='OLD')
       Name='CONCRETE'
       Goto 300
  19   continue
       If(Ialbd.ne.19)goto 20
-      Open (UNIT=20,FILE='../Albedo/BlckLoam.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/BlckLoam.dat',STATUS='OLD')
       Name='BLACK_LOAM'
       Goto 300
  20   continue
       If(Ialbd.ne.20)goto 21
-      Open (UNIT=20,FILE='../Albedo/BrwnLoam.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/BrwnLoam.dat',STATUS='OLD')
       Name='BROWN_SANDY_LOAM'
       Goto 300
  21   continue
       If(Ialbd.ne.21)goto 22
-      Open (UNIT=20,FILE='../Albedo/BrwnSand.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/BrwnSand.dat',STATUS='OLD')
       Name='BROWN_LOAMY_FINE_SAND'
       Goto 300
  22   continue
       If(Ialbd.ne.22)goto 23
-      Open (UNIT=20,FILE='../Albedo/Conifers.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Conifers.dat',STATUS='OLD')
       Name='CONIFER_TREES'
       Goto 300
  23   continue
       If(Ialbd.ne.23)goto 24
-      Open (UNIT=20,FILE='../Albedo/DarkLoam.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/DarkLoam.dat',STATUS='OLD')
       Name='BROWN_SILT_LOAM'
       Goto 300
  24   continue
       If(Ialbd.ne.24)goto 25
-      Open (UNIT=20,FILE='../Albedo/DarkSand.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/DarkSand.dat',STATUS='OLD')
       Name='BROWN_LOAMY_SAND'
       Goto 300
  25   continue
       If(Ialbd.ne.25)goto 26
-      Open (UNIT=20,FILE='../Albedo/Decidous.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Decidous.dat',STATUS='OLD')
       Name='DECIDUOUS_TREES'
       Goto 300
  26   continue
       If(Ialbd.ne.26)goto 27
-      Open (UNIT=20,FILE='../Albedo/DryGrass.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/DryGrass.dat',STATUS='OLD')
       Name='DRY_GRASS'
       Goto 300
  27   continue
       If(Ialbd.ne.27)goto 28
-      Open (UNIT=20,FILE='../Albedo/DuneSand.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/DuneSand.dat',STATUS='OLD')
       Name='WHITE_DUNE_SAND'
       Goto 300
  28   continue
       If(Ialbd.ne.28)goto 29
-      Open (UNIT=20,FILE='../Albedo/FineSnow.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/FineSnow.dat',STATUS='OLD')
       Name='FINE_SNOW'
       Goto 300
  29   continue
       If(Ialbd.ne.29)goto 30
-      Open (UNIT=20,FILE='../Albedo/GrnGrass.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/GrnGrass.dat',STATUS='OLD')
       Name='GREEN_GRASS'
       Goto 300
  30   continue
       If(Ialbd.ne.30)goto 31
-      Open (UNIT=20,FILE='../Albedo/GrnlSnow.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/GrnlSnow.dat',STATUS='OLD')
       Name='GRANULAR_SNOW'
       Goto 300
  31   continue
       If(Ialbd.ne.31)goto 32
-      Open (UNIT=20,FILE='../Albedo/LiteClay.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/LiteClay.dat',STATUS='OLD')
       Name='LIGHT_BROWN_CLAY'
       Goto 300
  32   continue
       If(Ialbd.ne.32)goto 33
-      Open (UNIT=20,FILE='../Albedo/LiteLoam.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/LiteLoam.dat',STATUS='OLD')
       Name='LIGHT_BROWN_LOAM'
       Goto 300
  33   continue
       If(Ialbd.ne.33)goto 34
-      Open (UNIT=20,FILE='../Albedo/LiteSand.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/LiteSand.dat',STATUS='OLD')
       Name='LIGHT_BROWN_LOAMY_SAND'
       Goto 300
  34   continue
       If(Ialbd.ne.34)goto 35
-      Open (UNIT=20,FILE='../Albedo/PaleLoam.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/PaleLoam.dat',STATUS='OLD')
       Name='PALE_BROWN_LOAM'
       Goto 300
  35   continue
       If(Ialbd.ne.35)goto 36
-      Open (UNIT=20,FILE='../Albedo/Seawater.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Seawater.dat',STATUS='OLD')
       Name='SEA_WATER'
       Goto 300
  36   continue
       If(Ialbd.ne.36)goto 37
-      Open (UNIT=20,FILE='../Albedo/SolidIce.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/SolidIce.dat',STATUS='OLD')
       Name='SOLID_ICE'
       Goto 300
  37   continue
       If(Ialbd.ne.37)goto 38
-      Open (UNIT=20,FILE='../Albedo/Dry_Soil.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Dry_Soil.dat',STATUS='OLD')
       Name='DRY_SOIL'
       Goto 300
  38   continue
       If(Ialbd.ne.38)goto 39
-      Open (UNIT=20,FILE='../Albedo/LiteSoil.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/LiteSoil.dat',STATUS='OLD')
       Name='LIGHT_SANDY_SOIL'
       Goto 300
  39   continue
       If(Ialbd.ne.39)goto 40
-      Open (UNIT=20,FILE='../Albedo/RConcrte.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/RConcrte.dat',STATUS='OLD')
       Name='OLD_RUNWAY_CONCRETE'
       Goto 300
  40   continue
       If(Ialbd.ne.40)goto 41
-      Open (UNIT=20,FILE='../Albedo/RoofTile.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/RoofTile.dat',STATUS='OLD')
       Name='TERRACOTA_ROOFING_TILE'
       Goto 300
  41   continue
       If(Ialbd.ne.41)goto 42
-      Open (UNIT=20,FILE='../Albedo/RedBrick.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/RedBrick.dat',STATUS='OLD')
       Name='RED_BRICK'
       Goto 300
  42   continue
       If(Ialbd.ne.42)goto 43
-      Open (UNIT=20,FILE='../Albedo/Asphalt.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Asphalt.dat',STATUS='OLD')
       Name='OLD_RUNWAY_ASPHALT'
       Goto 300
  43   continue
       If(Ialbd.ne.43)goto 44
-      Open (UNIT=20,FILE='../Albedo/TallCorn.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/TallCorn.dat',STATUS='OLD')
       Name='TALL_GREEN_CORN'
       Goto 300
  44   continue
       If(Ialbd.ne.44)goto 45
-      Open (UNIT=20,FILE='../Albedo/SndGrvl.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/SndGrvl.dat',STATUS='OLD')
       Name='SAND_&_GRAVEL'
       Goto 300
  45   continue
       If(Ialbd.ne.45)goto 46
-      Open (UNIT=20,FILE='../Albedo/Fallow.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Fallow.dat',STATUS='OLD')
       Name='FALLOW_FIELD'
       Goto 300
  46   continue
       If(Ialbd.ne.46)goto 47
-      Open (UNIT=20,FILE='../Albedo/WetClay2.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/WetClay2.dat',STATUS='OLD')
       Name='WET_RED_CLAY'
       Goto 300
  47   continue
       If(Ialbd.ne.47)goto 48
-      Open (UNIT=20,FILE='../Albedo/WetSSoil.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/WetSSoil.dat',STATUS='OLD')
       Name='WET_SANDY_SOIL'
       Goto 300
  48   continue
       If(Ialbd.ne.48)goto 49
-      Open (UNIT=20,FILE='../Albedo/Gravel.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Gravel.dat',STATUS='OLD')
       Name='GRAVEL'
       Goto 300
  49   continue
       If(Ialbd.ne.49)goto 50
-      Open (UNIT=20,FILE='../Albedo/WetClay2.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/WetClay2.dat',STATUS='OLD')
       Name='WET_RED_CLAY'
       Goto 300
  50   continue
       If(Ialbd.ne.50)goto 51
-      Open (UNIT=20,FILE='../Albedo/WetSilt.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/WetSilt.dat',STATUS='OLD')
       Name='WET_SILT'
       Goto 300
  51   continue
       If(Ialbd.ne.51)goto 52
-      Open (UNIT=20,FILE='../Albedo/LngGrass.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/LngGrass.dat',STATUS='OLD')
       Name='DRY_LONG_GRASS'
       Goto 300
  52   continue
       If(Ialbd.ne.52)goto 53
-      Open (UNIT=20,FILE='../Albedo/LwnGrass.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/LwnGrass.dat',STATUS='OLD')
       Name='GENERIC_LAWN_GRASS'
       Goto 300
  53   continue
       If(Ialbd.ne.53)goto 54
-      Open (UNIT=20,FILE='../Albedo/OakTree.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/OakTree.dat',STATUS='OLD')
       Name='DECIDOUS_OAK_TREE_LEAVES'
       Goto 300
  54   continue
       If(Ialbd.ne.54)goto 55
-      Open (UNIT=20,FILE='../Albedo/Pinion.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Pinion.dat',STATUS='OLD')
       Name='PINON_PINETREE_NEEDLES'
       Goto 300
  55   continue
       If(Ialbd.ne.55)goto 56
-      Open (UNIT=20,FILE='../Albedo/MeltSnow.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/MeltSnow.dat',STATUS='OLD')
       Name='MELTING_SNOW=SLUSH'
       Goto 300
  56   continue
       If(Ialbd.ne.56)goto 57
-      Open (UNIT=20,FILE='../Albedo/Plywood.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Plywood.dat',STATUS='OLD')
       Name='PLYWOOD_SHEET'
       Goto 300
  57   continue
       If(Ialbd.ne.57)goto 58
-      Open (UNIT=20,FILE='../Albedo/WiteVinl.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/WiteVinl.dat',STATUS='OLD')
       Name='WHITE_VINYL_COVER_SHEET'
       Goto 300
  58   continue
       If(Ialbd.ne.58)goto 59
-      Open (UNIT=20,FILE='../Albedo/FibrGlss.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/FibrGlss.dat',STATUS='OLD')
       Name='CLEAR_FIBERGLASS_COVER'
       Goto 300
  59   continue
       If(Ialbd.ne.59)goto 60
-      Open (UNIT=20,FILE='../Albedo/ShtMetal.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/ShtMetal.dat',STATUS='OLD')
       Name='GALVANIZED_SHEET_METAL'
       Goto 300
  60   continue
       If(Ialbd.ne.60)goto 61
-      Open (UNIT=20,FILE='../Albedo/Wetland.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Wetland.dat',STATUS='OLD')
       Name='WETLAND_CANOPY'
       Goto 300
  61   continue
       If(Ialbd.ne.61)goto 62
-      Open (UNIT=20,FILE='../Albedo/SageBrsh.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/SageBrsh.dat',STATUS='OLD')
       Name='SAGEBRUSH_CANOPY'
       Goto 300
  62   continue
       If(Ialbd.ne.62)goto 63
-      Open (UNIT=20,FILE='../Albedo/FirTrees.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/FirTrees.dat',STATUS='OLD')
       Name='FIR_TREES_COLORADO'
       Goto 300
  63   continue
       If(Ialbd.ne.63)goto 64
-      Open (UNIT=20,FILE='../Albedo/CSeaWatr.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/CSeaWatr.dat',STATUS='OLD')
       Name='COASTAL_PACIFIC_SEAWATER'
       Goto 300
  64   continue
       If(Ialbd.ne.64)goto 65
-      Open (UNIT=20,FILE='../Albedo/OSeaWatr.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/OSeaWatr.dat',STATUS='OLD')
       Name='OPEN_ATLANTIC_SEAWATER'
       Goto 300
  65   continue
       If(Ialbd.ne.65)goto 66
-      Open (UNIT=20,FILE='../Albedo/GrazingField.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/GrazingField.dat',STATUS='OLD')
       Name='GRAZING_FIELD'
       Goto 300
  66   continue
       If(Ialbd.ne.66)goto 2
-      Open (UNIT=20,FILE='../Albedo/Spruce.dat',STATUS='OLD')
+      Open (UNIT=20,FILE='Albedo/Spruce.dat',STATUS='OLD')
       Name='SPRUCE_TREE'
       Goto 300
 c      
@@ -3934,9 +3914,7 @@ c
       Name='WATER'
       Return
  1    continue
-      if (Ialbd.LE.1) then 
-      Open (UNIT=20,FILE='../Albedo/Albedo.DAT',STATUS='OLD')
-      end if
+      If(Ialbd.LE.1)Open (UNIT=20,FILE='Albedo/ALBEDO.DAT',STATUS='OLD')
       Name='USER_DEFINED'
  300  Continue
       Ial=1

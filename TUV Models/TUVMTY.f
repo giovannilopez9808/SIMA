@@ -221,7 +221,7 @@
       integer totalarc,arc,i,j,k,n,m,ciclo,si,station,carp
       integer nstation,tmax
       real hora,uva,medm,op,dif,dr,def,aod,med,maxmod
-      real,dimension(700,61):: mod
+      real,dimension(600,61):: mod
       real,dimension(60*3):: modm
 
 
@@ -748,6 +748,8 @@ c 444  format(1pe11.4,1x,a50)
  30   continue
       end do
       CLOSE(iout)
+      write(*,*) "ve el archivo"
+      read(*,*) a
       !Inicializacion de la matriz
       do i=1,180
       modm(i)=0
@@ -760,12 +762,12 @@ c 444  format(1pe11.4,1x,a50)
       read(103,*) a
       end do
       !Lectura de los espectros
-      do i=1,700
+      do i=1,600
       read(103,*) (mod(i,j),j=1,61)
       end do
       !Calculo de la integral para la irradiancia
       do i=1,60
-      do j=1,700
+      do j=1,600
       modm(i+(k-1)*60)=modm(i+(k-1)*60)+mod(j,i+1)
       end do
       end do
