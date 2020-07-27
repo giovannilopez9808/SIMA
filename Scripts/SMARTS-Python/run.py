@@ -1,4 +1,5 @@
 import numpy as np
+import math 
 import os
 #<-------------------------Funcion que le da el formato a SMARTS------------------------>
 def escribir(day,month,year,hour,ozono,aod):
@@ -35,8 +36,10 @@ def escribir(day,month,year,hour,ozono,aod):
     file.close()
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../../Stations/"
-stations=["noreste"]
+stations=["noroeste"]
 DR_lim,aod_i=7,0.025
+hour_i,hour_f=11,14
+dh=(hour_f-hour_i)*3
 for station in stations:
     carp=car+station
     AOD_file=open(carp+"/AOD.txt","w")
@@ -48,33 +51,31 @@ for station in stations:
         data=np.loadtxt(carp+"/Mediciones/"+str(int(date[i]))+".txt",skiprows=10)
         data=np.max(data[0:5,1])
         year_i,month_i,day_i,o3_i=int(year[i]),int(month[i]),int(day[i]),o3[i]
-        print("Calculando el dia ",year_i,month_i,day_i)
-        #<------------------------------Valores iniciales------------------------------------------->
-        aod,var,k=aod_i,False,1
-        while var==False:
-            print("Intento ",k)
-            hour_i,resul=12,np.zeros(180)
-            for min in range(180):
-                escribir(day_i,month_i,year_i,round(hour_i+min/60,4),o3_i,aod)
-                os.system("./smarts.out")
-                mod=np.loadtxt("data.ext.txt",skiprows=121,max_rows=601)
-                resul[min]=np.sum(mod[:,1])   
-                os.system("rm data*")
-            #<-------------------------Posicion del valor mas alto------------------------------------>
-            pos=(np.where(np.max(resul)==resul)[0])[0]
-            #<-----------------------Promedio de datos minuto a minuto------------------------------>
-            data_mod=np.mean(resul[pos-30:pos+31])
-            print(data,data_mod)
-            a=input()
-            DR=100*(data_mod-data)/data
-            if abs(DR)<DR_lim:
-                AOD_file.write(str(int(date[i]))+" "+str(aod)+"\n")
-                var=True
-            else:
-                if DR<0:
+        if year_i==2019:
+            print("Calculando el dia ",year_i,month_i,day_i)
+            #<------------------------------Valores iniciales------------------------------------------->
+            aod,var,k=aod_i,False,1
+            while var==False and k<32:
+                print("Intento ",k)
+                resul=np.zeros(dh)
+                for min in range(dh):
+                    escribir(day_i,month_i,year_i,round(hour_i+min/60,4),o3_i,aod)
+                    os.system("./smarts.out")
+                    mod=np.loadtxt("data.ext.txt",skiprows=121,max_rows=701)
+                    resul[min]=np.sum(mod[:,1])   
+                    os.system("rm data*")
+                #<-------------------------Posicion del valor mas alto------------------------------------>
+                pos=(np.where(np.max(resul)==resul)[0])[0]
+                #<-----------------------Promedio de datos minuto a minuto------------------------------>
+                data_mod=np.mean(resul[pos-30:pos+31])
+                DR=100*(data_mod-data)/data
+                if abs(DR)<DR_lim:
                     AOD_file.write(str(int(date[i]))+" "+str(aod)+"\n")
                     var=True
                 else:
-                    aod+=0.025
-            k+=1
-            print(data,data_mod,DR)
+                    if DR<0:
+                        AOD_file.write(str(int(date[i]))+" "+str(aod)+"\n")
+                        var=True
+                    else:
+                        aod+=0.025
+                k+=1
