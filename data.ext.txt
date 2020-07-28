@@ -1,0 +1,11 @@
+lec1 https://stream.crowdcast.io/5f14b80fb1ce2500a6582259/vod_master.m3u8
+lab1 https://stream.crowdcast.io/5f1596819318d600a679ebd9/vod_master.m3u8 
+lec2 https://stream.crowdcast.io/5f16cffe46ecb8009a783944/vod_master.m3u8
+lab2 https://stream.crowdcast.io/5f16e770aea02300aacd1138/vod_master.m3u8
+lec3 https://stream.crowdcast.io/5f18323be1daed00aae26ef0/vod_master.m3u8
+lab3 https://stream.crowdcast.io/5f183974da0b1100a8fd26b7/vod_master.m3u8
+lec4 https://stream.crowdcast.io/5f197a28c5d8b300a8da5559/vod_master.m3u8
+lab4 https://stream.crowdcast.io/5f198ad007e3b400aa6518be/vod_master.m3u8
+lec5 https://stream.crowdcast.io/5f171a3da0bc0600b13a5120/vod_master.m3u8
+lab5 https://stream.crowdcast.io/5f171a3da0bc0600b13a5120/vod_master.m3u8
+lec6 https://stream.crowdcast.io/5f1ed05f0cbd0500aa7c58f8/vod_master.m3u8
