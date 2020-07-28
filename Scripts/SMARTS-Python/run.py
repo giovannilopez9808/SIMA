@@ -38,10 +38,12 @@ def escribir(lon_i,lon_f,day,month,year,hour,ozono,aod):
 car="../../Stations/"
 stations=["noreste"]
 DR_lim,aod_i=7,0.025
+#<------------------------Hora inicial y final del calculo-------------------------->
 hour_i,hour_f=11,14
-lon_i,lon_f=400,2800
-dl=lon_f-lon_i
-dh=(hour_f-hour_i)*3
+#<---------------------Longitud inicial y final del calculo---------------------->
+lon_i,lon_f=400,1100
+#<---------------------------Diferencia de horas y longitudes de onda------------------->
+dl_i=lon_i-280+1;dh=(hour_f-hour_i)*3
 for station in stations:
     carp=car+station
     AOD_file=open(carp+"/AOD.txt","w")
@@ -53,7 +55,7 @@ for station in stations:
         data=np.loadtxt(carp+"/Mediciones/"+str(int(date[i]))+".txt",skiprows=10)
         data=np.max(data[0:5,1])
         year_i,month_i,day_i,o3_i=int(year[i]),int(month[i]),int(day[i]),o3[i]
-        if year_i==2015:
+        if year_i!=2014:
             print("Calculando el dia ",year_i,month_i,day_i)
             #<------------------------------Valores iniciales------------------------------------------->
             aod,var,k=aod_i,False,1
@@ -63,7 +65,7 @@ for station in stations:
                 for min in range(dh):
                     escribir(lon_i,lon_f,day_i,month_i,year_i,round(hour_i+min/60,4),o3_i,aod)
                     os.system("./smarts.out")
-                    mod=np.loadtxt("data.ext.txt",skiprows=121)
+                    mod=np.loadtxt("data.ext.txt",skiprows=dl_i)
                     sum=0
                     size=np.size(mod[:,0])
                     for lon in range(size):
@@ -88,4 +90,4 @@ for station in stations:
                     else:
                         aod+=0.025
                 k+=1
-                print(data_mod,data,DR)
+                print(math.ceil(data_mod),math.ceil(data),round(DR,2))
