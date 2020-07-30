@@ -40,55 +40,37 @@ def writeAOD(date,year,month,day,o3,aod,DR):
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../../Stations/"
 stations=["noroeste"]
-DR_lim,aod_i=7,0.025
 #<------------------------Hora inicial y final del calculo-------------------------->
-hour_i,hour_f=11,16
+hour_i,hour_f=6,21
 #<---------------------Longitud inicial y final del calculo---------------------->
 lon_i,lon_f=285,2800
 #<---------------------------Diferencia de horas y longitudes de onda------------------->
 dl_i=lon_i-280+1;dh=(hour_f-hour_i);n_min=dh*60
 for station in stations:
     carp=car+station
+    os.mkdir(carp+"/ResultsSMARTS")
     AOD_file=open(carp+"/DataAOD.txt","w")
     data=np.loadtxt(carp+"/datos.txt")
-    date,day,month,year,o3=data[:,0],data[:,1],data[:,2],data[:,3],data[:,4];del data
+    date,year,month,day,o3,aod,dr=data[:,0],data[:,1],data[:,2],data[:,3],data[:,4],data[:,5],data[:,6];del data
     n=np.size(year)
+    carp+="/ResultsSMARTS/"
     #<-----------------------------Ciclo para variar los dias--------------------------------------->
     for i in range(n):
-        data=np.loadtxt(carp+"/Mediciones/"+str(int(date[i]))+".txt",skiprows=hour_i)
-        data=np.max(data[0:dh,1])
-        year_i,month_i,day_i,o3_i=int(year[i]),int(month[i]),int(day[i]),o3[i]
+        year_i,month_i,day_i,o3_i,aod_i,dr_i=int(year[i]),int(month[i]),int(day[i]),o3[i],aod[i],dr[i]
         if year_i!=2014:
             print("Calculando el dia ",year_i,month_i,day_i)
-            #<------------------------------Valores iniciales------------------------------------------->
-            aod,var,k=aod_i,False,1
-            while var==False and k<32:
-                resul=np.zeros(n_min)
-                for min in range(n_min):
-                    escribir(lon_i,lon_f,day_i,month_i,year_i,round(hour_i+min/60,4),o3_i,aod)
-                    os.system("./smarts.out")
-                    mod=np.loadtxt("data.ext.txt",skiprows=dl_i)
-                    sum=0
-                    size=np.size(mod[:,0])
-                    for lon in range(size):
-                        if lon==0:
-                            sum+=mod[lon,1]
-                        else:
-                            sum+=mod[lon,1]*(mod[lon,0]-mod[lon-1,0])
-                    resul[min]=sum
-                    os.system("rm data*")
-                #<-------------------------Posicion del valor mas alto------------------------------------>
-                pos=(np.where(np.max(resul)==resul)[0])[0]
-                #<-----------------------Promedio de datos minuto a minuto------------------------------>
-                data_mod=np.mean(resul[pos-30:pos+31])
-                DR=100*(data_mod-data)/data
-                if abs(DR)<DR_lim: 
-                    writeAOD(date[i],year_i,month_i,day_i,o3_i,aod,DR)
-                    var=True
-                else:
-                    if DR<0:
-                        writeAOD(date[i],year_i,month_i,day_i,o3_i,aod,DR)
-                        var=True
+            file=open(carp+date[i])
+            for min in range(n_min):
+                escribir(lon_i,lon_f,day_i,month_i,year_i,round(hour_i+min/60,4),o3_i,aod_i)
+                os.system("./smarts.out")
+                mod=np.loadtxt("data.ext.txt",skiprows=dl_i)
+                sum=0
+                size=np.size(mod[:,0])
+                for lon in range(size):
+                    if lon==0:
+                        sum+=mod[lon,1]
                     else:
-                        aod+=0.025
-                k+=1
+                        sum+=mod[lon,1]*(mod[lon,0]-mod[lon-1,0])
+                os.system("rm data*")
+                file.write(str(round(hour_i+min/60,4))+" "+str(round(sum))+"\n")
+            file.close()
