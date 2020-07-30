@@ -39,7 +39,7 @@ def writeAOD(date,year,month,day,o3,aod,DR):
     +str(round(aod,3))+" "+str(round(DR,2))+"\n")
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../../Stations/"
-stations=["noroeste"]
+stations=["noroeste","noreste"]
 DR_lim,aod_i=7,0.025
 #<------------------------Hora inicial y final del calculo-------------------------->
 hour_i,hour_f=11,16
@@ -48,6 +48,7 @@ lon_i,lon_f=285,2800
 #<---------------------------Diferencia de horas y longitudes de onda------------------->
 dl_i=lon_i-280+1;dh=(hour_f-hour_i);n_min=dh*60
 for station in stations:
+    print("Calculando estacion "+station)
     carp=car+station
     AOD_file=open(carp+"/DataAOD.txt","w")
     data=np.loadtxt(carp+"/datos.txt")
@@ -59,7 +60,7 @@ for station in stations:
         data=np.max(data[0:dh,1])
         year_i,month_i,day_i,o3_i=int(year[i]),int(month[i]),int(day[i]),o3[i]
         if year_i!=2014:
-            print("Calculando el dia ",year_i,month_i,day_i)
+            print("           Calculando el dia ",year_i,month_i,day_i)
             #<------------------------------Valores iniciales------------------------------------------->
             aod,var,k=aod_i,False,1
             while var==False and k<32:
