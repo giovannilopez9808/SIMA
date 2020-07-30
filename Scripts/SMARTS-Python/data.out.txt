@@ -1,0 +1,116 @@
+
+******************   SMARTS, version 2.9.5   *******************
+
+ Simple Model of the Atmospheric Radiative Transfer of Sunshine
+     Chris A. Gueymard, Solar Consulting Services
+                    December 2005
+
+    This model is documented in FSEC Report PF-270-95
+ and in a Solar Energy paper, vol. 71, No.5, 325-346 (2001)
+
+ NOTE: These references describe v. 2.8 or earlier!!!
+ See the User's Manual for details on the considerable 
+ changes that followed...
+
+****************************************************************
+
+   Reference for this run: AOD=0.025                                                       
+
+----------------------------------------------------------------
+
+* ATMOSPHERE : USSA        AEROSOL TYPE: S&F_URBAN                                                       
+
+* INPUTS:
+     Pressure (mb) =  953.270   Ground Altitude (km) =   0.5120
+     Height above ground (km) =   0.0000
+     Relative Humidity (%) = 47.648   Precipitable Water (cm) =  1.1395
+     Ozone (atm-cm) = 0.2610 or 261.0 Dobson Units
+   AEROSOLS:  Optical Depth at 500 nm = 0.0278      Optical depth at 550 nm = 0.0250
+       Angstrom's Beta = 0.0094       Schuepp's B = 0.0121
+     Meteorological Range (km) =  999.0   Visibility (km) =  764.9
+     Alpha1 = 0.9990  Alpha2 = 1.5650   Mean Angstrom's Alpha = 1.2820
+     Season = SPRING/SUMMER           
+
+* TEMPERATURES:
+     Instantaneous at site's altitude = 284.8 K
+     Daily average (reference) at site's altitude = 284.8 K
+     Stratospheric Ozone and NO2 (effective) = 225.2 K
+
+** WARNING #13 *********
+\\ Ground reflectance data for CONCRETE                
+\\ extend only from 0.3000 to 1.3000 �m,
+\\ whereas the wavelength limits for this run are 0.2850 and 2.8000 �m.
+\\ Consequently, reflectance is fixed at 0.186 below 0.3000 �m and at 0.486 above 1.3000 �m.
+
+
+
+The following spectral variables will be output to file: data.ext.txt            
+
+ * Global_horizn_irradiance
+
+
+      Spectral ZONAL albedo data: CONCRETE                
+      with a reflection process: NON_LAMBERTIAN          
+
+
+* GEOMETRY (half-angles) OF THE SIMULATED RADIOMETER (deg.):
+   Slope =  0.00      Aperture =  2.90   Limit =  0.00
+
+** WARNING #11*********
+\\ The radiometer's Slope and Limit angles are not provided.
+\\ Circumsolar calculations will therefore be performed for
+\\ an average geometry corresponding to the Aperture angle.
+
+
+
+      Spectral LOCAL albedo data: DRY_LONG_GRASS          
+      with a reflection process: NON_LAMBERTIAN          
+
+
+
+====================================================================================================
+====================================================================================================
+
+* SOLAR POSITION (deg.):
+    Zenith Angle (apparent) = 30.168  Azimuth (from North) =  129.55
+
+      RELATIVE OPTICAL MASSES:
+  - Rayleigh =  1.156
+  - Water Vapor =  1.157
+  - Ozone =  1.156
+  - NO2 =  1.156
+  - Aerosols =  1.157
+
+  Results below are for this specific day:
+ Year = 2015   Month =  4  Day =  2   Hour (LST) = 11.217   Day of Year =  92
+   In Universal Time:
+   Day (UT) =  2   Hour (UT) = 17.217
+   Julian Day =  2457115.250  Declination =   5.007 deg.  Radius vector = 0.99957   Equation of Time (min) =  -3.568
+   Local Apparent Time (or Solar Time):  10.474
+
+
+
+ CO2 Mixing Ratio (ppmv):  390.0
+
+
+
+ Total column abundances (atm-cm) for all gases except H2O, and for normal/standard conditions:
+
+    BrO       CH2O        CH4      ClNO3         CO        CO2       HNO2       HNO3        NH3
+
+0.2500E-05 0.3000E-03 0.1244E+01 0.1200E-03 0.8171E-01 0.2948E+03 0.1000E-03 0.3610E-03 0.1521E-03
+
+
+     NO        NO2        NO3         N2        N2O         O2         O3         O4        SO2
+
+0.3005E-03 0.2034E-03 0.5000E-04 0.3427E+06 0.2318E+00 0.1580E+06 0.2610E+00 0.1580E+06 0.9620E-04
+
+
+
+
+* ANGLES (deg.) FOR TILTED SURFACE CALCULATIONS: 
+   Surface Tilt =  37.000   Surface Azimuth (from North) = 180.000
+   Incidence Angle =  27.987
+
+  Diffuse irradiance ratios (tilted plane/horizontal):
+      0.8993  (isotropic approximate conversion--for reference)
