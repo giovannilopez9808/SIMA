@@ -39,10 +39,10 @@ def writeAOD(date,year,month,day,o3,aod,DR):
     +str(round(aod,3))+" "+str(round(DR,2))+"\n")
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../../Stations/"
-stations=["noroeste","noreste"]
+stations=["noreste"]
 DR_lim,aod_i=7,0.025
 #<------------------------Hora inicial y final del calculo-------------------------->
-hour_i,hour_f=11,16
+hour_i,hour_f=11,14
 #<---------------------Longitud inicial y final del calculo---------------------->
 lon_i,lon_f=285,2800
 #<---------------------------Diferencia de horas y longitudes de onda------------------->
