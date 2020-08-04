@@ -34,12 +34,9 @@ def escribir(lon_i,lon_f,day,month,year,hour,ozono,aod):
     file.write(" 3\n")
     file.write(" "+str(year)+" "+str(month)+" "+str(day)+" "+str(hour)+" 25.75 -100.25 -6\n")
     file.close()
-def writeAOD(date,year,month,day,o3,aod,DR):
-    AOD_file.write(str(int(date))+" "+str(year)+" "+str(month)+" "+str(day)+" "+str(o3)+" " 
-    +str(round(aod,3))+" "+str(round(DR,2))+"\n")
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../../Stations/"
-stations=["noroeste"]
+stations=["noreste"]
 #<------------------------Hora inicial y final del calculo-------------------------->
 hour_i,hour_f=6,21
 #<---------------------Longitud inicial y final del calculo---------------------->
@@ -49,9 +46,7 @@ dl_i=lon_i-280+1;dh=(hour_f-hour_i);n_min=dh*60
 for station in stations:
     carp=car+station
     os.mkdir(carp+"/ResultsSMARTS")
-    AOD_file=open(carp+"/DataAOD.txt","w")
-    data=np.loadtxt(carp+"/datos.txt")
-    date,year,month,day,o3,aod,dr=data[:,0],data[:,1],data[:,2],data[:,3],data[:,4],data[:,5],data[:,6];del data
+    date,year,month,day,o3,aod,dr=np.loadtxt(carp+"/DataAOD.txt",unpack=True)
     n=np.size(year)
     carp+="/ResultsSMARTS/"
     #<-----------------------------Ciclo para variar los dias--------------------------------------->
