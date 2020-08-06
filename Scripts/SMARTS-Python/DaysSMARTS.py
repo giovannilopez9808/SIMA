@@ -1,6 +1,8 @@
 import numpy as np
 import math 
 import os
+#<----------Libreria para ubicar los errores------------>
+import errno
 #<-------------------------Funcion que le da el formato a SMARTS------------------------>
 def escribir(lon_i,lon_f,day,month,year,hour,ozono,aod):
     file=open("data.inp.txt","w")
@@ -45,7 +47,12 @@ lon_i,lon_f=285,2800
 dl_i=lon_i-280+1;dh=(hour_f-hour_i);n_min=dh*60
 for station in stations:
     carp=car+station
-    os.mkdir(carp+"/ResultsSMARTS")
+    try: #Direccion y nombre de la carpeta
+        os.mkdir(carp+"/ResultsSMARTS")
+    #Verificacion si la carpeta ya existe o no
+    except OSError as e: #Si no se produce error realizar nada
+        if e.errno!=errno.EEXIST:
+            raise
     dates,year,month,day,o3,aod,dr=np.loadtxt(carp+"/DataAOD.txt",unpack=True)
     n=np.size(year)
     carp+="/ResultsSMARTS/"
