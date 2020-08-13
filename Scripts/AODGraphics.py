@@ -16,7 +16,7 @@ for station in stations:
     plt.ylim(0,1)
     plt.xticks(np.arange(0,365*5,365),np.arange(2015,2020,1))
     plt.title(station)
-    plt.plot(days,aod)
+    plt.scatter(days,aod,c="#4287f5",marker=".")
     plt.plot([0,365*5],[0.8,0.8],color="red",ls="--")
     plt.savefig(car+"Graphics/AOD.png")
     plt.clf()
