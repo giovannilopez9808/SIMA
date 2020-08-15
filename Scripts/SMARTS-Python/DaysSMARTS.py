@@ -38,7 +38,7 @@ def escribir(lon_i,lon_f,day,month,year,hour,ozono,aod):
     file.close()
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../../Stations/"
-stations=["noreste","noroeste"]
+stations=["noroeste"]
 #<------------------------Hora inicial y final del calculo-------------------------->
 hour_i,hour_f=8,17
 #<---------------------Longitud inicial y final del calculo---------------------->

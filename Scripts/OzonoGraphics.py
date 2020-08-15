@@ -24,4 +24,4 @@ plt.contourf(o3,cmap=mapcolor,levels=levels)
 cbar=plt.colorbar()
 cbar.ax.set_ylabel("Total Ozone Column (DU)",rotation=-90,va="bottom",fontsize="large")
 #<---------Guardado de la grafica---------->
-plt.savefig("../Graficas/OzonoDaily.png",dpi=200)
+plt.savefig("../Graphics/OzonoDaily.png",dpi=200)
