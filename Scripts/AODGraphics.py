@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import datetime
+from math import ceil
 #---------------Funcion que obtiene el PM de la medicion SIMA-------------------->
 def PM_SIMA(file_data,ncol,car,n,station):
     print("     Imprimiendo "+file_data+" del SIMA")
@@ -19,15 +20,16 @@ def PM_SIMA(file_data,ncol,car,n,station):
                 elif PM_sima[i+1]!="": 
                     PM_measurement[j]=float(PM_sima[i+1])
                 j+=1
-    plot_data(x=days,y=PM_measurement,ylim=100,title=station,name=file_data+"_SIMA.png",carp=car+"Graphics/")
+    plot_data(x=days,y=PM_measurement,ylim=ceil(np.max(PM_measurement)/50)*50,title=station,name=file_data+"_SIMA.png",carp=car+"Graphics/",line=False)
 #<--------------------Funcion que grafica del AOD y del PM------------------------------->
-def plot_data(x,y,ylim,title,name,carp):
-    plt.ylim(0,ylim)
+def plot_data(x,y,ylim,title,name,carp,line):
     plt.xlim(0,365*5)
     plt.xticks(np.arange(0,365*6,365),np.arange(2015,2021,1))
     plt.title(title)
     plt.scatter(x,y,c="#4287f5",marker=".")
-    plt.plot([0,365*5],[0.8,0.8],color="red",ls="--")
+    if line==True:
+        plt.plot([0,365*5],[0.8,0.8],color="red",ls="--")
+    plt.ylim(0,ylim)
     plt.savefig(carp+name)
     plt.clf()
 #<-----------------------------Funcion para obtener el dia consecutivo------------------------------>
@@ -56,7 +58,7 @@ for station,station_sima in zip(stations,stations_sima):
         days[i]=yymmdd(dates,i,[0,2],[2,4],[4,6])
     days_total=np.union1d(days,days_total)
     #<------------------------------Grafia del AOD calculado por el SMARTS-------------------------->
-    plot_data(x=days,y=aod,ylim=1,name="AOD_SMARTS.png",carp=car+"Graphics/",title=station)
+    plot_data(x=days,y=aod,ylim=1,name="AOD_SMARTS.png",carp=car+"Graphics/",title=station,line=True)
     #<-------------------AOD medido por el SIMA---------------------------------------->
     PM_SIMA(file_data="PM10",ncol=station_sima,car=car,n=n,station=station)
     PM_SIMA(file_data="PM25",ncol=station_sima,car=car,n=n,station=station)
@@ -66,8 +68,8 @@ print("Analizando AOD de MODIS")
 dates_MODIS,datas_MODIS=np.loadtxt("../Archivos/MODIS-AOD.csv",skiprows=1,usecols=[0,2],unpack=True,delimiter=",",dtype=str)
 AOD_MODIS=[]
 for date_MODIS,data_MODIS in zip(dates_MODIS,datas_MODIS):
-    conse_day=yymmdd([date_MODIS],0,[2:4],[5,7],[8,10])
+    conse_day=yymmdd([date_MODIS],0,[2,4],[5,7],[8,10])
     if conse_day in days_total:
         AOD_MODIS=np.append(AOD_MODIS,float(data_MODIS))
 #<------------------------------------------Ploteo del AOD------------------------------------------>
-plot_data(x=days_total,y=AOD_MODIS,ylim=1,name="AOD_MODIS.png",carp="../Graphics/",title="MODIS")
+plot_data(x=days_total,y=AOD_MODIS,ylim=1,name="AOD_MODIS.png",carp="../Graphics/",title="MODIS",line=False)
