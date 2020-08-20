@@ -12,7 +12,10 @@ def escribir(lon_i,lon_f,day,month,year,hour,ozono,aod):
     file.write(" 1\n")
     file.write(" 0\n")
     file.write(" 1 "+str(round(ozono/1000,4))+"\n")
-    file.write(" 1\n")
+    #<-------------------------Card 6------------------>
+    file.write(" 0\n")
+    #<-------------------------Card 6a----------------->
+    file.write(" 3\n")
     file.write(" 390\n")
     file.write(" 0\n")
     file.write(" 'S&F_URBAN'\n")
