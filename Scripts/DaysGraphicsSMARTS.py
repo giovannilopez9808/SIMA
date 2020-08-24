@@ -5,11 +5,11 @@ import os
 import errno
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../Stations/"
-stations=["noreste","noroeste"]
+stations=["noreste"]
 for station in stations:
     print("Graficando estacion "+station)
     carp=car+station
-    dates,aods=np.loadtxt(carp+"/DataAOD.txt",usecols=[0,5],dtype=str,unpack=True)
+    dates,aods=np.loadtxt(carp+"/DataAOD_moderate.txt",usecols=[0,5],dtype=str,unpack=True)
     try: #Direccion y nombre de la carpeta
         os.mkdir(carp+"/Graphics")
     #Verificacion si la carpeta ya existe o no

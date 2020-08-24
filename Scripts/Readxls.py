@@ -20,6 +20,15 @@ def dateformat(date):
 #<--------Funcion que lee los nombres de los archivos que hay en una carpeta--------->
 def ls(ruta):
     return [arch for arch in listdir(ruta) if isfile(join(ruta, arch))]
+
+def CreateFolder(path,name):
+    #Creacion de la carpeta
+    try: #Direccion y nombre de la carpeta
+        os.mkdir(path+name)
+    #Verificacion si la carpeta ya existe o no
+    except OSError as e: #Si no se produce error realizar nada
+        if e.errno!=errno.EEXIST:
+            raise
 #<--------Localizacion de la carpeta--------->
 dir,stadir="../Archivos/","../Stations/"
 arc=["2015","2016-2018","2016-2019"]
@@ -38,13 +47,8 @@ for arch in arc:
         param=str(sheet.cell_value(1,j+2))
         if param==cont:
             #Creacion de la carpeta
-            try: #Direccion y nombre de la carpeta
-                os.mkdir(stadir+station)
-                os.mkdir(stadir+station+"/Mediciones")
-            #Verificacion si la carpeta ya existe o no
-            except OSError as e: #Si no se produce error realizar nada
-                if e.errno!=errno.EEXIST:
-                    raise
+            CreateFolder(path=stadir,name=station)
+            CreateFolder(path=stadir+station,name="/Mediciones")
             #Ciclo para variar los dias de las mediciones
             for k in range(int((sheet.nrows-3)/24)):
                 #Apertura del archivo donde se guardara la medicion de un día

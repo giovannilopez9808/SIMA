@@ -38,7 +38,7 @@ def escribir(lon_i,lon_f,day,month,year,hour,ozono,aod):
     file.close()
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../../Stations/"
-stations=["noroeste"]
+stations=["noreste"]
 #<------------------------Hora inicial y final del calculo-------------------------->
 hour_i,hour_f=8,17
 #<---------------------Longitud inicial y final del calculo---------------------->
@@ -53,7 +53,7 @@ for station in stations:
     except OSError as e: #Si no se produce error realizar nada
         if e.errno!=errno.EEXIST:
             raise
-    dates,year,month,day,o3,aod,dr=np.loadtxt(carp+"/DataAOD.txt",unpack=True)
+    dates,year,month,day,o3,aod,dr=np.loadtxt(carp+"/DataAOD_moderate.txt",unpack=True)
     n=np.size(year)
     carp+="/ResultsSMARTS/"
     #<-----------------------------Ciclo para variar los dias--------------------------------------->
