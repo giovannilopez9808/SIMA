@@ -49,9 +49,9 @@ for station,station_sima in zip(stations,stations_sima):
     print("     Imprimiendo AOD del SMARTS")
     car="../Stations/"+station+"/"
     #<--------------------Dias de cielo despejado antes seleccionado------------------->
-    dates=np.loadtxt(car+"DataAOD.txt",dtype=str,usecols=0)
+    dates=np.loadtxt(car+"DataAOD_moderate.txt",dtype=str,usecols=0)
     #<--------------------------AOD Calculado----------------------------------->
-    aod=np.loadtxt(car+"DataAOD.txt",usecols=5)
+    aod=np.loadtxt(car+"DataAOD_moderate.txt",usecols=5)
     n=np.size(dates)
     days=np.ones(n)
     for i in range(n):

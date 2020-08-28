@@ -13,7 +13,7 @@ def escribir(lon_i,lon_f,day,month,year,hour,ozono,aod):
     file.write(" 0\n")
     file.write(" 1 "+str(round(ozono/1000,4))+"\n")
     #<-------------------------Card 6------------------>
-    file.write(" 0\n")
+    file.write(" 1\n")
     #<-------------------------Card 6a----------------->
     file.write(" 3\n")
     file.write(" 390\n")
@@ -42,8 +42,8 @@ def writeAOD(date,year,month,day,o3,aod,DR):
     +str(round(aod,3))+" "+str(round(DR,2))+"\n")
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../../Stations/"
-stations=["noreste"]
-DR_lim,aod_i=7,0.025
+stations=["noroeste"]
+DR_lim,aod_i,aod_lim=7,0.01,1
 #<------------------------Hora inicial y final del calculo-------------------------->
 hour_i,hour_f=11,14
 #<---------------------Longitud inicial y final del calculo---------------------->
@@ -54,8 +54,7 @@ for station in stations:
     print("Calculando estacion "+station)
     carp=car+station
     AOD_file=open(carp+"/DataAOD.txt","w")
-    data=np.loadtxt(carp+"/datos.txt")
-    date,day,month,year,o3=data[:,0],data[:,1],data[:,2],data[:,3],data[:,4];del data
+    date,day,month,year,o3=np.loadtxt(carp+"/datos.txt",unpack=True)
     n=np.size(year)
     #<-----------------------------Ciclo para variar los dias--------------------------------------->
     for i in range(n):
@@ -66,7 +65,7 @@ for station in stations:
             print("           Calculando el dia ",year_i,month_i,day_i)
             #<------------------------------Valores iniciales------------------------------------------->
             aod,var,k=aod_i,False,1
-            while var==False and k<32:
+            while var==False and k<math.ceil(aod_lim/aod_i):
                 resul=np.zeros(n_min)
                 for min in range(n_min):
                     escribir(lon_i,lon_f,day_i,month_i,year_i,round(hour_i+min/60,4),o3_i,aod)
@@ -94,5 +93,5 @@ for station in stations:
                         writeAOD(date[i],year_i,month_i,day_i,o3_i,aod,DR)
                         var=True
                     else:
-                        aod+=0.025
+                        aod+=aod_i
                 k+=1
