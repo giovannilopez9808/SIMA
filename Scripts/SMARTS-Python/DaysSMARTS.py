@@ -58,21 +58,22 @@ for station in stations:
     carp+="/ResultsSMARTS/"
     #<-----------------------------Ciclo para variar los dias--------------------------------------->
     for date,year_i,month_i,day_i,o3_i,aod_i in zip(dates,year,month,day,o3,aod):
-        date,year_i,month_i,day_i,o3_i=str(int(date)),int(year_i),int(month_i),int(day_i),float(o3_i)
-        if year_i!=2014:
-            print("Calculando el dia ",year_i,month_i,day_i)
-            file_date=open(carp+date+".txt","w")
-            for min in range(n_min):
-                escribir(lon_i,lon_f,day_i,month_i,year_i,round(hour_i+min/60,4),o3_i,aod_i)
-                os.system("./smarts.out")
-                mod=np.loadtxt("data.ext.txt",skiprows=dl_i)
-                sum=0
-                size=np.size(mod[:,0])
-                for lon in range(size):
-                    if lon==0:
-                        sum+=mod[lon,1]
-                    else:
-                        sum+=mod[lon,1]*(mod[lon,0]-mod[lon-1,0])
-                os.system("rm data*")
-                file_date.write(str(round(hour_i+min/60,4))+" "+str(round(sum))+"\n")
-            file_date.close()
+        if aod_i>=0.9:
+            date,year_i,month_i,day_i,o3_i=str(int(date)),int(year_i),int(month_i),int(day_i),float(o3_i)
+            if year_i!=2014:
+                print("Calculando el dia ",year_i,month_i,day_i)
+                file_date=open(carp+date+".txt","w")
+                for min in range(n_min):
+                    escribir(lon_i,lon_f,day_i,month_i,year_i,round(hour_i+min/60,4),o3_i,aod_i)
+                    os.system("./smarts.out")
+                    mod=np.loadtxt("data.ext.txt",skiprows=dl_i)
+                    sum=0
+                    size=np.size(mod[:,0])
+                    for lon in range(size):
+                        if lon==0:
+                            sum+=mod[lon,1]
+                        else:
+                            sum+=mod[lon,1]*(mod[lon,0]-mod[lon-1,0])
+                    os.system("rm data*")
+                    file_date.write(str(round(hour_i+min/60,4))+" "+str(round(sum))+"\n")
+                file_date.close()

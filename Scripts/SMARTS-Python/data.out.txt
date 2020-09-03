@@ -14,7 +14,7 @@
 
 ****************************************************************
 
-   Reference for this run: AOD=0.01                                                        
+   Reference for this run: AOD=0.98                                                        
 
 ----------------------------------------------------------------
 
@@ -24,17 +24,24 @@
      Pressure (mb) =  953.270   Ground Altitude (km) =   0.5120
      Height above ground (km) =   0.0000
      Relative Humidity (%) = 47.648   Precipitable Water (cm) =  1.1395
-     Ozone (atm-cm) = 0.2610 or 261.0 Dobson Units
-   AEROSOLS:  Optical Depth at 500 nm = 0.0111      Optical depth at 550 nm = 0.0100
-       Angstrom's Beta = 0.0038       Schuepp's B = 0.0048
-     Meteorological Range (km) =  999.0   Visibility (km) =  764.9
-     Alpha1 = 0.9990  Alpha2 = 1.5650   Mean Angstrom's Alpha = 1.2820
+     Ozone (atm-cm) = 0.2490 or 249.0 Dobson Units
+   AEROSOLS:  Optical Depth at 500 nm = 1.0910      Optical depth at 550 nm = 0.9800
+       Angstrom's Beta = 0.4910       Schuepp's B = 0.4738
+     Meteorological Range (km) =    6.2   Visibility (km) =    4.8
+     Alpha1 = 0.8349  Alpha2 = 1.1518   Mean Angstrom's Alpha = 0.9933
      Season = SPRING/SUMMER           
 
 * TEMPERATURES:
      Instantaneous at site's altitude = 284.8 K
      Daily average (reference) at site's altitude = 284.8 K
      Stratospheric Ozone and NO2 (effective) = 225.2 K
+
+** WARNING #13 *********
+\\ Ground reflectance data for CONCRETE                
+\\ extend only from 0.3000 to 1.3000 �m,
+\\ whereas the wavelength limits for this run are 0.2850 and 2.8000 �m.
+\\ Consequently, reflectance is fixed at 0.186 below 0.3000 �m and at 0.486 above 1.3000 �m.
+
 
 
 The following spectral variables will be output to file: data.ext.txt            
@@ -65,21 +72,21 @@ The following spectral variables will be output to file: data.ext.txt
 ====================================================================================================
 
 * SOLAR POSITION (deg.):
-    Zenith Angle (apparent) = 15.421  Azimuth (from North) =  228.85
+    Zenith Angle (apparent) = 75.779  Azimuth (from North) =  116.71
 
       RELATIVE OPTICAL MASSES:
-  - Rayleigh =  1.037
-  - Water Vapor =  1.037
-  - Ozone =  1.037
-  - NO2 =  1.037
-  - Aerosols =  1.037
+  - Rayleigh =  4.013
+  - Water Vapor =  4.059
+  - Ozone =  3.906
+  - NO2 =  3.907
+  - Aerosols =  4.052
 
   Results below are for this specific day:
- Year = 2015   Month =  5  Day =  1   Hour (LST) = 13.433   Day of Year = 121
+ Year = 2018   Month = 11  Day =  8   Hour (LST) =  8.100   Day of Year = 312
    In Universal Time:
-   Day (UT) =  1   Hour (UT) = 19.433
-   Julian Day =  2457144.250  Declination =  15.140 deg.  Radius vector = 1.00759   Equation of Time (min) =   2.919
-   Local Apparent Time (or Solar Time):  12.799
+   Day (UT) =  8   Hour (UT) = 14.100
+   Julian Day =  2458431.000  Declination = -16.633 deg.  Radius vector = 0.99076   Equation of Time (min) =  16.289
+   Local Apparent Time (or Solar Time):   7.688
 
 
 
@@ -96,78 +103,14 @@ The following spectral variables will be output to file: data.ext.txt
 
      NO        NO2        NO3         N2        N2O         O2         O3         O4        SO2
 
-0.3005E-03 0.2034E-03 0.5000E-04 0.3427E+06 0.2318E+00 0.1580E+06 0.2610E+00 0.1580E+06 0.9620E-04
+0.3005E-03 0.2034E-03 0.5000E-04 0.3427E+06 0.2318E+00 0.1580E+06 0.2490E+00 0.1580E+06 0.9620E-04
 
 
 
 
 * ANGLES (deg.) FOR TILTED SURFACE CALCULATIONS: 
    Surface Tilt =  37.000   Surface Azimuth (from North) = 180.000
-   Incidence Angle =  28.934
+   Incidence Angle =  62.715
 
   Diffuse irradiance ratios (tilted plane/horizontal):
       0.8993  (isotropic approximate conversion--for reference)
-      0.9844  (anisotropic conversion model--used here)
-
-
-
-*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
-
-** SPECTRUM:
-   Total (0-100 �m) Extraterrestrial Irradiance used here = 1345.60 W/m2
-  (i.e., 0.9850 times the selected solar constant, 1366.10 W/m2, due to the actual Sun-Earth distance.)
-   Source for selected solar spectrum: Gueymard_2003                                                   
-
-
-Wavelength Range =  280.0 to 1100.0 nm;  Number of Wavelengths =   941
-
-*** BROADBAND IRRADIANCES (W/m2):
-
-* DIRECT BEAM AT NORMAL INCIDENCE:
-  Extraterrestrial =  997.33   Terrestrial =  826.30   Atmospheric Transmittance = 0.8285
-
-* FOR THE HORIZONTAL PLANE:
-  Direct Beam =  796.55   Diffuse =  70.92   Global =  867.48   Clearness index, KT = 0.6447
-  Diffuse irradiance origination details:
-   Sky diffuse =  54.02   Back-scattered diffuse =  16.91
-
-* FOR THE TILTED PLANE: 
-  Direct Beam =  723.16   Sky Diffuse =  84.53   Ground Reflected =  20.75   Global =  807.69
-
-* EXPERIMENTAL (WITH CIRCUMSOLAR CORRECTION):
-  Direct Beam, Normal Incidence =  826.59   Diffuse Horizontal =  70.64   Global Horizontal =  867.48
-
-
-
-
-*** UV IRRADIANCES (W/m2):
-
- TOTAL UV-A IRRADIANCE (315-400 nm) =  66.36120
- TOTAL UV-B IRRADIANCE (280-315 nm) =  2.54519
-
- TOTAL UV-A IRRADIANCE (320-400 nm) =  64.43270
- TOTAL UV-B IRRADIANCE (280-320 nm) =  4.44826
-
-
-*** ACTION-WEIGHTED DOSE RATES (W/m2) USING SELECTED ACTION CURVES
-
- ERYTHEMAL C.I.E. (McKinley & Diffey, 1987) = 0.3680E+00
- ERYTHEMAL from Green et al. (1974) = 0.2726E+00
- ERYTHEMAL from Green et al. (1975) = 0.3390E+00
- ERYTHEMAL from Diffey (1982) modified by Bjorn (1989) = 0.5243E+00
- DNA DAMAGE from Setlow (1974) = 0.8922E-02
- PHOTOSYNTHESIS INHIBITION from Caldwell et al. (1986) = 0.2287E+01
- ACGIH SAFETY SPECTRUM from Wester (1981) = 0.8546E-01
- BIOLOGICAL ACTION from Caldwell (1971) and Green (1974) = 0.1252E+00
- POLYCHROMATIC ACTION FOR HIGHER PLANTS from Caldwell et al. (1986) = 0.2348E+00
- SYSTEMIC IMMUNOSUPPRESSION from deFabo et al. (1990)    = 0.4534E+00
- DNA TO PROTEIN CROSSLINKS from Peak & Peak (1986) = 0.5402E-01
- SKIN CARCINOGENESIS from deGruijl & VanderLeun (1994) = 0.8155E+00 (humans); 0.3176E+00 (mice)
-
-
-*** DOSE RATE IN MED/h from an ideal Robertson-Berger instrument = 0.6308E+01
-
-
-*** UV Index =  14.718
-
-

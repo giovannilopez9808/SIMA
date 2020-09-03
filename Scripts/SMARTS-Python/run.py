@@ -13,7 +13,7 @@ def escribir(lon_i,lon_f,day,month,year,hour,ozono,aod):
     file.write(" 0\n")
     file.write(" 1 "+str(round(ozono/1000,4))+"\n")
     #<-------------------------Card 6------------------>
-    file.write(" 1\n")
+    file.write(" 0\n")
     #<-------------------------Card 6a----------------->
     file.write(" 3\n")
     file.write(" 390\n")
@@ -47,7 +47,8 @@ DR_lim,aod_i,aod_lim=7,0.01,1
 #<------------------------Hora inicial y final del calculo-------------------------->
 hour_i,hour_f=11,14
 #<---------------------Longitud inicial y final del calculo---------------------->
-lon_i,lon_f=285,2800
+#lon_i,lon_f=285,2800
+lon_i,lon_f=400,1100
 #<---------------------------Diferencia de horas y longitudes de onda------------------->
 dl_i=lon_i-280+1;dh=(hour_f-hour_i);n_min=dh*60
 for station in stations:
