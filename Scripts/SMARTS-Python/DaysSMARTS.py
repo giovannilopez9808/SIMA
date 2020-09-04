@@ -38,7 +38,7 @@ def escribir(lon_i,lon_f,day,month,year,hour,ozono,aod):
     file.close()
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../../Stations/"
-stations=["noreste"]
+stations=["noroeste"]
 #<------------------------Hora inicial y final del calculo-------------------------->
 hour_i,hour_f=8,17
 #<---------------------Longitud inicial y final del calculo---------------------->
@@ -58,7 +58,6 @@ for station in stations:
     carp+="/ResultsSMARTS/"
     #<-----------------------------Ciclo para variar los dias--------------------------------------->
     for date,year_i,month_i,day_i,o3_i,aod_i in zip(dates,year,month,day,o3,aod):
-        if aod_i>=0.9:
             date,year_i,month_i,day_i,o3_i=str(int(date)),int(year_i),int(month_i),int(day_i),float(o3_i)
             if year_i!=2014:
                 print("Calculando el dia ",year_i,month_i,day_i)
