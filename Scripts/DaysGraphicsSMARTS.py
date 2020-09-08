@@ -5,7 +5,7 @@ import os
 import errno
 #<----------------------------Lectura de los datos de entrada--------------------------------------->
 car="../Stations/"
-stations=["noreste"]
+stations=["noroeste"]
 for station in stations:
     print("Graficando estacion "+station)
     carp=car+station
