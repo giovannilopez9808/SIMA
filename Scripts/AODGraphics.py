@@ -25,10 +25,9 @@ def PM_SIMA(file_data,ncol,car,n,station):
 def plot_data(x,y,ylim,title,name,carp,line):
     plt.xlim(0,365*5)
     plt.xticks(np.arange(0,365*6,365),np.arange(2015,2021,1))
-    plt.title(title)
     plt.scatter(x,y,c="#4287f5",marker=".")
     if line==True:
-        plt.plot([0,365*5],[0.8,0.8],color="red",ls="--")
+        plt.plot([0,365*5],[1,1],color="red",ls="--")
     plt.ylim(0,ylim)
     plt.savefig(carp+name)
     plt.clf()
