@@ -28,5 +28,4 @@ for station in stations:
         plt.title("Day "+date+"\n AOD$_{550nm}$: "+aod)
         plt.legend(ncol=2,frameon=False,mode="expand")
         plt.savefig(carp+"/Graphics/"+date+".png")
-        plt.show()
         plt.clf()

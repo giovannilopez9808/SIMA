@@ -13,10 +13,10 @@ def AODGraphics(file_data,folder,label):
 def plot_data(x,y,label):
     plt.xlim(0,365*5)
     plt.xticks(np.arange(0,365*6,365),np.arange(2015,2021,1))
-    plt.scatter(x,y,marker=".",label=label)
+    plt.scatter(x,y,marker=".",label=label,alpha=0.7)
     plt.plot([0,365*5],[1,1],color="red",ls="--")
     plt.ylim(0,1.2)
-    plt.ylabel("AOD$_{550nm}$")
+    plt.ylabel("SMARTS AOD$_{550nm}$")
     plt.xlabel("Year")
     plt.yticks(np.arange(0,1.4,0.2))
 #<-----------------------------Funcion para obtener el dia consecutivo------------------------------>
@@ -26,12 +26,13 @@ def yymmdd(date_sima,i,yy,mm,dd):
     day=int(date_sima[i][dd[0]:dd[1]])
     conse_day=(datetime.date(year,month,day)-datetime.date(2015,1,1)).days
     return conse_day
-stations=["noreste"]
+stations=["noreste","noroeste"];stations_name=["Northeast","Northwest"]
 files=["DataAOD_clear.txt","DataAOD_moderate.txt"]
 labels=["Pristine","Moderate"]
-for station in stations:
+for station,station_name in zip(stations,stations_name):
     dir="../Stations/"+station+"/"
     for file,label in zip(files,labels):
         AODGraphics(file_data=file,folder=dir,label=label)
-    plt.legend(frameon=False,mode="expand",ncol=2)
+    plt.title(station_name+" station")
     plt.savefig(dir+"Graphics/Compare_AOD.png")
+    plt.clf()

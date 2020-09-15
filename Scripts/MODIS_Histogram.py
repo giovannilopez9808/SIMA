@@ -17,16 +17,27 @@ def hist_plot(data1,data2,path,title):
     fig, ax = plt.subplots()
     ax.set_ylabel("Frequency (%)")
     x=np.arange(np.size(data1))
-    width =0.5 
+    width =0.75 
     ax.plot(x,data2,width,c="green",ls="--")
     ax.set_ylim(0,70)
+    ax.set_xlim(-1,10)
+    plot_grid(ax)
+    ax.set_xlabel("AOD$_{550nm}$")
     rects1=ax.bar(x,data1,width,label='SMARTS',facecolor="purple",alpha=0.5)
     autolabel(ax,rects1)    
-    plt.xticks(x,div)
+    plt.xticks(x+0.5,div)
     plt.title(title+" 2015-2019")
     ax.scatter(x,data2,c="green",label="MODIS")
     plt.legend(frameon=False,ncol=2,mode='expand')
     plt.savefig(path+'Graphics/AOD_hist.png')
+def plot_grid(ax):
+    y_levels=np.arange(5,75,5)
+    for y_level in y_levels:
+        if y_level%10==0:
+            alpha=0.5
+        else:
+            alpha=1
+        ax.plot([-1,10],[y_level,y_level],ls="--",c="grey",alpha=alpha)
 #<------------------------Funcion que grafica los valores de cada barra------------->
 def autolabel(ax,rects):
     for rect in rects:
