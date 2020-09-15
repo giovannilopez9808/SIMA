@@ -19,8 +19,8 @@ for station in stations:
     for date,aod in zip(dates,aods):
         med=np.loadtxt(carp+"/Mediciones/"+date+".txt")
         mod=np.loadtxt(carp+"/ResultsSMARTS/"+date+".txt")
-        plt.plot(med[:,0],med[:,1],label="Measurement",lw=3,color="#aacc00")
-        plt.plot(mod[:,0],mod[:,1],label="SMARTS Model",lw=3,color="#007f5f")
+        plt.plot(med[:,0],med[:,1],label="Measurement",lw=3,color="black")
+        plt.plot(mod[:,0],mod[:,1],label="SMARTS Model",lw=3,color="green")
         plt.ylabel("UV-VIS-NIR irradiance (W/m$^2$)")
         plt.xlabel("Local hour (h)")
         plt.xlim(8,17)
