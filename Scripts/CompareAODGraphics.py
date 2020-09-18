@@ -34,5 +34,6 @@ for station,station_name in zip(stations,stations_name):
     for file,label in zip(files,labels):
         AODGraphics(file_data=file,folder=dir,label=label)
     plt.title(station_name+" station")
+    plt.legend(frameon=False,ncol=2,mode="expand")
     plt.savefig(dir+"Graphics/Compare_AOD.png")
     plt.clf()
