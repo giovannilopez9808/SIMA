@@ -35,7 +35,7 @@ def PM_array(array_date,array_data):
 stations=["noroeste","noreste"];titles=["Noroeste","Noreste"];alturas=[0.52,0.95]
 dir_arc="../Archivos/";dir_Graphics="Graphics/"
 file_PM10="PM10_2020.csv";
-files_SMARTS=["DataAOD_clear.txt","DataAOD_moderate.txt"]
+file_SMARTS="DataAOD_moderate.txt"
 fig,axs=plt.subplots(2)
 for station,title,ax,altura in zip(stations,titles,axs,alturas):
     #<-----------------------------------Localizacion de los archivos de datos-------------------------->
@@ -45,41 +45,38 @@ for station,title,ax,altura in zip(stations,titles,axs,alturas):
     #<-----------------------------------------Datos y dias del SIMA------------------------------------>
     dates_PM10,data_PM10=PM_array(date_PM10,data_PM10)
     #<----------------------------------------------Datos SMARTS------------------------------------->
-    date_SMARTS=np.loadtxt(dir_station+files_SMARTS[0],usecols=0,dtype=str)
-    data_SMARTS_clear=np.loadtxt(dir_station+files_SMARTS[0],usecols=5)
-    data_SMARTS_moderate=np.loadtxt(dir_station+files_SMARTS[1],usecols=5)
+    date_SMARTS=np.loadtxt(dir_station+file_SMARTS,usecols=0,dtype=str)
+    data_SMARTS=np.loadtxt(dir_station+file_SMARTS,usecols=5)
     dates_SMARTS=value_conse_day(date_SMARTS,[0,2],[2,4],[4,6])
     del date_SMARTS,date_PM10
-    x_PM10,y_SMARTS_clear,y_SMARTS_moderate,dates,dates_n=[],[],[],[],[]
-    for date_SMARTS,aod_SMARTS_clear,aod_SMARTS_moderate in zip(dates_SMARTS,data_SMARTS_clear,data_SMARTS_moderate):
+    x_PM10,y_SMARTS_clear,y_SMARTS,dates,dates_n=[],[],[],[],[]
+    for date_SMARTS,aod_SMARTS in zip(dates_SMARTS,data_SMARTS):
         if date_SMARTS in dates_PM10:
             pos=np.where(date_SMARTS==dates_PM10)[0]
             if data_PM10[pos]>=0:
                 x_PM10=np.append(x_PM10,data_PM10[pos])
-                y_SMARTS_clear=np.append(y_SMARTS_clear,aod_SMARTS_clear)
-                y_SMARTS_moderate=np.append(y_SMARTS_moderate,aod_SMARTS_moderate)
+                y_SMARTS=np.append(y_SMARTS,aod_SMARTS)
                 dates_n=np.append(dates_n,date_SMARTS)
     ax2=ax.twinx()
-    ax.plot(dates_n,x_PM10,color="#114B5F",label="SIMA PM$_{10}$")
-    ax.set_xlim(0,365*5)
-    ax.set_ylim(0,500)
-    ax2.set_ylim(0,1)
-    ax2.set_yticks(np.arange(0,1.2,0.2))
-    ax.set_yticks(np.arange(0,600,100))
+    ax.scatter(dates_n,x_PM10,color="#114B5F",label="SIMA PM$_{10}$",marker=".",alpha=0.5)
+    ax.set_xlim(0,365*5);ax.set_ylim(0,350)
+    ax2.set_ylim(0,0.1)
+    ax2.set_yticks(np.arange(0,1,0.2));ax.set_yticks(np.arange(0,400,50))
     if ax==axs[1]:
         ax.set_xticks(np.arange(0,365*6,365))
         ax.set_xticklabels(np.arange(2015,2021),rotation=60)
     else:
         ax.set_xticks([])
-    ax2.plot(dates_n,y_SMARTS_clear,color="#88D498",label="AOD Pristine")
-    ax2.plot(dates_n,y_SMARTS_moderate,color="#DDA15E",label="AOD Moderate")
+    ax2.scatter(dates_n,y_SMARTS,color="#DDA15E",label="AOD",marker=".",alpha=0.5)
     if ax==axs[0]:
-        ax.legend(frameon=False,loc=2,bbox_to_anchor=(0., 1.15,1,0.02))
-        ax2.legend(frameon=False,loc=1,ncol=2,bbox_to_anchor=(0., 1.15,1,0.02))
+        ax.legend(frameon=False,loc=1,bbox_to_anchor=(0., 1.15,1,0.02))
+        ax2.legend(frameon=False,loc=2,bbox_to_anchor=(0., 1.15,1,0.02))
     fig.text(0.40,altura,"Estación "+title,va="center",fontsize="large")
 #<-----------------------------------------Shared ylabel---------------------------------->
 fig.text(0.035, 0.5, 'PM$_{10}$', va='center', rotation='vertical',fontsize="large")
 fig.text(0.95, 0.5, 'AOD$_{550nm}$', va='center', rotation=-90,fontsize="large")
+axs[1].set_xlabel("Año",fontsize="large")
 plt.subplots_adjust(left=0.125, bottom=0.167, right=0.879, top=0.88, wspace=0.2, hspace=0.188)
 plt.savefig("../"+dir_Graphics+"AODsandPM10.png",dpi=400)
+plt.show()
 plt.clf()
