@@ -6,7 +6,7 @@ import xlrd
 # <--------Localizacion de la carpeta--------->
 dir_archivos = "../Archivos/"
 dir_stations = "../Stations/"
-files_data = ["2015", "2016-2018", "2016-2019","2020"]
+files_data = ["2015", "2016-2018", "2016-2019","2019","2020"]
 type_data = "SR"
 # <--------------Ciclo para analizar todos los archivos----------->
 for file_data in files_data:
