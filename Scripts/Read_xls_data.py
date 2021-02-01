@@ -39,6 +39,6 @@ for file_data in files_data:
                     data = data_sheet.cell_value(med_loc, col)
                     data = save_measurement(data)
                     # Escritura del archivo
-                    file.write(str(hour+0.5)+" "+data+"\hour")
+                    file.write(str(hour+0.5)+" "+data+"\n")
                 # Cierre del archivo
                 file.close()

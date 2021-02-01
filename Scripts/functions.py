@@ -7,7 +7,7 @@ def mkdir(name, path=""):
     try:
         os.mkdir(path+name)
     except FileExistsError:
-        print("")
+        print()
 
 
 def format_date(date):
