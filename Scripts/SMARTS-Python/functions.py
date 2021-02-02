@@ -6,7 +6,7 @@ def mkdir(name, path=""):
     try:
         os.mkdir(path+name)
     except FileExistsError:
-        print("")
+        pass
 
 
 def int_dates(year, month, day):
@@ -31,8 +31,6 @@ def find_max(name, path=""):
 def RD_decision(model, measurement, limit):
     var = False
     DR = 100*(model-measurement)/measurement
-    if abs(DR) < limit:
-        var = True
-    elif DR < 0:
+    if abs(DR) < limit or DR < 0:
         var = True
     return var, DR

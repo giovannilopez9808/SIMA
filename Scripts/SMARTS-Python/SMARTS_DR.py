@@ -5,13 +5,13 @@ from functions import *
 input_parameters = {
     "path stations": "../../Stations/",
     "stations": ["noroeste"],
-    "hour initial": 11,
-    "hour final": 14,
+    "hour initial": 9,
+    "hour final": 16,
     "lon initial": 285,
     "lon final": 2800,
     "AOD inicial": 0.01,
     "AOD delta": 0.025,
-    "RD limite": 7,
+    "RD limite": 10,
     "AOD limite": 1,
 }
 
@@ -30,7 +30,7 @@ for station in input_parameters["stations"]:
     mkdir("Results_SMARTS_DR", path=dir_station)
     dir_results = dir_station+"Results_SMARTS_DR/"
     AOD_file = open(dir_station+"/DataAOD_found.txt", "w")
-    dates, o3_list, years, months, days = np.loadtxt(
+    dates, o3_list, years, months, days = loadtxt(
         dir_station+"/datos.txt", unpack=True)
     for date, o3, year, month, day in zip(dates, o3_list, years, months, days):
         date = str(int(date))
