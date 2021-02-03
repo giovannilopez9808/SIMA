@@ -1,8 +1,8 @@
 import numpy as np
 import datetime
 o3data = np.loadtxt("../Archivos/OzonoMty.csv", skiprows=1,
-                    usecols=np.arange(1, 16), dtype=str, delimiter=",")
-stations = ["noroeste"]
+                    usecols=np.arange(1, 17), dtype=str, delimiter=",")
+stations = ["noroeste","noreste"]
 dir_stations = "../Stations/"
 for station in stations:
     dir_station = dir_stations+station+"/"
