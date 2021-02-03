@@ -11,7 +11,7 @@ class SMARTS:
         self.lon_i = lon_i
         self.lon_f = lon_f
         self.delta_lon = lon_i-280+1
-        self.delta_hour=int(hour_f-hour_i)
+        self.delta_hour = int(hour_f-hour_i)
         self.total_minute = int((hour_f-hour_i)*60)
 
     def run_SMARTS(self, day, month, year, o3, aod, name, path=""):
@@ -110,12 +110,20 @@ class SMARTS:
                    " "+hour+" 25.75 -100.25 -6\n")
         file.close()
 
+
 class SMARTS_DR(SMARTS):
 
-    def __init__(self, hour_i, hour_f, lon_i, lon_f,aod_ini,aod_delta,aod_lim,RD_lim):
+    def __init__(self, hour_i, hour_f, lon_i, lon_f, aod_ini, aod_delta, aod_lim, RD_lim):
         SMARTS.__init__(self, hour_i, hour_f, lon_i, lon_f)
-        self.aod_i=aod_ini
-        self.delta_aod=aod_delta
-        self.aod_lim=aod_lim
-        self.max_aod=ceil(aod_lim/aod_ini)
-        self.RD_lim=RD_lim
+        self.aod_i = aod_ini
+        self.delta_aod = aod_delta
+        self.aod_lim = aod_lim
+        self.max_aod = ceil(aod_lim/aod_ini)
+        self.RD_lim = RD_lim
+
+    def RD_decision(self, model, measurement):
+        var = False
+        DR = 100*(model-measurement)/measurement
+        if abs(DR) < self.RD_lim or DR < 0:
+            var = True
+        return var, DR

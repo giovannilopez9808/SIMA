@@ -26,11 +26,3 @@ def find_max(name, path=""):
     pos = (np.where(np.max(data_model) == data_model)[0])[0]
     data_model = np.mean(data_model[pos-30:pos+31])
     return data_model
-
-
-def RD_decision(model, measurement, limit):
-    var = False
-    DR = 100*(model-measurement)/measurement
-    if abs(DR) < limit or DR < 0:
-        var = True
-    return var, DR

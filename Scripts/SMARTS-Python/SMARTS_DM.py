@@ -12,11 +12,11 @@ input_parameters = {
     "lon final": 2800,
 }
 
-input = SMARTS(input_parameters["hour initial"],
-               input_parameters["hour final"],
-               input_parameters["lon initial"],
-               input_parameters["lon final"],
-               )
+SMARTS_Model = SMARTS(input_parameters["hour initial"],
+                      input_parameters["hour final"],
+                      input_parameters["lon initial"],
+                      input_parameters["lon final"],
+                      )
 
 for station in input_parameters["stations"]:
     dir_station = input_parameters["path stations"]+station+"/"
@@ -29,4 +29,5 @@ for station in input_parameters["stations"]:
         date = str(int(date))
         year, month, day = int_dates(year, month, day)
         print("Calculando el dia ", year, month, day)
-        input.run_SMARTS(day, month, year, o3, aod, date, path=dir_results)
+        SMARTS_Model.run_SMARTS(day, month, year, o3,
+                                aod, date, path=dir_results)
