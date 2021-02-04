@@ -1,0 +1,22 @@
+\section{Methodology}
+\subsection{Groud-level PM concentrations}
+We collected SIMA’s data from all 13 stations for the period of 2015-2020, where three of them
+started operating in 2017. Data includes hourly measures of PM\textsubscript{10}, PM\textsubscript{2.5},
+solar irradiance, humidity, wind and other pollutants. The measuring instruments that are located at SIMA’s
+meteorological station are required to adapt to the mexican guidelines for obtaining and communicating the
+air quality index and health risks that can be found as NOM-172-SEMARNAT-2019.
+\subsection{SMARTS AOD Model}
+Only solar radiation measurements under clear skies were selected. The source code of the SMARTS model was
+modified to enter the values of Table 1 and perform iterations with the AOD550nm, until the relative difference
+between the measured and modeled irradiance reaches 10\% at solar noon.
+\subsection{MODIS-NASA Data}
+We automated the download of data of Aerosol Optical Depth at 550 nm (AOD\textsubscript{550nm}) from NASA’s
+satellite MODIS (\url{https://ladsweb.modaps.eosdis.nasa.gov/}). The data is taken daily and with a spatial
+resolution of 1 Deg. We used the product MODIS-Aqua Aerosol Cloud Water Vapor Ozone Daily L3 Global 1Deg CMG
+(MYD08\_D3) and looked at two data sets: Deep Blue Combined Mean and Land and Ocean Mean. 
+\subsection{Wind}
+\subsection{Data processing}
+We developed a code in Python to analyze the distinct data sets. For PM data, we analyzed availability,
+trends, and selected the data that coincided with the time the satellite passed over the coordinates of
+the stations. The AOD data were compared with the PM data to find the correlation. For the linear regression
+the module sklearn.linear\_model was used.
