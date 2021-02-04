@@ -6,7 +6,7 @@ import xlrd
 # <--------Localizacion de la carpeta--------->
 dir_archivos = "../Archivos/"
 dir_stations = "../Stations/"
-files_data = ["2015", "2016-2018", "2016-2019","2019","2020"]
+files_data = ["2015","2016","2017", "2018", "2019", "2020"]
 type_data = "SR"
 # <--------------Ciclo para analizar todos los archivos----------->
 for file_data in files_data:
@@ -16,7 +16,7 @@ for file_data in files_data:
     # Lectura del sheet
     data_sheet = data.sheet_by_index(0)
     # Ciclo para leer las columnas
-    for col in range(2, data_sheet.ncols):
+    for col in range(1, data_sheet.ncols):
         # Lectura del nombre de la estacion
         station = str(data_sheet.cell_value(0, col)).lower()
         param = str(data_sheet.cell_value(1, col))
