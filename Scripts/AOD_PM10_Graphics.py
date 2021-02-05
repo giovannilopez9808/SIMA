@@ -48,7 +48,8 @@ dir_arc = "../Archivos/"
 dir_Graphics = "Graphics/"
 file_PM10 = "PM10_2020.csv"
 file_SMARTS = "DataAOD_moderate.txt"
-fig, axs = plt.subplots(1, 2, figsize=(8, 5))
+fig,(ax1,ax2) = plt.subplots(1, 2, figsize=(8, 5))
+axs=[ax1,ax2]
 for station, title, ax in zip(stations, titles, axs):
     # <-----------------------------------Localizacion de los archivos de datos-------------------------->
     dir_station = "../Stations/"+station+"/"
@@ -77,7 +78,7 @@ for station, title, ax in zip(stations, titles, axs):
 # <-----------------------------------Limite de los ejes y ticks----------------------------->
     ax.set_xlim(0, 350)
     ax.set_ylim(0, 1)
-    if ax == axs[0]:
+    if ax == ax1:
         ax.set_yticks(np.arange(0, 1.1, 0.1))
         ax.set_ylabel("SMARTS AOD$_{550nm}$", fontsize="large")
     else:

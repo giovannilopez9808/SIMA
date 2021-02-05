@@ -11,7 +11,7 @@ def f(x, m):
 # <-----------------------------Funcion para obtener el dia consecutivo------------------------------>
 
 
-def yymmdd(date, yy, mm, dd):
+def yymmdd2consecutiveday(date, yy, mm, dd):
     year = int("20"+date[yy[0]:yy[1]])
     month = int(date[mm[0]:mm[1]])
     day = int(date[dd[0]:dd[1]])
@@ -24,7 +24,7 @@ def yymmdd(date, yy, mm, dd):
 def value_conse_day(date_list, yy, mm, dd):
     dates = []
     for date in date_list:
-        dates = np.append(dates, yymmdd(date, yy, mm, dd))
+        dates = np.append(dates, yymmdd2consecutiveday(date, yy, mm, dd))
     return dates
 # ---------------Funcion que obtiene el PM de la medicion SIMA-------------------->
 
@@ -33,7 +33,7 @@ def PM_array(array_date, array_data):
     array_conse_day, array_data_value = [], []
     arrary_conse_day_all, array_data_value_all = [], []
     for PM, date in zip(array_data, array_date):
-        conse_day = yymmdd(date, [2, 4], [5, 7], [8, 10])
+        conse_day = yymmdd2consecutiveday(date, [2, 4], [5, 7], [8, 10])
         hour = int(date[11:13])
         if hour == 13:
             if PM != "":
@@ -43,7 +43,7 @@ def PM_array(array_date, array_data):
 
 
 stations = ["noroeste", "noreste"]
-titles = ["Noroeste", "Noreste"]
+titles = [title.capitalize() for title in stations]
 alturas = [0.52, 0.95]
 dir_arc = "../Archivos/"
 dir_Graphics = "Graphics/"

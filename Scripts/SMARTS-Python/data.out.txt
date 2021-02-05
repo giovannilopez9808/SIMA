@@ -24,7 +24,7 @@
      Pressure (mb) =  953.270   Ground Altitude (km) =   0.5120
      Height above ground (km) =   0.0000
      Relative Humidity (%) = 47.648   Precipitable Water (cm) =  1.1395
-     Ozone (atm-cm) = 0.2550 or 255.0 Dobson Units
+     Ozone (atm-cm) = 0.2700 or 270.0 Dobson Units
    AEROSOLS:  Optical Depth at 500 nm = 0.1225      Optical depth at 550 nm = 0.1100
        Angstrom's Beta = 0.0500       Schuepp's B = 0.0532
      Meteorological Range (km) =   77.2   Visibility (km) =   59.1
@@ -72,21 +72,21 @@ The following spectral variables will be output to file: data.ext.txt
 ====================================================================================================
 
 * SOLAR POSITION (deg.):
-    Zenith Angle (apparent) = 36.542  Azimuth (from North) =  193.30
+    Zenith Angle (apparent) = 15.427  Azimuth (from North) =  105.01
 
       RELATIVE OPTICAL MASSES:
-  - Rayleigh =  1.244
-  - Water Vapor =  1.245
-  - Ozone =  1.243
-  - NO2 =  1.244
-  - Aerosols =  1.245
+  - Rayleigh =  1.037
+  - Water Vapor =  1.037
+  - Ozone =  1.037
+  - NO2 =  1.037
+  - Aerosols =  1.037
 
   Results below are for this specific day:
- Year = 2016   Month = 10  Day = 18   Hour (LST) = 12.967   Day of Year = 292
+ Year = 2017   Month =  5  Day = 24   Hour (LST) = 11.567   Day of Year = 144
    In Universal Time:
-   Day (UT) = 18   Hour (UT) = 18.967
-   Julian Day =  2457680.250  Declination =  -9.964 deg.  Radius vector = 0.99610   Equation of Time (min) =  15.005
-   Local Apparent Time (or Solar Time):  12.533
+   Day (UT) = 24   Hour (UT) = 17.567
+   Julian Day =  2457898.250  Declination =  20.899 deg.  Radius vector = 1.01279   Equation of Time (min) =   3.144
+   Local Apparent Time (or Solar Time):  10.936
 
 
 
@@ -103,7 +103,7 @@ The following spectral variables will be output to file: data.ext.txt
 
      NO        NO2        NO3         N2        N2O         O2         O3         O4        SO2
 
-0.3005E-03 0.2034E-03 0.5000E-04 0.3427E+06 0.2318E+00 0.1580E+06 0.2550E+00 0.1580E+06 0.9620E-04
+0.3005E-03 0.2034E-03 0.5000E-04 0.3427E+06 0.2318E+00 0.1580E+06 0.2700E+00 0.1580E+06 0.9620E-04
 
 
 

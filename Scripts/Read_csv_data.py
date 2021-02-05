@@ -1,6 +1,6 @@
 # <-----------Libreria para leer el archivo xls---------------->
+from pandas import read_csv
 from functions import *
-import xlrd
 
 
 # <--------Localizacion de la carpeta--------->
@@ -12,33 +12,32 @@ type_data = "SR"
 for file_data in files_data:
     print("Analizando archivo "+file_data)
     # Apertura del archivo de excel
-    data = xlrd.open_workbook(dir_archivos+file_data+".xlsx")
-    # Lectura del sheet
-    data_sheet = data.sheet_by_index(0)
+    data = read_csv(dir_archivos+file_data+".csv",low_memory=False)
+    data = data.fillna(0)
+    keys=data.keys()
     # Ciclo para leer las columnas
-    for col in range(1, data_sheet.ncols):
+    for key in keys:
         # Lectura del nombre de la estacion
-        station = str(data_sheet.cell_value(0, col)).lower()
-        param = str(data_sheet.cell_value(1, col))
+        station = (key.split(".")[0]).lower()
+        param = data[key][0]
         if param == type_data:
             dir_station = dir_stations+station+"/"
             # Creacion de la carpeta
             mkdir(name=station, path=dir_stations)
             mkdir(name="Mediciones", path=dir_station)
             # Ciclo para variar los dias de las mediciones
-            n_rows = int((data_sheet.nrows-3)/24)
+            n_rows = (data[key].size-2)//24
             for row in range(n_rows):
                 # Apertura del archivo donde se guardara la medicion de un día
-                date = int(data_sheet.cell_value(row*24+3, 0))
-                date = xlsxdate2date(date)
+                date = consecutiveday2date(row,int(file_data))
                 file = open(dir_station+"Mediciones/" +
                             date+".txt", "w")
                 # Ciclo que varia las horas
                 for hour in range(24):  # Lectura de la medicion
-                    med_loc = row*24+hour+3
-                    data = data_sheet.cell_value(med_loc, col)
-                    data = save_measurement(data)
+                    med_loc = row*24+hour+2
+                    values = data[key][med_loc]
+                    values = save_measurement(values)
                     # Escritura del archivo
-                    file.write(str(hour+0.5)+" "+data+"\n")
+                    file.write(str(hour+0.5)+" "+values+"\n")
                 # Cierre del archivo
                 file.close()
