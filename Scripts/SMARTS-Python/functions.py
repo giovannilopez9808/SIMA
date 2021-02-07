@@ -17,8 +17,8 @@ def int_dates(year, month, day):
 
 
 def writeAOD(file, date, year, month, day, o3, aod, DR):
-    file.write(str(int(date))+" "+str(year)+" "+str(month)+" "+str(day)+" "+str(o3)+" "
-               + str(round(aod, 3))+" "+str(round(DR, 2))+"\n")
+    file.write(str(int(date))+","+str(year)+","+str(month)+","+str(day)+","+str(o3)+","
+               + str(round(aod, 3))+","+str(round(DR, 2))+"\n")
 
 
 def find_max(name, path=""):

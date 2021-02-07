@@ -14,7 +14,7 @@
 
 ****************************************************************
 
-   Reference for this run: AOD=0.11000000000000001                                         
+   Reference for this run: AOD=0.060000000000000005                                        
 
 ----------------------------------------------------------------
 
@@ -24,17 +24,22 @@
      Pressure (mb) =  953.270   Ground Altitude (km) =   0.5120
      Height above ground (km) =   0.0000
      Relative Humidity (%) = 47.648   Precipitable Water (cm) =  1.1395
-     Ozone (atm-cm) = 0.2700 or 270.0 Dobson Units
-   AEROSOLS:  Optical Depth at 500 nm = 0.1225      Optical depth at 550 nm = 0.1100
-       Angstrom's Beta = 0.0500       Schuepp's B = 0.0532
-     Meteorological Range (km) =   77.2   Visibility (km) =   59.1
-     Alpha1 = 0.8907  Alpha2 = 1.2925   Mean Angstrom's Alpha = 1.0916
+     Ozone (atm-cm) = 0.2400 or 240.0 Dobson Units
+   AEROSOLS:  Optical Depth at 500 nm = 0.0668      Optical depth at 550 nm = 0.0600
+       Angstrom's Beta = 0.0254       Schuepp's B = 0.0290
+     Meteorological Range (km) =  174.8   Visibility (km) =  133.9
+     Alpha1 = 0.9311  Alpha2 = 1.3942   Mean Angstrom's Alpha = 1.1627
      Season = SPRING/SUMMER           
 
 * TEMPERATURES:
      Instantaneous at site's altitude = 284.8 K
      Daily average (reference) at site's altitude = 284.8 K
      Stratospheric Ozone and NO2 (effective) = 225.2 K
+
+** WARNING #3*********
+\\ The ozone columnar amount, 0.2400 atm-cm, is outside the most probable limits of 0.2425 and 0.4436
+\\ for this altitude. This may produce inconsistent results.
+\\ Suggestion: double check the values of IALT and AbO3 on input Card 5a.
 
 ** WARNING #13 *********
 \\ Ground reflectance data for CONCRETE                
@@ -72,21 +77,21 @@ The following spectral variables will be output to file: data.ext.txt
 ====================================================================================================
 
 * SOLAR POSITION (deg.):
-    Zenith Angle (apparent) = 15.427  Azimuth (from North) =  105.01
+    Zenith Angle (apparent) = 60.975  Azimuth (from North) =  222.50
 
       RELATIVE OPTICAL MASSES:
-  - Rayleigh =  1.037
-  - Water Vapor =  1.037
-  - Ozone =  1.037
-  - NO2 =  1.037
-  - Aerosols =  1.037
+  - Rayleigh =  2.055
+  - Water Vapor =  2.060
+  - Ozone =  2.047
+  - NO2 =  2.051
+  - Aerosols =  2.060
 
   Results below are for this specific day:
- Year = 2017   Month =  5  Day = 24   Hour (LST) = 11.567   Day of Year = 144
+ Year = 2015   Month =  1  Day = 11   Hour (LST) = 15.450   Day of Year =  11
    In Universal Time:
-   Day (UT) = 24   Hour (UT) = 17.567
-   Julian Day =  2457898.250  Declination =  20.899 deg.  Radius vector = 1.01279   Equation of Time (min) =   3.144
-   Local Apparent Time (or Solar Time):  10.936
+   Day (UT) = 11   Hour (UT) = 21.450
+   Julian Day =  2457034.500  Declination = -21.727 deg.  Radius vector = 0.98346   Equation of Time (min) =  -7.984
+   Local Apparent Time (or Solar Time):  14.634
 
 
 
@@ -103,13 +108,8 @@ The following spectral variables will be output to file: data.ext.txt
 
      NO        NO2        NO3         N2        N2O         O2         O3         O4        SO2
 
-0.3005E-03 0.2034E-03 0.5000E-04 0.3427E+06 0.2318E+00 0.1580E+06 0.2700E+00 0.1580E+06 0.9620E-04
+0.3005E-03 0.2034E-03 0.5000E-04 0.3427E+06 0.2318E+00 0.1580E+06 0.2400E+00 0.1580E+06 0.9620E-04
 
 
 
  Corrected total column abundances for all gases (atm-cm)
- with these realistic conditions: MODERATE POLLUTION      
-
-    BrO       CH2O        CH4      ClNO3         CO        CO2       HNO2       HNO3        NH3
-
-0.2500E-05 0.1000E-02 0.1274E+01 0.1200E-03 0.1167E+00 0.2948E+03 0.3000E-03 0.1561E-02 0.1521E-03

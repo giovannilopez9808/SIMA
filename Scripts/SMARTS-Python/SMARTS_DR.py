@@ -1,10 +1,13 @@
 from SMARTS_algorithm import *
-from numpy import loadtxt
 from functions import *
+import numpy as np
 
 input_parameters = {
     "path stations": "../../Stations/",
-    "stations": ["noroeste", "noreste"],
+    "path results": "Results_SMARTS_DR/",
+    "file results": "Data_found_2015.csv",
+    "file data": "datos.txt",
+    "stations": ["noroeste"],
     "hour initial": 9,
     "hour final": 16,
     "lon initial": 285,
@@ -27,12 +30,13 @@ SMARTS_Model = SMARTS_DR(input_parameters["hour initial"],
 for station in input_parameters["stations"]:
     print("Calculando estacion "+station)
     dir_station = input_parameters["path stations"]+station+"/"
-    mkdir("Results_SMARTS_DR", path=dir_station)
-    dir_results = dir_station+"Results_SMARTS_DR/"
-    AOD_file = open(dir_station+"/DataAOD_found.txt", "w")
+
+    mkdir(input_parameters["path results"], path=dir_station)
+    dir_results = dir_station+input_parameters["path results"]
+    AOD_file = open(dir_station+input_parameters["file results"], "w")
     AOD_file.write("Date,year,month,day,ozone,AOD,RD\n")
-    dates, o3_list, years, months, days = loadtxt(
-        dir_station+"/datos.txt", unpack=True)
+    dates, o3_list, years, months, days = np.loadtxt(
+        dir_station+input_parameters["file data"], unpack=True)
     for date, o3, year, month, day in zip(dates, o3_list, years, months, days):
         date = str(int(date))
         year, month, day = int_dates(year, month, day)
