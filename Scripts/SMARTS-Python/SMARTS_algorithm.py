@@ -113,17 +113,33 @@ class SMARTS:
 
 class SMARTS_DR(SMARTS):
 
-    def __init__(self, hour_i, hour_f, lon_i, lon_f, aod_ini, aod_delta, aod_lim, RD_lim):
+    def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta):
         SMARTS.__init__(self, hour_i, hour_f, lon_i, lon_f)
-        self.aod_i = aod_ini
-        self.delta_aod = aod_delta
-        self.aod_lim = aod_lim
-        self.max_aod = ceil(aod_lim/aod_ini)
         self.RD_lim = RD_lim
+        self.RD_delta = RD_delta
+
+    def initialize_aod(self, aod_i, aod_lim):
+        self.aod_i = aod_i
+        self.aod_lim = aod_lim
 
     def RD_decision(self, model, measurement):
         var = False
-        DR = 100*(model-measurement)/measurement
-        if abs(DR) < self.RD_lim or DR < 0:
+        RD = round(100*(model-measurement)/measurement,3)
+        if self.RD_search(RD):
             var = True
-        return var, DR
+        return var, RD
+
+    def aod_binary_search(self, aod, RD):
+        if self.RD_search(RD):
+            self.aod_i = aod
+            aod = round((aod+self.aod_lim)/2, 3)
+        elif RD > self.RD_lim+1:
+            self.aod_i = aod
+            aod = round((aod+self.aod_lim)/2, 3)
+        else:
+            self.aod_lim = aod
+            aod = round((aod+self.aod_i)/2, 3)
+        return aod
+
+    def RD_search(self, RD):
+        return self.RD_lim-self.RD_delta < RD < self.RD_lim+self.RD_delta
