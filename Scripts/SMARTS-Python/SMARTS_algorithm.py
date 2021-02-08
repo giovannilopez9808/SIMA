@@ -4,8 +4,22 @@ import os
 
 
 class SMARTS:
+    """
+    Clase que contiene las funciones que interactuaran con el modelo SMARTS
+    """
 
     def __init__(self, hour_i, hour_f, lon_i, lon_f):
+        """
+        Valores con los cuales se inicializa el modelo SMARTS
+        Descripción de las variables
+        hour_i       ----> Hora inicial para correr el modelo
+        hour_f       ----> Hora final para correr el modelo
+        lon_ i       ----> Longitud de onda inicial para el modelo
+        lon_ f       ----> Longitud de onda final para el modelo
+        delta_lon    ----> Número de longitudes de onda que se saltara
+                           el resultado del modelo
+        total_minute ----> Total minutos que correra el modelo
+        """
         self.hour_i = hour_i
         self.hour_f = hour_f
         self.lon_i = lon_i
@@ -15,28 +29,64 @@ class SMARTS:
         self.total_minute = int((hour_f-hour_i)*60)
 
     def run_SMARTS(self, day, month, year, o3, aod, name, path=""):
+        """
+        Función que ejecuta el modelo SMARTS
+        Describción de las variables
+        day   ----> Dia del año
+        month ----> Mes del año númerico
+        year  ----> Año del dia por analizar
+        o3    ----> ozono del dia
+        aod   ----> AOD del dia
+        name  ----> nombre del archivo resultante
+        path  ----> direccion para guardar los archivos
+        """
         file_date = open(path+name+".txt", "w")
         for min in range(self.total_minute):
+            # Hora y minutos a hora con decimal
             minutes = str(round(self.hour_i+min/60, 4))
+            # Escribir el archivo de input para el modelo SMARTS
             self.write_data_input_SMARTS(day, month, year,
                                          minutes, o3, aod)
             os.system("./smarts.out")
+            # Resultado de la integral a partir de los resultaos del modelo SMARTS
             integral = self.read_results_SMARTS()
+            # Escritura de los resultados
             file_date.write(minutes+" "+integral+"\n")
         file_date.close()
 
     def read_results_SMARTS(self, name_result="data.ext.txt"):
+        """
+        Funcion que realiza la lectura de los resultados del SMARTS
+        y realiza la integral del especto a cada minuto
+        Describción de variables
+        wavelength ----> longitudes de onda de los resultados del modelo SMARTS
+        irra       ----> Valor del especto de los resultados del modelo SMARTS
+        integral   ----> Valor que irradiancia solar
+        """
+        # Lectura de los resultados del modelo SMARTS
         wavelength, irra = np.loadtxt(
             name_result, skiprows=self.delta_lon, unpack=True)
         integral = irra[0]
+        # Calculo de la irradiancia solar a partir de los resultados del modelo SMARTS
         size = np.size(irra)
         for i in range(1, size):
             integral += irra[i]*(wavelength[i]-wavelength[i-1])
+        # Eliminación de los archivos
         os.system("rm data*")
+        # Formato de la integral
         integral = str(round(integral))
         return integral
 
     def write_data_input_SMARTS(self, day, month, year, hour, ozono, aod):
+        """
+        Formato del input del modelo SMARTS
+        day   ----> Dia del año
+        month ----> Mes del año númerico
+        year  ----> Año del dia por analizar
+        hour  ----> Hora del calculo de la irradiancia
+        ozono ----> ozono del dia
+        aod   ----> AOD del dia
+        """
         file = open("data.inp.txt", "w")
         file.write(" 'AOD="+str(aod)+"'\n")
         # Card 2
@@ -112,17 +162,40 @@ class SMARTS:
 
 
 class SMARTS_DR(SMARTS):
+    """
+    Clase heredada de SMARTS, uso especifico para la versión del modelo
+    que calcula el AOD a partir de las mediciones y una RD dada
+    """
 
     def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta):
+                """
+        Valores con los cuales se inicializa el modelo SMARTS
+        Descripción de las variables
+        hour_i       ----> Hora inicial para correr el modelo
+        hour_f       ----> Hora final para correr el modelo
+        lon_ i       ----> Longitud de onda inicial para el modelo
+        lon_ f       ----> Longitud de onda final para el modelo
+        delta_lon    ----> Número de longitudes de onda que se saltara
+                           el resultado del modelo
+        total_minute ----> Total minutos que correra el modelo
+        RD_lim       ----> RD al cual se quiere llegar
+        RD_delta     ----> Mas menos del RD
+        """
         SMARTS.__init__(self, hour_i, hour_f, lon_i, lon_f)
         self.RD_lim = RD_lim
         self.RD_delta = RD_delta
 
     def initialize_aod(self, aod_i, aod_lim):
+        """
+        Funcion que inicializa el limite inferior y superior del AOD
+        """
         self.aod_i = aod_i
         self.aod_lim = aod_lim
 
     def RD_decision(self, model, measurement):
+        """
+        Funcion que calcula la RD entre el modelo y la medicion
+        """
         var = False
         RD = round(100*(model-measurement)/measurement,3)
         if self.RD_search(RD):
@@ -130,10 +203,14 @@ class SMARTS_DR(SMARTS):
         return var, RD
 
     def aod_binary_search(self, aod, RD):
+        """
+        Función que calcula el AOD que se introducira en el modelo SMARTS
+        este emplea una busqueda binaria para que sea más eficiente
+        """
         if self.RD_search(RD):
             self.aod_i = aod
             aod = round((aod+self.aod_lim)/2, 3)
-        elif RD > self.RD_lim+1:
+        elif RD > self.RD_lim+self.RD_delta:
             self.aod_i = aod
             aod = round((aod+self.aod_lim)/2, 3)
         else:
