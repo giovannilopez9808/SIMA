@@ -168,7 +168,7 @@ class SMARTS_DR(SMARTS):
     """
 
     def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta):
-                """
+        """
         Valores con los cuales se inicializa el modelo SMARTS
         Descripción de las variables
         hour_i       ----> Hora inicial para correr el modelo
