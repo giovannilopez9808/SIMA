@@ -8,7 +8,7 @@ class SMARTS:
     Clase que contiene las funciones que interactuaran con el modelo SMARTS
     """
 
-    def __init__(self, hour_i, hour_f, lon_i, lon_f):
+    def __init__(self, hour_i, hour_f, lon_i, lon_f,igas):
         """
         Valores con los cuales se inicializa el modelo SMARTS
         Descripción de las variables
@@ -16,6 +16,7 @@ class SMARTS:
         hour_f       ----> Hora final para correr el modelo
         lon_ i       ----> Longitud de onda inicial para el modelo
         lon_ f       ----> Longitud de onda final para el modelo
+        igas         ----> Card 6a del Modelo SMARTS
         delta_lon    ----> Número de longitudes de onda que se saltara
                            el resultado del modelo
         total_minute ----> Total minutos que correra el modelo
@@ -24,6 +25,7 @@ class SMARTS:
         self.hour_f = hour_f
         self.lon_i = lon_i
         self.lon_f = lon_f
+        self.igas=str(igas)
         self.delta_lon = lon_i-280+1
         self.delta_hour = int(hour_f-hour_i)
         self.total_minute = int((hour_f-hour_i)*60)
@@ -86,6 +88,7 @@ class SMARTS:
         hour  ----> Hora del calculo de la irradiancia
         ozono ----> ozono del dia
         aod   ----> AOD del dia
+        igas  ----> Card 6a
         """
         file = open("data.inp.txt", "w")
         file.write(" 'AOD="+str(aod)+"'\n")
@@ -110,7 +113,9 @@ class SMARTS:
         # Card 6
         file.write(" 0\n")
         # Card 6a
-        file.write(" 3\n")
+        # Pristine ----> 1 
+        # Moderate ----> 3
+        file.write(" "+self.igas+"\n")
         # Card 7
         # Co2
         file.write(" 390\n")
@@ -167,7 +172,7 @@ class SMARTS_DR(SMARTS):
     que calcula el AOD a partir de las mediciones y una RD dada
     """
 
-    def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta):
+    def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta,igas):
         """
         Valores con los cuales se inicializa el modelo SMARTS
         Descripción de las variables
@@ -181,7 +186,7 @@ class SMARTS_DR(SMARTS):
         RD_lim       ----> RD al cual se quiere llegar
         RD_delta     ----> Mas menos del RD
         """
-        SMARTS.__init__(self, hour_i, hour_f, lon_i, lon_f)
+        SMARTS.__init__(self, hour_i, hour_f, lon_i, lon_f,igas)
         self.RD_lim = RD_lim
         self.RD_delta = RD_delta
 

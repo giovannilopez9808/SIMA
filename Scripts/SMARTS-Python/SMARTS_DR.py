@@ -11,7 +11,7 @@ input_parameters = {
     "path results": "Results_SMARTS_DR/",
     "file results": "Data_found.csv",
     "file data": "datos.txt",
-    "stations": ["noroeste"],
+    "stations": ["noreste"],
     "hour initial": 9,
     "hour final": 16,
     "lon initial": 285,
@@ -20,6 +20,7 @@ input_parameters = {
     "AOD limite": 1,
     "RD limite": 10,
     "RD delta": 1,
+    "Igas": 3,
 }
 # Inicialización del objeto que contiene a la clase SMARTS con sus parametros de entrada
 SMARTS_Model = SMARTS_DR(input_parameters["hour initial"],
@@ -27,7 +28,8 @@ SMARTS_Model = SMARTS_DR(input_parameters["hour initial"],
                          input_parameters["lon initial"],
                          input_parameters["lon final"],
                          input_parameters["RD limite"],
-                         input_parameters["RD delta"])
+                         input_parameters["RD delta"],
+                         input_parameters["Igas"])
 
 for station in input_parameters["stations"]:
     print("Calculando estacion "+station)
