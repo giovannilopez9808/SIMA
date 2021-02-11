@@ -21,5 +21,5 @@ for file in files:
             datas.append(count)
     datas=np.round((datas/total)*100,2)
     for data,name in zip(datas,names):
-        if "SUROESTE2" == name[0]:
+        if "SUR" == name[0]:
             print(name[0],"\t",name[1],"\t\t",data)
