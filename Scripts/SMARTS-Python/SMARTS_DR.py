@@ -8,8 +8,8 @@ para el uso de las estaciones noroeste y noreste del SIMA en el periodo
 """
 input_parameters = {
     "path stations": "../../Stations/",
-    "path results": "Results_SMARTS_DR/",
-    "file results": "Data_found.csv",
+    "path results": "Results_SMARTS_DR_1/",
+    "file results": "Data_found_prismite.csv",
     "file data": "datos.txt",
     "stations": ["noreste"],
     "hour initial": 9,
@@ -20,7 +20,7 @@ input_parameters = {
     "AOD limite": 1,
     "RD limite": 10,
     "RD delta": 1,
-    "Igas": 3,
+    "Igas": 1,
 }
 # Inicialización del objeto que contiene a la clase SMARTS con sus parametros de entrada
 SMARTS_Model = SMARTS_DR(input_parameters["hour initial"],
