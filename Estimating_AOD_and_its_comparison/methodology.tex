@@ -5,19 +5,32 @@ started operating in 2017. Data includes hourly measures (CHECAR) of PM\textsubs
 solar irradiance, humidity, wind and other pollutants. The measuring instruments that are located at SIMA’s
 meteorological station are required to adapt to the mexican guidelines for obtaining and communicating the
 air quality index and health risks that can be found as NOM-172-SEMARNAT-2019. De las estaciones San Nicolas
-y San Bernabé se realizó un filtro de días de cielo despejado haciendo uso de las mediciones de irradiancia solar.
+y San Bernabé se realizó un filtro de días de cielo despejado haciendo uso de las mediciones de irradiancia
+solar en el rango 285nm a 2800nm. En la tabla \ref{table:measurements_SIMA} se muestra el porcentaje de mediciones anuales en cada estación de la red 
+del SIMA, se relleno en rojo las estaciones que tienen un porcentaje menor a 75\%, ya que con esto se considera que
+las mediciones no son representativas \cite{molina2019}.
 \input{table_distribution.tex}
 \subsection{Satellite data}
 \subsubsection{OMI-NASA Data}
+Descargamos los datos de las columnas de Ozono (O\textsubscript{3}) en Dobson Units del satélite OMI de la NASA 
+(\url{https://aura.gsfc.nasa.gov/omi.html}). Los datos fueron tomados diariamente con una resolución espacial de 0.25$^{\circ}$.
+Tomamos el producto OMI/Aura Ozone DOAS Total Column L3 1 day V3 (OMDOAO3e), con un código escrito en \textit{Python} obtuvimos
+los promedios mensuales para cada año para así dar un valor a los días en que no se tuvo una medición en la zona metropolitana de Monterrey.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/OzonoDaily.png}
+    \caption{}
+    \label{fig:ozono_daily}
+\end{figure}
 \subsubsection{MODIS-NASA Data}
-We automated the download of data of Aerosol Optical Depth at 550 nm (AOD\textsubscript{550nm}) from NASA’s
+We downloaded the data of Aerosol Optical Depth at 550 nm (AOD\textsubscript{550nm}) from NASA’s
 satellite MODIS (\url{https://ladsweb.modaps.eosdis.nasa.gov/}). The data is taken daily and with a spatial
 resolution of 1 Deg. We used the product MODIS-Aqua Aerosol Cloud Water Vapor Ozone Daily L3 Global 1Deg CMG
 (MYD08\_D3) and looked at two data sets: Deep Blue Combined Mean and Land and Ocean Mean. 
 \subsection{SMARTS Model}
-El \textit{Simple Model of the Atmosphere Radiactive Transfer os Sunshine} (SMARTS) es un modelo espectral
+El \textit{Simple Model of the Atmosphere Radiactive Transfer of Sunshine} (SMARTS) es un modelo espectral
 escrito en el lenguaje \textit{Fortran}, el cual realiza la predicción de los rayos de luz directos, difusos y la 
-irradiancia global sobre cualquier geometría en la superficie de la Tierra. Se creo un código en \textit{Python} que 
+irradiancia global sobre cualquier geometría en la superficie de la Tierra. Se creó un código en \textit{Python} que 
 realizá la lectura de los parámetros de la tabla (INSERTAR TABLA DE PARAMETROS) y va escribiendo el archivo de entrada 
 con el formato del modelo SMARTS. 
 Only solar radiation measurements under clear skies were selected. The source code of the SMARTS model was
