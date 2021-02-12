@@ -8,7 +8,7 @@ class SMARTS:
     Clase que contiene las funciones que interactuaran con el modelo SMARTS
     """
 
-    def __init__(self, hour_i, hour_f, lon_i, lon_f,igas):
+    def __init__(self, hour_i, hour_f, lon_i, lon_f, igas):
         """
         Valores con los cuales se inicializa el modelo SMARTS
         Descripción de las variables
@@ -25,7 +25,7 @@ class SMARTS:
         self.hour_f = hour_f
         self.lon_i = lon_i
         self.lon_f = lon_f
-        self.igas=str(igas)
+        self.igas = str(igas)
         self.delta_lon = lon_i-280+1
         self.delta_hour = int(hour_f-hour_i)
         self.total_minute = int((hour_f-hour_i)*60)
@@ -113,7 +113,7 @@ class SMARTS:
         # Card 6
         file.write(" 0\n")
         # Card 6a
-        # Pristine ----> 1 
+        # Pristine ----> 1
         # Moderate ----> 3
         file.write(" "+self.igas+"\n")
         # Card 7
@@ -172,7 +172,7 @@ class SMARTS_DR(SMARTS):
     que calcula el AOD a partir de las mediciones y una RD dada
     """
 
-    def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta,igas):
+    def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta, igas):
         """
         Valores con los cuales se inicializa el modelo SMARTS
         Descripción de las variables
@@ -186,7 +186,7 @@ class SMARTS_DR(SMARTS):
         RD_lim       ----> RD al cual se quiere llegar
         RD_delta     ----> Mas menos del RD
         """
-        SMARTS.__init__(self, hour_i, hour_f, lon_i, lon_f,igas)
+        SMARTS.__init__(self, hour_i, hour_f, lon_i, lon_f, igas)
         self.RD_lim = RD_lim
         self.RD_delta = RD_delta
 
@@ -202,7 +202,7 @@ class SMARTS_DR(SMARTS):
         Funcion que calcula la RD entre el modelo y la medicion
         """
         var = False
-        RD = round(100*(model-measurement)/measurement,3)
+        RD = round(100*(model-measurement)/measurement, 3)
         if self.RD_search(RD):
             var = True
         return var, RD
@@ -225,3 +225,99 @@ class SMARTS_DR(SMARTS):
 
     def RD_search(self, RD):
         return self.RD_lim-self.RD_delta < RD < self.RD_lim+self.RD_delta
+
+
+class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
+    def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta, igas):
+        SMARTS_DR.__init__(self, hour_i, hour_f, lon_i,
+                           lon_f, RD_lim, RD_delta, igas)
+    
+    def write_data_input_SMARTS(self, day, month, year, hour, ozono, aod):
+        """
+        Formato del input del modelo SMARTS
+        day   ----> Dia del año
+        month ----> Mes del año númerico
+        year  ----> Año del dia por analizar
+        hour  ----> Hora del calculo de la irradiancia
+        ozono ----> ozono del dia
+        aod   ----> AOD del dia
+        igas  ----> Card 6a
+        """
+        file = open("data.inp.txt", "w")
+        file.write(" 'AOD="+str(aod)+"'\n")
+        # Card 2
+        file.write(" 2\n")
+        # Card 2a
+        # lat,altit,height
+        file.write(" 25.750 0.512 0\n")
+        # Card 3
+        # IATMOS
+        file.write(" 1\n")
+        # Card 3a
+        file.write(" 'USSA'\n")
+        # Card 4
+        # H2O
+        file.write(" 1\n")
+        # Card 4a
+        file.write(" 0\n")
+        # Card 5
+        # Ozono
+        file.write(" 1 "+str(round(ozono/1000, 4))+"\n")
+        # Card 6
+        file.write(" 0\n")
+        # Card 6a
+        # Pristine ----> 1
+        # Moderate ----> 3
+        file.write(" "+self.igas+"\n")
+        # Card 7
+        # Co2
+        file.write(" 390\n")
+        # Card 7a
+        file.write(" 0\n")
+        # Card 8
+        file.write(" 'USER'\n")
+        # Card 8a 
+        # SSAAER Palancar
+        # Asymmetry Promedio de 550 nm y humedad ente 50-70%
+        file.write(" 1 1 0.8 0.68\n")
+        # Card 9
+        file.write(" 5\n")
+        # Card 9a
+        file.write(" "+str(aod)+" 2\n")
+        # Card 10
+        file.write(" 18\n")
+        # Card 10b
+        file.write(" 1\n")
+        # Card 10d
+        # IALBDG, TILT,WAZIM
+        file.write(" 51 37. 180.\n")
+        # Card 11---
+        # Wave min, Wave max, suncor, solar cons
+        file.write(" "+str(self.lon_i)+" "+str(self.lon_f)+" 1 1366.1\n")
+        # ------Card 12---
+        file.write(" 2\n")
+        # Card 12a
+        # Wave min, Wave max, inter wave
+        file.write(" "+str(self.lon_i)+" "+str(self.lon_f)+" 1\n")
+        # Card 12b
+        file.write(" 1\n")
+        # Card 12c
+        file.write(" 4\n")
+        # Card 13
+        file.write(" 1\n")
+        # Card 13a
+        #  slope, apert, limit
+        file.write(" 0 2.9 0\n")
+        # Card 14
+        file.write(" 0\n")
+        # Card 15
+        file.write(" 0\n")
+        # Card 16
+        file.write(" 1\n")
+        # Card 17
+        file.write(" 3\n")
+        # Card 17a
+        # Year, month, day, hour, latit, longit, zone
+        file.write(" "+str(year)+" "+str(month)+" "+str(day) +
+                   " "+hour+" 25.75 -100.25 -6\n")
+        file.close()
