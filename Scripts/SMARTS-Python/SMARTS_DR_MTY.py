@@ -11,7 +11,7 @@ input_parameters = {
     "path results": "Results_SMARTS_DR_SSAAER/",
     "file results": "Data_found_SSAAER_prismite.csv",
     "file data": "datos.txt",
-    "stations": ["noroeste"],
+    "stations": ["noreste"],
     "hour initial": 9,
     "hour final": 16,
     "lon initial": 285,
@@ -64,7 +64,7 @@ for station in input_parameters["stations"]:
         iter = 0
         while not(var):
             # Inicio del calculo del AOD
-            if iter < 40:
+            if iter < 10:
                 # Ejecucion del modelo SMARTS con los parametros de cada dia
                 SMARTS_Model.run_SMARTS(day, month, year, o3, aod,
                                         date, path=dir_results)
@@ -94,5 +94,5 @@ for station in input_parameters["stations"]:
                         var = True
                     iter += 1
             else:
-                var = False
+                var = True
     AOD_file.close()
