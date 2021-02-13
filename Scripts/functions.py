@@ -14,7 +14,11 @@ def format_number(date):
     date = str(date)
     date = "0"*(2-len(date))+date
     return date
-
+    
+def format_date(date):
+    date = str(date)
+    date = "0"*(2-len(date))+date
+    return date
 
 def format_date(date):
     day = format_number(date.day)
@@ -53,3 +57,11 @@ def save_measurement(data):
     # # Cambios de medicion a W/m^2
     # data = data*1000
     return str(data)
+
+def date2consecutiveday(year, month, day):
+    return (datetime.date(year, month, day)-datetime.date(year, 1, 1)).days
+
+def obtain_month(year, year_i, day):
+    month = (datetime.date(year+year_i, 1, 1) +
+             datetime.timedelta(days=day)).month-1
+    return month
