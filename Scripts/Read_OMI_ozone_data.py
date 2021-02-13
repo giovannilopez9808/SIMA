@@ -8,7 +8,7 @@ input = {
     "year initial": 2005,
     "year final": 2020,
 }
-data = OMI_data(
+data = OMI_data_ozone(
     input["year initial"],
     input["year final"],
     input["lon"],

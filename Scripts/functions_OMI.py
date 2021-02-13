@@ -23,20 +23,6 @@ class OMI_data:
         pos = ceil((pos_i-pos_loc)/self.div)
         return pos
 
-    def read_files_he5(self,files):
-        name_year = 0
-        # Archivo resultante
-        for file in files:
-            dir_file = input["path data"]+file
-            year, month, day = obtain_date_from_name(file)
-            if year != name_year:
-                print("Analizando año "+str(year))
-            data_HD5 = h5py.File(dir_file, "r")
-            o3_values = list(
-                data_HD5["/HDFEOS/GRIDS/OMI Column Amount O3/Data Fields/ColumnAmountO3"])
-            self.obtain_data_from_he5(o3_values, year, month, day)
-            data_HD5.close()
-
     def obtain_data_from_he5(self, o3_values, year, month, day):
         data, n = 0, 0
         # Calculo de los promedios con los vecinos
@@ -49,11 +35,11 @@ class OMI_data:
                     n += 1
         # Asignacion del valor si es que se realizaron mediciones
         if n != 0:
-            o3 = ceil(data/n)
+            o3 = round(data/n,3)
             date = date2consecutiveday(year, month, day)
             if date > 364:
                 date = 364
-        self.data[date, year-self.year_i] = o3
+            self.data[date, year-self.year_i] = o3
 
     def calculate_mensual_mean(self):
         # Calculo del promedio mensual en el periodo
@@ -62,27 +48,28 @@ class OMI_data:
                 o3 = self.data[day, year]
                 # Si hubo mediciones, se contabiliza
                 if o3 > 0:
-                    month = obtain_month(year, year_i, day)
+                    month = obtain_month(year, self.year_i, day)
                     # Registro de los dato
                     self.month_mean[month, 0] += o3
                     self.month_mean[month, 1] += 1
         print("Calculando promedios")
         for month in range(12):
             if self.month_mean[month, 1] != 0:
-                self.month_mean[month, 0] = ceil(
-                    self.month_mean[month, 0]/self.month_mean[month, 1])
+                self.month_mean[month, 0] = round(
+                    self.month_mean[month, 0]/self.month_mean[month, 1],3)
 
     def fill_empty_data(self):
         # Asignacion a los dias en que no hubo medicion
         for year in range(self.delta_year):
             for day in range(365):
                 if self.data[day, year] == 0:
-                    month = obtain_month(year, year_i, day)
+                    month = obtain_month(year, self.year_i, day)
                     self.data[day, year] = self.month_mean[month, 0]
 
     def write_data(self, name, path=""):
-        print("Escribiendo archivo final OzonoMTY.txt")
+        print("Escribiendo archivo final")
         file = open(path+name+".csv", "w")
+        file.write(",")
         years = np.array(np.arange(self.year_i, self.year_f+1), dtype=str)
         for year in years:
             file.write(year+",")
@@ -96,17 +83,62 @@ class OMI_data:
         file.close()
 
 
+class OMI_data_ozone(OMI_data):
+    def __init__(self, year_i, year_f, lon, lat):
+        super().__init__(year_i, year_f, lon, lat)
+
+    def read_files_he5(self, files, path):
+        name_year = 0
+        # Archivo resultante
+        for file in files:
+            dir_file = path+file
+            year, month, day = self.obtain_date_from_name(file)
+            if year != name_year:
+                print("Analizando año "+str(year))
+            data_HD5 = h5py.File(dir_file, "r")
+            o3_values = list(
+                data_HD5["/HDFEOS/GRIDS/OMI Column Amount O3/Data Fields/ColumnAmountO3"])
+            self.obtain_data_from_he5(o3_values, year, month, day)
+            data_HD5.close()
+
+    def obtain_date_from_name(self, name):
+        year = int(name[19:23])
+        month = int(name[24:26])
+        day = int(name[26:28])
+        return year, month, day
+
+
+class OMI_data_AOD(OMI_data):
+    def __init__(self, year_i, year_f, lon, lat, wave):
+        super().__init__(year_i, year_f, lon, lat)
+        self.wave = wave
+
+    def read_files_he5(self, files, path):
+        name_year = 0
+        # Archivo resultante
+        for file in files:
+            dir_file = path+file
+            year, month, day = self.obtain_date_from_name(file)
+            if year != name_year:
+                print("Analizando año "+str(year))
+                name_year = year
+            data_HD5 = h5py.File(dir_file, "r")
+            o3_values = list(
+                data_HD5["/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/AerosolOpticalThicknessMW"][self.wave]/1000)
+            self.obtain_data_from_he5(o3_values, year, month, day)
+            data_HD5.close()
+
+    def obtain_date_from_name(self, name):
+        year = int(name[20:24])
+        month = int(name[25:27])
+        day = int(name[27:29])
+        return year, month, day
+
+
 def obtain_month(year, year_i, day):
     month = (datetime.date(year+year_i, 1, 1) +
              datetime.timedelta(days=day)).month-1
     return month
-
-
-def obtain_date_from_name(name):
-    year = int(name[19:23])
-    month = int(name[24:26])
-    day = int(name[26:28])
-    return year, month, day
 
 
 def date2consecutiveday(year, month, day):
