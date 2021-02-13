@@ -1,5 +1,7 @@
 __pycache__/
 Archivos/OMI_AOD_025/
+Archivos/OMI_AOD_1/
+Archivos/OMI_Ozone/
 *.aux
 *.bbl
 *.blg
