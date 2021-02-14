@@ -20,7 +20,7 @@ def plot_grids(days, year_i, year_f):
 
 print("Leyendo datos de Ozono")
 # <----------------Lectura de los archivos------------------>
-o3 = np.transpose(np.loadtxt("../Archivos/OzonoMty.csv",
+o3 = np.transpose(np.loadtxt("../Archivos/Ozono_OMI.csv",
                              skiprows=1, usecols=np.arange(1, 17), delimiter=","))
 # <-------------Datos para las graficas y calculos--------------->
 Meses = ["January", "February", "March", "April", "May", "June",
@@ -45,4 +45,4 @@ cbar = plt.colorbar()
 cbar.ax.set_ylabel("Total Ozone Column (DU)", rotation=-
                    90, va="bottom", fontsize="large")
 # <---------Guardado de la grafica---------->
-plt.savefig("../Graphics/OzonoDaily.png", dpi=200)
+plt.savefig("../Graphics/Ozono_Daily.png", dpi=200)
