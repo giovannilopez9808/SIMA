@@ -8,10 +8,10 @@ para el uso de las estaciones noroeste y noreste del SIMA en el periodo
 """
 input_parameters = {
     "path stations": "../../Stations/",
-    "path results": "Results_SMARTS_DR_1/",
-    "file results": "Data_found_prismite.csv",
+    "path results": "Results_SMARTS_DR_pristine/",
+    "file results": "Data_found_pristine.csv",
     "file data": "datos.txt",
-    "stations": ["noroeste"],
+    "stations": ["noroeste","noreste"],
     "hour initial": 9,
     "hour final": 16,
     "lon initial": 285,
