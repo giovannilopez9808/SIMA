@@ -11,7 +11,7 @@ input_parameters = {
     "path results": "Results_SMARTS_DR_SSAAER_moderate/",
     "file results": "Data_found_SSAAER_moderate.csv",
     "file data": "datos.txt",
-    "stations": ["noreste","noreste"],
+    "stations": ["noreste","noroeste"],
     "hour initial": 9,
     "hour final": 16,
     "lon initial": 285,
