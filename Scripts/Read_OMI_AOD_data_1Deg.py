@@ -15,8 +15,8 @@ input = {
 }
 AOD_list=["354","388","500"]
 total_days = (input["year final"]-input["year initial"]+1)*365+2
-dates = [consecutiveday2date(day, input["year initial"]) for day in range(
-    total_days) if not "0229" in consecutiveday2date(day, input["year initial"])]
+dates = [consecutiveday2yymmdd(day, input["year initial"]) for day in range(
+    total_days) if not "0229" in consecutiveday2yymmdd(day, input["year initial"])]
 data_AOD = pd.DataFrame(index=dates, columns=[AOD+"nm" for AOD in AOD_list])
 for AOD in AOD_list:
     print("Analizando longitud de onda "+AOD)

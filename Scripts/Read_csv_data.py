@@ -29,7 +29,7 @@ for file_data in files_data:
             n_rows = (data[key].size-2)//24
             for row in range(n_rows):
                 # Apertura del archivo donde se guardara la medicion de un día
-                date = consecutiveday2date(row,int(file_data))
+                date = consecutiveday2yymmdd(row,int(file_data))
                 file = open(dir_station+"Mediciones/" +
                             date+".txt", "w")
                 # Ciclo que varia las horas
