@@ -14,7 +14,7 @@
 
 ****************************************************************
 
-   Reference for this run: AOD=1.22                                                        
+   Reference for this run: AOD=0.383                                                       
 
 ----------------------------------------------------------------
 
@@ -24,10 +24,10 @@
      Pressure (mb) =  953.270   Ground Altitude (km) =   0.5120
      Height above ground (km) =   0.0000
      Relative Humidity (%) = 47.648   Precipitable Water (cm) =  1.1395
-     Ozone (atm-cm) = 0.2486 or 248.6 Dobson Units
-   AEROSOLS:  Optical Depth at 500 nm = 1.3420      Optical depth at 550 nm = 1.2200
-       Angstrom's Beta = 0.6710       Schuepp's B = 0.5828
-     Meteorological Range (km) =    4.8   Visibility (km) =    3.7
+     Ozone (atm-cm) = 0.2579 or 257.9 Dobson Units
+   AEROSOLS:  Optical Depth at 500 nm = 0.4213      Optical depth at 550 nm = 0.3830
+       Angstrom's Beta = 0.2106       Schuepp's B = 0.1830
+     Meteorological Range (km) =   19.2   Visibility (km) =   14.7
      Alpha1 = 1.0000  Alpha2 = 1.0000   Mean Angstrom's Alpha = 1.0000
      Season = SPRING/SUMMER           
 
@@ -72,21 +72,21 @@ The following spectral variables will be output to file: data.ext.txt
 ====================================================================================================
 
 * SOLAR POSITION (deg.):
-    Zenith Angle (apparent) = 48.501  Azimuth (from North) =   89.41
+    Zenith Angle (apparent) = 44.967  Azimuth (from North) =  221.10
 
       RELATIVE OPTICAL MASSES:
-  - Rayleigh =  1.507
-  - Water Vapor =  1.509
-  - Ozone =  1.506
-  - NO2 =  1.507
-  - Aerosols =  1.509
+  - Rayleigh =  1.412
+  - Water Vapor =  1.413
+  - Ozone =  1.411
+  - NO2 =  1.412
+  - Aerosols =  1.413
 
   Results below are for this specific day:
- Year = 2015   Month =  5  Day =  8   Hour (LST) =  9.183   Day of Year = 128
+ Year = 2017   Month =  2  Day = 22   Hour (LST) = 14.783   Day of Year =  53
    In Universal Time:
-   Day (UT) =  8   Hour (UT) = 15.183
-   Julian Day =  2457151.250  Declination =  17.144 deg.  Radius vector = 1.00931   Equation of Time (min) =   3.529
-   Local Apparent Time (or Solar Time):   8.559
+   Day (UT) = 22   Hour (UT) = 20.783
+   Julian Day =  2457807.250  Declination =  -9.930 deg.  Radius vector = 0.98933   Equation of Time (min) = -13.382
+   Local Apparent Time (or Solar Time):  13.877
 
 
 
@@ -103,7 +103,7 @@ The following spectral variables will be output to file: data.ext.txt
 
      NO        NO2        NO3         N2        N2O         O2         O3         O4        SO2
 
-0.3005E-03 0.2034E-03 0.5000E-04 0.3427E+06 0.2318E+00 0.1580E+06 0.2486E+00 0.1580E+06 0.9620E-04
+0.3005E-03 0.2034E-03 0.5000E-04 0.3427E+06 0.2318E+00 0.1580E+06 0.2579E+00 0.1580E+06 0.9620E-04
 
 
 
