@@ -38,6 +38,11 @@ def xlsxdate2date(xldate):
 
 def consecutiveday2date(conse_day, year):
     date = datetime.date(year, 1, 1)+datetime.timedelta(days=conse_day)
+    return str(date)
+
+
+def consecutiveday2yymmdd(conse_day, year):
+    date = consecutiveday2date(conse_day, year)
     date = format_date(date)
     return date
 
