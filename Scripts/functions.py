@@ -14,11 +14,13 @@ def format_number(date):
     date = str(date)
     date = "0"*(2-len(date))+date
     return date
-    
+
+
 def format_date(date):
     date = str(date)
     date = "0"*(2-len(date))+date
     return date
+
 
 def format_date(date):
     day = format_number(date.day)
@@ -41,10 +43,10 @@ def consecutiveday2date(conse_day, year):
 
 
 def save_measurement(data):
-    if float(data)<0:
-        data=0
+    if float(data) < 0:
+        data = 0
     else:
-        data=float(data)*1000
+        data = float(data)*1000
     # if data == "":
     #     data = 0
     # if math.isnan(data) == True:
@@ -58,10 +60,24 @@ def save_measurement(data):
     # data = data*1000
     return str(data)
 
+
 def date2consecutiveday(year, month, day):
     return (datetime.date(year, month, day)-datetime.date(year, 1, 1)).days
+
 
 def obtain_month(year, year_i, day):
     month = (datetime.date(year+year_i, 1, 1) +
              datetime.timedelta(days=day)).month-1
     return month
+
+
+def yy_mm_dd2consecutiveday(date, year_i):
+    date = date.split("-")
+    year = int(date[0])
+    month = int(date[1])
+    day = int(date[2])
+    conse_day = date2consecutiveday(year, month, day)
+    days_in_the_middle = (datetime.date(year, 1, 1) -
+                          datetime.date(year_i, 1, 1)).days
+    conse_day += days_in_the_middle
+    return conse_day
