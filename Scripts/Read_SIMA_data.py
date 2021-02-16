@@ -33,7 +33,7 @@ dir_data = "../Archivos/"
 dir_stations = "../Stations/"
 stations = [station.upper() for station in sorted(os.listdir(dir_stations))]
 files = ["2015", "2016", "2017", "2018", "2019", "2020"]
-particle_type = "PM10"
+particle_type = "PM2.5"
 file_data = open(dir_data+particle_type+"_SIMA.csv", "w")
 file_data.write("Dates,Hours,")
 for station in stations:
