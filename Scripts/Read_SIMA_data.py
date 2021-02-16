@@ -45,19 +45,19 @@ for file in files:
     index = data.index[2:]-2
     dates, hours = index2date(index, int(file))
     len_data = len(dates)-2
-    PM10_data = pd.DataFrame({"Dates": dates})
+    SIMA_data = pd.DataFrame({"Dates": dates})
     for station in stations:
         for key, key_station in zip(data.keys(), keys_stations):
             if data[key][0] == particle_type and station == key_station:
-                    PM10_data[station] = data[key]
-    PM10_data = PM10_data.drop([0, 1])
-    PM10_data = PM10_data.set_index("Dates")
+                SIMA_data[station] = data[key]
+    SIMA_data = SIMA_data.drop([0, 1])
+    SIMA_data = SIMA_data.set_index("Dates")
     for date in range(len_data):
         file_data.write(dates[date+2]+",")
         file_data.write(str(hours[date+2])+",")
         for station in stations:
             if station in keys_stations:
-                value = str(PM10_data[station][date])
+                value = str(SIMA_data[station][date])
                 if value == "nan":
                     value = ""
             else:
