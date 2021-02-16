@@ -4,7 +4,7 @@ import pandas as pd
 import datetime
 
 
-class PM10:
+class SIMA_data:
     def __init__(self, year_i, year_f, stations):
         self.year_i = year_i
         self.year_f = year_f
@@ -80,7 +80,7 @@ class PM10:
                 self.day_mean[day][year] = round(
                     self.data[station][hour_i:hour_f].mean(), 1)
 
-    def plot_month_means(self, AOD_list):
+    def plot_month_means_AOD(self, AOD_list):
         choose_months = np.arange(1, 11, 3)
         choose_months = np.append(choose_months, 12)
         month_names = obtain_month_names(choose_months)
@@ -113,6 +113,39 @@ class PM10:
         fig.legend(lines, labels, loc="upper center",
                    ncol=5, frameon=False, fontsize=12)
         plt.show()
+    
+    def plot_month_means_Rain(self, Rain_data_title):
+        choose_months = np.arange(1, 11, 3)
+        choose_months = np.append(choose_months, 12)
+        month_names = obtain_month_names(choose_months)
+        fig, axs = plt.subplots(
+            2, 3, sharex=True, sharey=True, figsize=(10, 12))
+        plt.subplots_adjust(left=0.083, right=0.9, top=0.9)
+        axs = np.reshape(axs, 6)
+        for year, ax in zip(self.years, axs):
+            ax2 = ax.twinx()
+            ax.set_xticks(choose_months)
+            ax.set_xticklabels(month_names, rotation=45, fontsize=12)
+            ax.set_xlim(1, 12)
+            ax.set_ylim(0, 120)
+            ax.set_title("Year: {}".format(year))
+            ax.grid(ls="--", color="grey", alpha=0.5, lw=2)
+            ax.plot(np.arange(1, 13),
+                    self.month_mean[year], ls="--", color="purple", marker="o", label="PM$_{10}$")
+            Rain_data, title = Rain_data_title
+            ax2.set_ylim(0, 0.5)
+            if not ax in [axs[2], axs[5]]:
+                ax2.set_yticks(([]))
+            ax2.bar(np.arange(
+                1, 13), Rain_data[year],0.5,label=title)
+        fig.text(0.02, 0.5, "PM$_{10} (\mu g/m^3)$", rotation=90, fontsize=14)
+        fig.text(0.95, 0.5, "Rainfall (mm/hr)", rotation=-90, fontsize=14)
+        lines, labels = fig.axes[-1].get_legend_handles_labels()
+        lines.append(fig.axes[0].get_legend_handles_labels()[0][0])
+        labels.append(fig.axes[0].get_legend_handles_labels()[1][0])
+        fig.legend(lines, labels, loc="upper center",
+                   ncol=5, frameon=False, fontsize=12)
+        plt.show()
 
     def plot_season_means(self):
         seasons = ["Spring", "Summer", "Autumn", "Winter"]
@@ -129,7 +162,11 @@ class PM10:
                    bbox_to_anchor=(0, 1.07, 1, 0.02))
         plt.grid(ls="--", color="grey", alpha=0.5, lw=2)
         plt.show()
-
+    
+    def cut_year(self,date_i,date_f):
+        self.data.index = pd.to_datetime(self.data.index)
+        self.section = self.data.loc[ (self.data.index >= date_i) & 
+                                            (self.data.index <= date_f) ]
 
 def count_days(date_i, date_f):
     year, month, day = date_f
