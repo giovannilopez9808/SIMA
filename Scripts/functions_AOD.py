@@ -66,10 +66,10 @@ class AOD:
         self.len_data = len(self.data["Date"])
 
     def calc_month_mean(self):
-        month_sum = pd.DataFrame(
-            columns=self.years, index=np.arange(1, 13))
-        month_count = pd.DataFrame(
-            columns=self.years, index=np.arange(1, 13))
+        month_sum = pd.DataFrame(columns=self.years,
+                                 index=np.arange(1, 13))
+        month_count = pd.DataFrame(columns=self.years,
+                                   index=np.arange(1, 13))
         month_sum = month_sum.fillna(0.0)
         month_count = month_count.fillna(0.0)
         self.month_mean = self.month_mean = pd.DataFrame(columns=self.years,

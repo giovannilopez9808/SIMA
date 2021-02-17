@@ -14,12 +14,14 @@ inputs = {
     "year final": 2020,
     "path data": "../Archivos/",
     "stations": ["NOROESTE", "NORESTE"],
-    "path stations": "../Stations/"
+    "path stations": "../Stations/",
+    "hour": 13,
 }
 PM_data = SIMA_data(
     inputs["year initial"],
     inputs["year final"],
     inputs["stations"],
+    inputs["hour"],
 )
 AOD_data_list = AOD_list(
     inputs["path stations"],
@@ -28,7 +30,6 @@ AOD_data_list = AOD_list(
     inputs["year final"]
 )
 PM_data.read_data("PM10_SIMA.csv", inputs["path data"])
-PM_data.Clean_data()
 # PM_data.calc_year_mean()
 calc_month_mean_of_data(PM_data, AOD_data_list)
 # PM_data.calc_day_mean("NORESTE")
