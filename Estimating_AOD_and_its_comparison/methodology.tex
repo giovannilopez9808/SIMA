@@ -27,16 +27,20 @@ We downloaded the data of Aerosol Optical Depth at 550 nm (AOD\textsubscript{550
 satellite MODIS (\url{https://ladsweb.modaps.eosdis.nasa.gov/}). The data is taken daily and with a spatial
 resolution of 1 Deg. We used the product MODIS-Aqua Aerosol Cloud Water Vapor Ozone Daily L3 Global 1Deg CMG
 (MYD08\_D3) and looked at two data sets: Deep Blue Combined Mean and Land and Ocean Mean. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/AOD_Daily_MODIS.png}
+    \caption{}
+\end{figure}
 \subsection{SMARTS Model}
 El \textit{Simple Model of the Atmosphere Radiactive Transfer of Sunshine} (SMARTS) es un modelo espectral
 escrito en el lenguaje \textit{Fortran}, el cual realiza la predicción de los rayos de luz directos, difusos y la 
-irradiancia global sobre cualquier geometría en la superficie de la Tierra. Se creó un código en \textit{Python} que 
-realizá la lectura de los parámetros de la tabla (INSERTAR TABLA DE PARAMETROS) y va escribiendo el archivo de entrada 
+irradiancia global sobre cualquier geometría en la superficie de la Tierra. En base a esto se creó un código en
+\textit{Python} que  realizá la lectura de los parámetros de la tabla \ref{table:parameters} y va escribiendo el archivo de entrada 
 con el formato del modelo SMARTS. 
-Only solar radiation measurements under clear skies were selected. The source code of the SMARTS model was
-modified to enter the values of Table 1 and perform iterations with the AOD550nm, until the relative difference
-between the measured and modeled irradiance reaches 10\% at solar noon.
+\input{table_parameters.tex}
 \input{table_card6a.tex}
+Only solar radiation measurements under clear skies were selected. 
 \subsection{Wind}
 \subsection{Data processing}
 We developed a code in Python to analyze the distinct data sets. For PM data, we analyzed availability,
