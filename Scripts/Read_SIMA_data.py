@@ -9,7 +9,7 @@ def index2date(index, year):
     dates = ["", ""]
     hour = [-1, -1]
     for i in range(n):
-        dates.append(consecutiveday2date(index[i]//24, year))
+        dates.append(str(consecutiveday2date(index[i]//24, year)))
     for i in range(n//24):
         hour = np.append(hour, np.arange(24))
     return dates, hour

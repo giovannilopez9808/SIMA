@@ -38,7 +38,7 @@ def xlsxdate2date(xldate):
 
 def consecutiveday2date(conse_day, year):
     date = datetime.date(year, 1, 1)+datetime.timedelta(days=conse_day)
-    return str(date)
+    return date
 
 
 def consecutiveday2yymmdd(conse_day, year):
@@ -81,6 +81,17 @@ def yy_mm_dd2consecutiveday(date, year_i):
     year = int(date[0])
     month = int(date[1])
     day = int(date[2])
+    conse_day = date2consecutiveday(year, month, day)
+    days_in_the_middle = (datetime.date(year, 1, 1) -
+                          datetime.date(year_i, 1, 1)).days
+    conse_day += days_in_the_middle
+    return conse_day
+
+
+def yymmdd2consecutiveday(date, year_i):
+    year = int("20"+date[0:2])
+    month = int(date[2:4])
+    day = int(date[4:6])
     conse_day = date2consecutiveday(year, month, day)
     days_in_the_middle = (datetime.date(year, 1, 1) -
                           datetime.date(year_i, 1, 1)).days

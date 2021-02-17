@@ -21,8 +21,8 @@ wavelength_dict = {
     "483.5nm": 4,
 }
 total_days = (input["year final"]-input["year initial"]+1)*365+2
-dates = [consecutiveday2yymmdd(day, input["year initial"]) for day in range(
-    total_days) if not "0229" in consecutiveday2yymmdd(day, input["year initial"])]
+dates = [consecutiveday2yymmdd(day, input["year initial"])
+         for day in range(total_days) if not "0229" in consecutiveday2yymmdd(day, input["year initial"])]
 data_AOD = pd.DataFrame(index=dates, columns=wavelength_dict.keys())
 for key in wavelength_dict.keys():
     print("Analizando longitud de onda "+key)
@@ -39,5 +39,5 @@ for key in wavelength_dict.keys():
     data.fill_empty_data()
     data.reshape()
     data_AOD[key] = pd.DataFrame(data.data, index=dates)
-data_AOD=data_AOD.replace(0,np.nan)
+data_AOD = data_AOD.replace(0, np.nan)
 data_AOD.to_csv(dir_data+"AOD_OMI_025.csv")

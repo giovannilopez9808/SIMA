@@ -131,7 +131,7 @@ class OMI_data_AOD_025Deg(OMI_data):
                 name_year = year
             data_HD5 = h5py.File(dir_file, "r")
             o3_values = list(
-                data_HD5[path_HDF][self.wave]/1000)
+                data_HD5[path_HDF][self.wave]*0.001)
             self.obtain_data_from_he5(o3_values, year, month, day)
             data_HD5.close()
 
