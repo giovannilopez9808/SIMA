@@ -97,3 +97,10 @@ def yymmdd2consecutiveday(date, year_i):
                           datetime.date(year_i, 1, 1)).days
     conse_day += days_in_the_middle
     return conse_day
+
+def yymmdd2yyyy_mm_dd(date):
+    year="20"+date[0:2]
+    month=date[2:4]
+    day=date[4:6]
+    date=year+"-"+month+"-"+day
+    return date

@@ -10,6 +10,17 @@ solar en el rango 285nm a 2800nm. En la tabla \ref{table:measurements_SIMA} se m
 del SIMA, se relleno en rojo las estaciones que tienen un porcentaje menor a 75\%, ya que con esto se considera que
 las mediciones no son representativas \cite{molina2019}.
 \input{table_distribution.tex}
+\subsubsection{Irradiance solar}
+Se seleccionaron las estaciones de San Nicolas y San Bernabé ya que estas contaban con una mayor cantidad de datos disponibles
+y los radiometros usados para las mediciones de irradianica solar se sabian concretamente que miden en el rango 285-2800 nm.
+Realizando una visualizacion de los datos, se seleccionaron los días de cielo despejado usando el criterio ()
+como los que se muetran en la figura \ref{fig:clear_days}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/Clear_days.png}
+    \caption{}
+    \label{fig:clear_days}
+\end{figure}
 \subsection{Satellite data}
 \subsubsection{OMI-NASA Data}
 Descargamos los datos de las columnas de Ozono (O\textsubscript{3}) en Dobson Units del satélite OMI de la NASA 
@@ -39,11 +50,29 @@ irradiancia global sobre cualquier geometría en la superficie de la Tierra. En 
 \textit{Python} que  realizá la lectura de los parámetros de la tabla \ref{table:parameters} y va escribiendo el archivo de entrada 
 con el formato del modelo SMARTS. 
 \input{table_parameters.tex}
-\input{table_card6a.tex}
-Only solar radiation measurements under clear skies were selected. 
+\subsubsection{Algortimo para encontrar el AOD correspondiente a la medición}
+A partir de los dias de cielo despejado se creo una base de datos que contiene la siguiente información,
+código del día del año en formato yymmdd, año, mes, día, columnas de ozono correspondiente al día obtenido de los datos del
+producto OMI-NASA, esto para cada estación de monitoreo, ya que estas pueden tener días de cielo despejado diferentes.
+Se escribió un código en el lenguaje \textit{Python}, el cual creará el archivo de input para el modelo SMARTS usando
+un AOD inicial de 0.5. El modelo SMARTS dará como resultados una matriz de espectros solares para cada  minuto entre las 9 y 16 horas,
+el código de python calculará la irradiancia solar en base a la ecuación \ref{eq:irradiance}.
+\begin{equation}
+        I(t) = \int\limits_{285}^{2800} E(\lambda,t) d\lambda
+        \label{eq:irradiance}
+\end{equation}
+Al tener la irradiancia solar del día, el código encontrará el valor máximo de irradiancia solar del modelo y calculara un promedio 
+tomando en cuenta los valores de 30 minutos antes y después. En seguida calculará la diferencia relativa
+del promedio de irraciancia solar con la medición máxima de la estación de monitoreo de acuerdo a la ecuación \ref{eq:rd}. Dependiendo de que valor tenga la diferencia relativa
+se asignará un valor al AOD, este procedimiento realiza el siguiente algortimo:
+\begin{enumerate}
+    \item Si la diferencia relativa tiene un valor mayor a 11\%, entonces el límite inferior es el AOD con el cual se produjo esa diferencia relativa, al inicio del proceso el limite inferior del AOD es 0.01.
+    \item Si la diferencia relativa tiene un valor menor a 9\%, entonces el limite superior es el AOD con el cual se produjo esa diferencia relativa, al inicio del proceso el limite superior del AOD es 1.
+    \item En cualquiera de los dos casos, el nuevo valor del AOD es un promedio del limite inferior y superior.
+    \item Este proceso termina cuando se obtiene una diferencia relativa entre 9\% y 11\% o el número de intentos es 10. Si la diferencia relativa se encuentra entre 9\% y 11\% este valor es guardado en una base de datos.
+\end{enumerate}
+\begin{equation}
+    RD = \left(\frac{Model-Measurement}{Model}\right)*100\%
+    \label{eq:rd}
+\end{equation}
 \subsection{Wind}
-\subsection{Data processing}
-We developed a code in Python to analyze the distinct data sets. For PM data, we analyzed availability,
-trends, and selected the data that coincided with the time the satellite passed over the coordinates of
-the stations. The AOD data were compared with the PM data to find the correlation. For the linear regression
-the module sklearn.linear\_model was used.
