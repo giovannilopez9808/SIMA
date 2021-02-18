@@ -16,19 +16,20 @@ class SIMA_data:
     hour        ----> Hora que se analizara
     """
 
-    def __init__(self, year_i, year_f, stations, hour):
+    def __init__(self, year_i, year_f, stations, file):
         self.year_i = year_i
         self.day_i = [year_i, 1, 1]
         self.year_f = year_f
         self.years = [year for year in range(year_i, year_f+1)]
         self.stations = stations
-        self.hour = hour
+        self.file = file
 
-    def read_data(self, file, path):
+    def read_data(self, path):
         """
         Lectura y limpieza de datos que no se usaran para el analisis
         """
-        self.data = pd.read_csv(path+file)
+        self.data = pd.read_csv(path+self.file+"_SIMA.csv")
+        self.data_hour = pd.read_csv(path+self.file+"_hour_SIMA.csv")
         self.clean_data()
 
     def clean_data(self):
@@ -39,13 +40,9 @@ class SIMA_data:
         for key in self.data.keys():
             if not key in self.stations and not key in ["Dates", "Hours"]:
                 self.data = self.data.drop(key, 1)
-        n = self.data["Dates"].count()
-        # Limpieza de horas que no seran usadas
-        for i in range(n):
-            if self.data["Hours"][i] != self.hour:
-                self.data = self.data.drop(i)
-        # Eliminacion de la columna de las horas
-        self.data = self.data.drop("Hours", 1)
+        for key in self.data_hour.keys():
+            if not key in self.stations and not key in ["Dates", "Hours"]:
+                self.data_hour = self.data_hour.drop(key, 1)
 
     def calc_year_mean(self):
         """
@@ -57,7 +54,7 @@ class SIMA_data:
                 day_i, day_f = count_days_per_year(date_f=[year, 1, 1],
                                                    date_i=self.day_i)
                 self.year_mean[station][year] = round(
-                    self.data[station][day_i:day_f].mean(), 1)
+                    self.data_hour[station][day_i:day_f].mean(), 1)
 
     def calc_month_mean(self, station):
         """
@@ -71,7 +68,7 @@ class SIMA_data:
                 day_initial, day_final = count_days_per_month(date_f=[year, month, 1],
                                                               date_i=self.day_i)
                 self.month_mean[year][month - 1] = round(
-                    self.data[station][day_initial:day_final].mean(), 1)
+                    self.data_hour[station][day_initial:day_final].mean(), 1)
 
     def plot_month_means_AOD(self, AOD_list):
         """
@@ -98,16 +95,24 @@ class SIMA_data:
             ax.set_title("Year: {}".format(year))
             ax.grid(ls="--", color="grey", alpha=0.5, lw=2)
             # Ploteo del valor de PM10
-            ax.plot(np.arange(1, 13),
-                    self.month_mean[year], ls="--", color="purple", marker="o", label="PM$_{10}$")
+            ax.plot(np.arange(1, 13), self.month_mean[year],
+                    ls="--", color="purple",
+                    marker="o", label="PM$_{10}$", alpha=0.75)
             # Ploteo de la lista de AOD
             for AOD_data_title in AOD_list:
-                AOD_data, title = AOD_data_title
+                AOD_data, title, color = AOD_data_title
                 ax2.set_ylim(0, 1.2)
                 if not ax in [axs[2], axs[5]]:
                     ax2.set_yticks(([]))
-                ax2.plot(np.arange(
-                    1, 13), AOD_data[year], label=title, ls="--", marker="o")
+                data_to_plot = []
+                months = []
+                for month in range(1, 13):
+                    if AOD_data[year][month] != 0:
+                        data_to_plot.append(AOD_data[year][month])
+                        months.append(month)
+                ax2.plot(months, data_to_plot,
+                         label=title, ls="--", marker="o",
+                         color=color, alpha=0.75)
         fig.text(0.02, 0.5, "PM$_{10}$", rotation=90, fontsize=14)
         fig.text(0.95, 0.5, "AOD$_{550nm}$", rotation=-90, fontsize=14)
         lines, labels = fig.axes[-1].get_legend_handles_labels()
@@ -157,30 +162,9 @@ class SIMA_data:
         plt.show()
 
     def cut_year(self, date_i, date_f):
-        self.data.index = pd.to_datetime(self.data.index)
-        self.section = self.data.loc[(self.data.index >= date_i) &
-                                     (self.data.index <= date_f)]
-
-
-class SIMA_data_season(SIMA_data):
-    def __init__(self, year_i, year_f, stations, hour):
-        super().__init__(self, year_i, year_f, stations, hour)
-
-    def read_data(self, file, path):
-        """
-        Lectura y limpieza de datos que no se usaran para el analisis
-        """
-        self.data = pd.read_csv(path+file)
-        self.clean_data()
-
-    def clean_data(self):
-        """
-        Funcion que limpia la base de datos de informacion que no sera usada
-        """
-        # Limpieza de columnas que no seran usadas
-        for key in self.data.keys():
-            if not key in self.stations:
-                self.data = self.data.drop(key, 1)
+        self.data_hour.index = pd.to_datetime(self.data_hour.index)
+        self.section = self.data_hour.loc[(self.data_hour.index >= date_i) &
+                                          (self.data_hour.index <= date_f)]
 
     def calc_season_hour_mean(self, station):
         """
