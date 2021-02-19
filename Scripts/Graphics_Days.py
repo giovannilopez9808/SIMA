@@ -10,7 +10,7 @@ for station in stations:
     dir_station = dir_stations+station+"/"
     dates, aods = np.loadtxt(dir_station+"DataAOD_moderate.txt",
                              usecols=[0, 5], dtype=str, unpack=True)
-    mkdir("Graphics/",path=dir_station)
+    mkdir("Graphics/", path=dir_station)
     for date, aod in zip(dates, aods):
         med = np.loadtxt(dir_station+"Mediciones/"+date+".txt")
         mod = np.loadtxt(dir_station+"Results_SMARTS/"+date+".txt")

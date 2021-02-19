@@ -34,10 +34,10 @@ PM_data.read_data(inputs["path data"])
 calc_month_mean_of_data(PM_data, AOD_data_list)
 # PM_data.calc_day_mean("NORESTE")
 PM_data.plot_month_means_AOD([
-    [AOD_data_list.pristine.month_mean,"Pristine","#f46188"],
-    [AOD_data_list.moderate.month_mean,"Moderate","#505bda"],
-    [AOD_data_list.SSAAER_pristine.month_mean,"SSAAER Pristine","#ffaac3"],
-    [AOD_data_list.SSAAER_moderate.month_mean,"SSAAER Moderate","#1a2849"],
+    [AOD_data_list.pristine.month_mean, "Pristine", "#f46188"],
+    [AOD_data_list.moderate.month_mean, "Moderate", "#505bda"],
+    [AOD_data_list.SSAAER_pristine.month_mean, "SSAAER Pristine", "#ffaac3"],
+    [AOD_data_list.SSAAER_moderate.month_mean, "SSAAER Moderate", "#1a2849"],
 ])
 # PM_data.calc_season_hour_mean("NORESTE")
 # PM_data.plot_season_means()

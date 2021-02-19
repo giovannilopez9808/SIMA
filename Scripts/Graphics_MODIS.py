@@ -13,8 +13,8 @@ years = np.arange(year_i, year_f+2, 1)
 data_MODIS = pd.read_csv(dir+"MODIS_AOD.csv", usecols=[1, 2])
 data_MODIS = data_MODIS.fillna(0)
 plt.xticks(days, years, rotation=60, fontsize="large")
-plt.ylabel("AOD$_{550nm}$",fontsize=12)
-plt.xlabel("Years",fontsize=12)
+plt.ylabel("AOD$_{550nm}$", fontsize=12)
+plt.xlabel("Years", fontsize=12)
 plt.grid(ls="--", color="#000", lw=2, alpha=0.5)
 plt.ylim(0, 0.8)
 plt.xlim(0, 365*6)
@@ -23,7 +23,7 @@ plt.subplots_adjust(left=0.11,
                     right=0.95,
                     top=0.93)
 for key in data_MODIS:
-    label=key.replace("AOD ","")
+    label = key.replace("AOD ", "")
     data = np.array(data_MODIS[key])
     x = np.arange(len(data))
     plt.scatter(x[data != 0], data[data != 0],

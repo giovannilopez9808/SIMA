@@ -1,6 +1,6 @@
 from functions_OMI import *
 from os import listdir
-dir_data="../Archivos/"
+dir_data = "../Archivos/"
 input = {
     "path HDF": "HDFEOS/GRIDS/ColumnAmountO3/Data Fields/ColumnAmountO3",
     "path data": dir_data+"OMI_Ozone/",
@@ -15,8 +15,8 @@ data = OMI_data_ozone(
     input["lon"],
     input["lat"],)
 files = sorted(listdir(input["path data"]))
-data.read_files_he5(files,input["path data"],input["path HDF"])
-data.write_data("Ozono_OMI_clean",path=dir_data)
+data.read_files_he5(files, input["path data"], input["path HDF"])
+data.write_data("Ozono_OMI_clean", path=dir_data)
 data.calculate_mensual_mean()
 data.fill_empty_data()
-data.write_data("Ozono_OMI",path=dir_data)
+data.write_data("Ozono_OMI", path=dir_data)
