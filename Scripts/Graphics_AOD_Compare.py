@@ -38,9 +38,9 @@ def yymmdd(date_sima, i, yy, mm, dd):
 
 stations = ["noreste", "noroeste"]
 stations_name = ["Northeast", "Northwest"]
-files = ["DataAOD_clear.txt", "DataAOD_moderate.txt"]
-labels = ["Pristine", "Moderate"]
-for station, station_name in zip(stations, stations_name):
+file_types = ["Pristine", "Moderate"]
+fig, axs = plt.subplots(2, 1, sharex=True)
+for station, station_name, ax in zip(stations, stations_name, axs):
     dir = "../Stations/"+station+"/"
     for file, label in zip(files, labels):
         AODGraphics(file_data=file, folder=dir, label=label)

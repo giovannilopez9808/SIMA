@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
+import numpy as np
 import datetime
 
 
@@ -9,8 +9,8 @@ class SIMA_data:
     Clase que guarda toda la logica para analizar los datos del SIMA
     Describcion de variables
     year_i      ----> Año inicial del que se tiene datos
-    year_f      ----> Año final del que se tienen datos
     day_i       ----> Dia inicial del años
+    year_f      ----> Año final del que se tienen datos
     years       ----> Años en que analizaran 
     stations    ----> Estaciones que se analizaran
     hour        ----> Hora que se analizara
@@ -162,7 +162,7 @@ class SIMA_data:
         plt.show()
 
     def cut_year(self, date_i, date_f):
-        self.data_hour.index = pd.to_datetime(self.data_hour.index)
+        self.data_hour.index = pd.to_datetime(self.data_hour["Dates"])
         self.section = self.data_hour.loc[(self.data_hour.index >= date_i) &
                                           (self.data_hour.index <= date_f)]
 
