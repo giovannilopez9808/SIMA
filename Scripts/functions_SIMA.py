@@ -91,7 +91,7 @@ class SIMA_data:
             ax.set_xticks(choose_months)
             ax.set_xticklabels(month_names, rotation=45, fontsize=12)
             ax.set_xlim(1, 12)
-            ax.set_ylim(0, 120)
+            ax.set_ylim(50, 100)
             ax.set_title("Year: {}".format(year))
             ax.grid(ls="--", color="grey", alpha=0.5, lw=2)
             # Ploteo del valor de PM10
@@ -102,6 +102,7 @@ class SIMA_data:
             for AOD_data_title in AOD_list:
                 AOD_data, title, color = AOD_data_title
                 ax2.set_ylim(0, 1.2)
+                ax2.set_yticks(np.linspace(0,1.2,6))
                 if not ax in [axs[2], axs[5]]:
                     ax2.set_yticks(([]))
                 data_to_plot = []
@@ -139,7 +140,7 @@ class SIMA_data:
             ax.set_xticks(choose_months)
             ax.set_xticklabels(month_names, rotation=45, fontsize=12)
             ax.set_xlim(1, 12)
-            ax.set_ylim(0, 120)
+            ax.set_ylim(50, 110)
             ax.set_title("Year: {}".format(year))
             ax.grid(ls="--", color="grey", alpha=0.5, lw=2)
             # Ploteo del valor de PM10
