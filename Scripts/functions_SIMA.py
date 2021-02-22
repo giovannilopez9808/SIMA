@@ -95,7 +95,7 @@ class SIMA_data:
             ax.set_title("Year: {}".format(year))
             ax.grid(ls="--", color="grey", alpha=0.5, lw=2)
             # Ploteo del valor de PM10
-            ax.plot(np.arange(1, 13), self.month_mean[year],
+            ax.plot(np.arange(1, 13), list(self.month_mean[year]),
                     ls="--", color="purple",
                     marker="o", label="PM$_{10}$", alpha=0.75)
             # Ploteo de la lista de AOD
