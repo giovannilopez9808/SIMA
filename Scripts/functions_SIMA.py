@@ -70,7 +70,7 @@ class SIMA_data:
                 self.month_mean[year][month - 1] = round(
                     self.data_hour[station][day_initial:day_final].mean(), 1)
 
-    def plot_month_means_AOD(self, AOD_list):
+    def plot_month_means_AOD(self, AOD_list, MODIS_list):
         """
         Funcion que grafica en diferentes subplots el promedio mensual en
         cada año junto con los datos de AOD promedio mensual
@@ -98,30 +98,34 @@ class SIMA_data:
             ax.plot(np.arange(1, 13), list(self.month_mean[year]),
                     ls="--", color="purple",
                     marker="o", label="PM$_{10}$", alpha=0.75)
+            ax2.set_ylim(0, 1.2)
+            ax2.set_yticks(np.linspace(0, 1.2, 6))
+            if not ax in [axs[2], axs[5]]:
+                ax2.set_yticks(([]))
             # Ploteo de la lista de AOD
-            for AOD_data_title in AOD_list:
-                AOD_data, title, color = AOD_data_title
-                ax2.set_ylim(0, 1.2)
-                ax2.set_yticks(np.linspace(0,1.2,6))
-                if not ax in [axs[2], axs[5]]:
-                    ax2.set_yticks(([]))
-                data_to_plot = []
-                months = []
-                for month in range(1, 13):
-                    if AOD_data[year][month] != 0:
-                        data_to_plot.append(AOD_data[year][month])
-                        months.append(month)
-                ax2.plot(months, data_to_plot,
-                         label=title, ls="--", marker="o",
-                         color=color, alpha=0.75)
+            self.plot_month_another_stuff(ax2, AOD_list, year)
+            self.plot_month_another_stuff(ax2, MODIS_list, year)
         fig.text(0.02, 0.5, "PM$_{10}$", rotation=90, fontsize=14)
         fig.text(0.95, 0.5, "AOD$_{550nm}$", rotation=-90, fontsize=14)
         lines, labels = fig.axes[-1].get_legend_handles_labels()
         lines.append(fig.axes[0].get_legend_handles_labels()[0][0])
         labels.append(fig.axes[0].get_legend_handles_labels()[1][0])
         fig.legend(lines, labels, loc="upper center",
-                   ncol=5, frameon=False, fontsize=12)
+                   ncol=6, frameon=False, fontsize=12)
         plt.show()
+
+    def plot_month_another_stuff(self, ax, data_list, year):
+        for data_title in data_list:
+            data, title, color = data_title
+            data_to_plot = []
+            months = []
+            for month in range(1, 13):
+                if data[year][month] != 0:
+                    data_to_plot.append(data[year][month])
+                    months.append(month)
+            ax.plot(months, data_to_plot,
+                    label=title, ls="--", marker="o",
+                    color=color, alpha=0.75)
 
     def plot_month_means_Rain(self, Rain_data_title):
         """
