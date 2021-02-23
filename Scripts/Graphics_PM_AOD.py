@@ -53,7 +53,7 @@ PM_data.plot_month_means_AOD([
     [AOD_data_list.pristine.month_mean, "Pristine", "#f46188"],
     [AOD_data_list.moderate.month_mean, "Moderate", "#505bda"],
     [AOD_data_list.SSAAER_pristine.month_mean, "SSA Pristine", "#ffaac3"],
-    [AOD_data_list.SSAAER_moderate.month_mean, "SSA Moderate", "#1a2849"],],
+    [AOD_data_list.SSAAER_moderate.month_mean, "SSA Moderate", "#1a2849"], ],
     [[MODIS_data_list.month_mean, "MODIS", "red"]],)
 # PM_data.calc_season_hour_mean("NORESTE")
 # PM_data.plot_season_means()
