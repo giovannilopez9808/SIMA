@@ -231,7 +231,7 @@ class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
     def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta, igas):
         SMARTS_DR.__init__(self, hour_i, hour_f, lon_i,
                            lon_f, RD_lim, RD_delta, igas)
-    
+
     def write_data_input_SMARTS(self, day, month, year, hour, ozono, aod):
         """
         Formato del input del modelo SMARTS
@@ -276,7 +276,7 @@ class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
         file.write(" 0\n")
         # Card 8
         file.write(" 'USER'\n")
-        # Card 8a 
+        # Card 8a
         # SSAAER Palancar
         # Asymmetry Promedio de 550 nm y humedad ente 50-70%
         file.write(" 1 1 0.8 0.68\n")
