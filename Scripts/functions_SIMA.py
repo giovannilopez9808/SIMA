@@ -102,8 +102,9 @@ class SIMA_data:
             ax2.set_yticks(np.linspace(0, 1.2, 6))
             if not ax in [axs[2], axs[5]]:
                 ax2.set_yticks(([]))
-            # Ploteo de la lista de AOD
+            # Ploteo de la lista de AOD de los data found
             self.plot_month_another_stuff(ax2, AOD_list, year)
+            # Ploteo de la lista de AOD de MODIS
             self.plot_month_another_stuff(ax2, MODIS_list, year)
         fig.text(0.02, 0.5, "PM$_{10}$", rotation=90, fontsize=14)
         fig.text(0.95, 0.5, "AOD$_{550nm}$", rotation=-90, fontsize=14)
@@ -115,6 +116,10 @@ class SIMA_data:
         plt.show()
 
     def plot_month_another_stuff(self, ax, data_list, year):
+        """
+        funcion que grafica los promedios mensuales de diferentes datos datos por una lista
+        que cotiene los datos, el titulo y color a plotear respectivamente
+        """
         for data_title in data_list:
             data, title, color = data_title
             data_to_plot = []
@@ -167,6 +172,9 @@ class SIMA_data:
         plt.show()
 
     def cut_year(self, date_i, date_f):
+        """
+        funcion que realiza el corte de los datos a partir de unas fechas dadas
+        """
         self.data_hour.index = pd.to_datetime(self.data_hour["Dates"])
         self.section = self.data_hour.loc[(self.data_hour.index >= date_i) &
                                           (self.data_hour.index <= date_f)]
