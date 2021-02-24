@@ -1,0 +1,17 @@
+\subsubsection{Algortimo para determinar el AOD correspondiente a la medición}
+A partir de la selección de los días de cielo despejado se creó una base de datos que contiene: día, mes y año en formato yymmdd, columna total de ozono (TOC) OMI-NASA, con las coordenadas geográficas para cada estación de monitoreo, pueden tener días de cielo despejado diferentes. Se escribió un código en el lenguaje \textit{Python}, el cual creará el archivo de input para el modelo SMARTS usando un AOD inicial de 0.5. El modelo SMARTS da como resultado una matriz de espectros solares por cada  minuto entre las 9 y 16 horas, el código de python calcula la irradiancia solar con base a la ecuación \ref{eq:irradiance}.
+\begin{equation}
+    I(t) = \int\limits_{285}^{2800} E(\lambda,t) d\lambda
+    \label{eq:irradiance}
+\end{equation}
+Al tener la irradiancia solar diaria, se establece el valor máximo de irradiancia solar y se calcula el promedio centrado en 1 hora. Se obtiene la diferencia relativa entre el promedio de la irradiancia solar máxima medida y la obtenida con el modelo por medio de la ecuación \ref{eq:rd}. Dependiendo de que valor tenga la diferencia relativa se asignará un valor al AOD, este procedimiento realiza el siguiente algortimo:
+\begin{enumerate}
+    \item Si la diferencia relativa tiene un valor mayor a 11\%, entonces el límite inferior es el AOD con el cual se produjo es diferencia relativa, al inicio del proceso el límite inferior del AOD es 0.01.
+    \item Si la diferencia relativa tiene un valor menor a 9\%, entonces el límite superior es el AOD con el cual se produjo esa diferencia relativa, al inicio del proceso el límite superior del AOD es 1.
+    \item En cualquiera de los dos casos, el nuevo valor del AOD es un promedio del límite inferior y superior.
+    \item Este proceso termina cuando se obtiene una diferencia relativa entre 9\% y 11\% o el número de intentos es 10. Si la diferencia relativa se encuentra entre 9\% y 11\% este valor es guardado en una base de datos.
+\end{enumerate}
+\begin{equation}
+    RD = \left(\frac{Model-Measurement}{Measurement}\right)*100\%
+    \label{eq:rd}
+\end{equation}
