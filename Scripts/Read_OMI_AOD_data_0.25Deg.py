@@ -8,8 +8,10 @@ input = {
     "path data": dir_data+"OMI_AOD_025/",
     # Path for HDF Files with 0.25 deg
     "path HDF": "/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/AerosolOpticalThicknessMW",
-    "lon": 25+40/60,
-    "lat": -(100+18/60),
+    "div": 0.25,
+    "scale": 0.001,
+    "lat": 25+40/60,
+    "lon": -(100+18/60),
     "year initial": 2015,
     "year final": 2020,
 }
@@ -31,6 +33,9 @@ for key in wavelength_dict.keys():
         input["year final"],
         input["lon"],
         input["lat"],
+        input["div"],
+        input["scale"],
+        input["path HDF"],
         wavelength_dict[key])
     files = sorted(listdir(input["path data"]))
     data.read_files_he5(

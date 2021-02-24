@@ -6,10 +6,12 @@ import h5py
 
 
 class OMI_data:
-    def __init__(self, year_i, year_f, lon, lat):
-        self.div = 0.25
-        self.lon_i = -90
-        self.lat_i = -180
+    def __init__(self, year_i, year_f, lon, lat, div, scale, path_HDF):
+        self.path_HDF = path_HDF
+        self.div = div
+        self.scale = scale
+        self.lat_i = -90
+        self.lon_i = -180
         self.year_i = year_i
         self.year_f = year_f
         self.lon = lon
@@ -23,6 +25,20 @@ class OMI_data:
     def loc(self, pos_i, pos_loc):
         pos = abs(ceil((pos_i-pos_loc)/self.div))
         return pos
+
+    def read_files_he5(self, files, path):
+        name_year = 0
+        # Archivo resultante
+        for file in files:
+            dir_file = path+file
+            year, month, day = self.obtain_date_from_name(file)
+            if year != name_year:
+                print("Analizando año "+str(year))
+                name_year = year
+            data_HD5 = h5py.File(dir_file, "r")
+            data = list(data_HD5[self.path_HDF])*self.scale
+            self.obtain_data_from_he5(data, year, month, day)
+            data_HD5.close()
 
     def obtain_data_from_he5(self, o3_values, year, month, day):
         data, n = 0, 0
@@ -94,32 +110,12 @@ class OMI_data:
         self.data = np.reshape(self.data, self.delta_year*365)
 
 
-class OMI_data_ozone(OMI_data):
-    def __init__(self, year_i, year_f, lon, lat):
-        super().__init__(year_i, year_f, lon, lat)
-
-    def read_files_he5(self, files, path,path_HDF):
-        name_year = 0
-        # Archivo resultante
-        for file in files:
-            dir_file = path+file
-            year, month, day = self.obtain_date_from_name(file)
-            if year != name_year:
-                print("Analizando año "+str(year))
-                name_year = year
-            data_HD5 = h5py.File(dir_file, "r")
-            o3_values = list(
-                data_HD5[path_HDF])
-            self.obtain_data_from_he5(o3_values, year, month, day)
-            data_HD5.close()
-
-
 class OMI_data_AOD_025Deg(OMI_data):
-    def __init__(self, year_i, year_f, lon, lat, wave):
-        super().__init__(year_i, year_f, lon, lat)
+    def __init__(self, year_i, year_f, lon, lat, div, scale, path_HDF, wave):
+        super().__init__(year_i, year_f, lon, lat, div, scale, path_HDF)
         self.wave = wave
 
-    def read_files_he5(self, files, path, path_HDF):
+    def read_files_he5(self, files, path):
         name_year = 0
         # Archivo resultante
         for file in files:
@@ -131,29 +127,7 @@ class OMI_data_AOD_025Deg(OMI_data):
                 name_year = year
             data_HD5 = h5py.File(dir_file, "r")
             o3_values = list(
-                data_HD5[path_HDF][self.wave]*0.001)
-            self.obtain_data_from_he5(o3_values, year, month, day)
-            data_HD5.close()
-
-
-class OMI_data_AOD_1Deg(OMI_data):
-    def __init__(self, year_i, year_f, lon, lat):
-        super().__init__(year_i, year_f, lon, lat)
-        self.div = 1
-        self.pos_lon = self.loc(self.lon_i, self.lon)
-        self.pos_lat = self.loc(self.lat_i, self.lat)
-
-    def read_files_he5(self, files, path, path_HDF):
-        name_year = 0
-        # Archivo resultante
-        for file in files:
-            dir_file = path+file
-            year, month, day = self.obtain_date_from_name(file)
-            if year != name_year:
-                print("Analizando año "+str(year))
-                name_year = year
-            data_HD5 = h5py.File(dir_file, "r")
-            o3_values = list(data_HD5[path_HDF])
+                data_HD5[self.path_HDF][self.wave]*self.scale)
             self.obtain_data_from_he5(o3_values, year, month, day)
             data_HD5.close()
 

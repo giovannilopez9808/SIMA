@@ -28,15 +28,15 @@ PM_10_2020_month_mean = PM_10_2020.groupby(PM_10_2020.index.month).mean()
 
 choose_months = np.arange(1, 13, 1)
 month_names = obtain_month_names(choose_months)
-plt.ylabel("PM$_{10}$ ($\mu g/m^3$)", fontsize=12)
-plt.xticks(choose_months, month_names, rotation=45, fontsize=12)
+plt.subplots(figsize=(10, 7))
+plt.ylabel("PM$_{10}$ ($\mu g/m^3$)", fontsize=16)
+plt.xticks(choose_months, month_names, rotation=45, fontsize=16)
 plt.xlim(1, 12)
 plt.ylim(0, 120)
 plt.grid(ls="--", color="grey", alpha=0.5, lw=2)
 plt.plot(np.arange(1, 13), list(PM_10_2019_month_mean[station]),
-         ls="--", color="blue", lw=2.5, marker="o", label="2015-2019")
+         ls="--", color="blue", lw=4, marker="o", label="2015-2019")
 plt.plot(np.arange(1, 13), list(PM_10_2020_month_mean[station]),
-         ls="--", color="orangered", lw=2.5, marker="o", label="2020")
-plt.legend(frameon=False, mode="expand", fontsize=12, ncol=2)
-
-plt.show()
+         ls="--", color="orangered", lw=4, marker="o", label="2020")
+plt.legend(frameon=False, mode="expand", fontsize=16, ncol=2)
+plt.savefig("../Graphics/PM10_2020_comp.png", dpi=400)
