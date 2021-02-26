@@ -1,0 +1,3 @@
+\subsubsection{OMI-NASA Ozone Data}
+Se utilizaron los datos de las columnas de Ozono (O\textsubscript{3}) en Dobson Units del satélite OMI de la NASA (\url{https://aura.gsfc.nasa.gov/omi.html}). Los datos fueron medidos diariamente con una resolución espacial de 0.25$^{\circ}$ Deg. Tomamos el producto OMI/Aura Ozone DOAS Total Column L3 1 day V3 (OMDOAO3e), con un código escrito en \textit{Python} obtuvimos las mediciones diarias para el píxel correspondiente a la zona metropolitana de Monterrey, el valor que asigna el producto a cada pixel que no realizó una medición es $-1.267650600x10^{30}$, es por ello que a cada vez que se no se tenía una medición se le asignaba el promedio mensual del año correspondiente.
+\subsubsection{OMI-NASA AOD Data}

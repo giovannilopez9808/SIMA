@@ -16,12 +16,12 @@ class SIMA_data:
     hour        ----> Hora que se analizara
     """
 
-    def __init__(self, year_i, year_f, stations, file):
+    def __init__(self, year_i, year_f, station, file):
         self.year_i = year_i
         self.day_i = [year_i, 1, 1]
         self.year_f = year_f
         self.years = [year for year in range(year_i, year_f+1)]
-        self.stations = stations
+        self.station = station
         self.file = file
 
     def read_data(self, path):
@@ -31,6 +31,7 @@ class SIMA_data:
         self.data = pd.read_csv(path+self.file+"_SIMA.csv")
         self.data_hour = pd.read_csv(path+self.file+"_hour_SIMA.csv")
         self.clean_data()
+        self.index_to_datetime()
 
     def clean_data(self):
         """
@@ -38,37 +39,70 @@ class SIMA_data:
         """
         # Limpieza de columnas que no seran usadas
         for key in self.data.keys():
-            if not key in self.stations and not key in ["Dates", "Hours"]:
+            if not key in ["Dates", "Hours", self.station]:
                 self.data = self.data.drop(key, 1)
         for key in self.data_hour.keys():
-            if not key in self.stations and not key in ["Dates", "Hours"]:
+            if not key in ["Dates", "Hours", self.station]:
                 self.data_hour = self.data_hour.drop(key, 1)
 
-    def calc_year_mean(self):
+    def index_to_datetime(self):
         """
-        Función que calcula el promedio anual 
+        Funcion que realiza el formato a Datetime el index de cada Dataframe
         """
-        self.year_mean = pd.DataFrame(index=self.years, columns=self.stations)
-        for station in self.stations:
-            for year in self.years:
-                day_i, day_f = count_days_per_year(date_f=[year, 1, 1],
-                                                   date_i=self.day_i)
-                self.year_mean[station][year] = round(
-                    self.data_hour[station][day_i:day_f].mean(), 1)
+        # Formatea la hora a dos digitos
+        self.data['Hours'] = self.data['Hours'].astype(str).str.zfill(2)
+        # Une fecha con horas
+        self.data['Datetime'] = self.data["Dates"] + ' ' + self.data['Hours']
+        # Formato datetime
+        self.data['Datetime'] = pd.to_datetime(self.data['Datetime'])
+        self.data.index = self.data['Datetime']
+        self.data = self.data.drop(['Dates', 'Hours', 'Datetime'], axis=1)
+        self.data_hour["Dates"] = pd.to_datetime(self.data_hour["Dates"])
+        self.data_hour.index = self.data_hour["Dates"]
+        self.data_hour = self.data_hour.drop("Dates", axis=1)
 
-    def calc_month_mean(self, station):
+    def calc_month_hour_mean(self):
         """
-        Funcion que calcula el promedio mensual por cada año
+        Funcion que calcula el promedio mensual por cada año basado
+        en las mediciones a una hora
         """
-        self.month_mean = pd.DataFrame(columns=self.years,
-                                       index=[i for i in range(12)])
+        self.month_hour_mean = pd.DataFrame(columns=self.years,
+                                            index=[i for i in range(1, 13)])
+        data_mean = self.data_hour.resample("MS").mean()
+        month_consecutive = 0
         for year in self.years:
             for month in range(1, 13):
-                # Calculo del día inicial y final de cada mes
-                day_initial, day_final = count_days_per_month(date_f=[year, month, 1],
-                                                              date_i=self.day_i)
-                self.month_mean[year][month - 1] = round(
-                    self.data_hour[station][day_initial:day_final].mean(), 1)
+                self.month_hour_mean[year][month] = round(
+                    data_mean[self.station][month_consecutive], 1)
+                month_consecutive += 1
+
+    def calc_month_mean(self):
+        """
+        Funcion que calcula el promedio mensual por cada año para todas las horas
+        """
+        self.month_mean = pd.DataFrame(columns=self.years,
+                                       index=[i for i in range(1, 13)])
+        data_mean = self.data.resample("MS").mean()
+        month_consecutive = 0
+        for year in self.years:
+            for month in range(1, 13):
+                self.month_mean[year][month] = round(
+                    data_mean[self.station][month_consecutive], 1)
+                month_consecutive += 1
+
+    def calc_month_sum(self):
+        """
+        Funcion que calcula la suma mensual por cada año para todas las horas
+        """
+        self.month_mean = pd.DataFrame(columns=self.years,
+                                       index=[i for i in range(1, 13)])
+        data_mean = self.data.resample("MS").sum()
+        month_consecutive = 0
+        for year in self.years:
+            for month in range(1, 13):
+                self.month_mean[year][month] = round(
+                    data_mean[self.station][month_consecutive], 1)
+                month_consecutive += 1
 
     def plot_month_means_AOD(self, AOD_list, MODIS_list):
         """
@@ -91,20 +125,21 @@ class SIMA_data:
             ax.set_xticks(choose_months)
             ax.set_xticklabels(month_names, rotation=45, fontsize=12)
             ax.set_xlim(1, 12)
-            ax.set_ylim(50, 100)
+            ax.set_ylim(30, 110)
+            ax.set_yticks(np.linspace(30, 110, 5))
             ax.set_title("Year: {}".format(year))
             ax.grid(ls="--", color="grey", alpha=0.5, lw=2)
             # Ploteo del valor de PM10
-            ax.plot(np.arange(1, 13), list(self.month_mean[year]),
+            ax.plot(np.arange(1, 13), list(self.month_hour_mean[year]),
                     ls="--", color="purple",
                     marker="o", label="PM$_{10}$", alpha=0.75)
             ax2.set_ylim(0, 1.2)
-            ax2.set_yticks(np.linspace(0, 1.2, 6))
+            ax2.set_yticks(np.linspace(0, 1.2, 5))
             if not ax in [axs[2], axs[5]]:
                 ax2.set_yticks(([]))
             # Ploteo de la lista de AOD de los data found
             self.plot_month_another_stuff(ax2, AOD_list, year)
-            # Ploteo de la lista de AOD de MODIS
+            # Ploteo de la lista de AOD de MODIS y de OMI
             self.plot_month_another_stuff(ax2, MODIS_list, year)
         fig.text(0.02, 0.5, "PM$_{10}$", rotation=90, fontsize=14)
         fig.text(0.95, 0.5, "AOD$_{550nm}$", rotation=-90, fontsize=14)
@@ -112,7 +147,7 @@ class SIMA_data:
         lines.append(fig.axes[0].get_legend_handles_labels()[0][0])
         labels.append(fig.axes[0].get_legend_handles_labels()[1][0])
         fig.legend(lines, labels, loc="upper center",
-                   ncol=6, frameon=False, fontsize=12)
+                   ncol=7, frameon=False, fontsize=11)
         plt.show()
 
     def plot_month_another_stuff(self, ax, data_list, year):
@@ -162,8 +197,10 @@ class SIMA_data:
             # Ploteo del valor de lluvias
             ax2.bar(np.arange(
                 1, 13), Rain_data[year], 0.5, label=title)
-        fig.text(0.02, 0.5, "PM$_{10} (\mu g/m^3)$", rotation=90, fontsize=14)
-        fig.text(0.95, 0.5, "Rainfall (mm/hr)", rotation=-90, fontsize=14)
+        fig.text(0.02, 0.5, "PM$_{10}$ $(\mu g/m^3)$",
+                 rotation=90, fontsize=14)
+        fig.text(0.95, 0.3, "Accumulated Rainfall (mm/hr)",
+                 rotation=-90, fontsize=14)
         lines, labels = fig.axes[-1].get_legend_handles_labels()
         lines.append(fig.axes[0].get_legend_handles_labels()[0][0])
         labels.append(fig.axes[0].get_legend_handles_labels()[1][0])
@@ -175,9 +212,8 @@ class SIMA_data:
         """
         funcion que realiza el corte de los datos a partir de unas fechas dadas
         """
-        self.data_hour.index = pd.to_datetime(self.data_hour["Dates"])
-        self.section = self.data_hour.loc[(self.data_hour.index >= date_i) &
-                                          (self.data_hour.index <= date_f)]
+        self.section = self.data.loc[(self.data.index >= date_i) &
+                                     (self.data.index <= date_f)]
 
     def calc_season_hour_mean(self, station):
         """
