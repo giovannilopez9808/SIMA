@@ -272,38 +272,6 @@ def count_days(date_i, date_f):
     return days
 
 
-def count_days_per_month(date_i, date_f):
-    year, month, day = date_f
-    day_initial = count_days(date_i, date_f)
-    year, month_f = validate_date(date=[year, month])
-    day_final = day_initial+count_days(date_i=date_i,
-                                       date_f=[year, month_f, day])
-    return day_initial, day_final
-
-
-def count_days_per_year(date_i, date_f):
-    year, month, day = date_f
-    day_initial = count_days(date_i, date_f)
-    day_final = day_initial+count_days(date_i=date_i,
-                                       date_f=[year+1, 1, day])
-    return day_initial, day_final
-
-
-def validate_date(date):
-    year, month = date
-    month += 1
-    if month > 12:
-        month = 1
-        year += 1
-    return year, month
-
-
-def obtain_month(year, day):
-    month = (datetime.date(year, 1, 1) +
-             datetime.timedelta(days=day)).month
-    return month
-
-
 def obtain_month_names(months):
     names = []
     for month in months:
