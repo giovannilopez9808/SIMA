@@ -34,4 +34,4 @@ for file in files:
             datas.append(n)
     datas = np.round((datas/total)*100, 2)
     for data, name in zip(datas, names):
-        print(name[0], "\t", name[1], "\t\t", data)
+        print("{:10} {:4} {:.1f}".format(name[0], name[1], data))
