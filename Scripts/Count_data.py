@@ -6,7 +6,7 @@ dir_stations = "../Stations/"
 stations = listdir(dir_stations)
 stations = [station.upper() for station in stations]
 files = ["2015", "2016", "2017", "2018", "2019", "2020"]
-measurements = ["PM10"]
+measurements = ["SR"]
 for file in files:
     names = []
     datas = []
