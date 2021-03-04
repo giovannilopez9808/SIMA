@@ -39,24 +39,21 @@ class SIMA_data:
         """
         # Limpieza de columnas que no seran usadas
         for key in self.data.keys():
-            if not key in ["Dates", "Hours", self.station]:
+            if not key in ["Dates", self.station]:
                 self.data = self.data.drop(key, 1)
         for key in self.data_hour.keys():
-            if not key in ["Dates", "Hours", self.station]:
+            if not key in ["Dates", self.station]:
                 self.data_hour = self.data_hour.drop(key, 1)
 
     def index_to_datetime(self):
         """
         Funcion que realiza el formato a Datetime el index de cada Dataframe
         """
-        # Formatea la hora a dos digitos
-        self.data['Hours'] = self.data['Hours'].astype(str).str.zfill(2)
         # Une fecha con horas
-        self.data['Datetime'] = self.data["Dates"] + ' ' + self.data['Hours']
         # Formato datetime
-        self.data['Datetime'] = pd.to_datetime(self.data['Datetime'])
-        self.data.index = self.data['Datetime']
-        self.data = self.data.drop(['Dates', 'Hours', 'Datetime'], axis=1)
+        self.data['Dates'] = pd.to_datetime(self.data['Dates'])
+        self.data.index = self.data['Dates']
+        self.data = self.data.drop(["Dates"], axis=1)
         self.data_hour["Dates"] = pd.to_datetime(self.data_hour["Dates"])
         self.data_hour.index = self.data_hour["Dates"]
         self.data_hour = self.data_hour.drop("Dates", axis=1)
@@ -167,7 +164,7 @@ class SIMA_data:
                     label=title, ls="--", marker="o",
                     color=color, alpha=0.75)
 
-    def plot_month_means_Rain(self, Rain_data_title):
+    def plot_month_means_Rainfall(self, Rain_data_title):
         """
         Funcion que grafica en diferentes subplots el promedio mensual en
         cada año junto con los datos de lluvia
@@ -184,14 +181,14 @@ class SIMA_data:
             ax.set_xticks(choose_months)
             ax.set_xticklabels(month_names, rotation=45, fontsize=12)
             ax.set_xlim(1, 12)
-            ax.set_ylim(50, 110)
+            ax.set_ylim(30, 110)
             ax.set_title("Year: {}".format(year))
             ax.grid(ls="--", color="grey", alpha=0.5, lw=2)
             # Ploteo del valor de PM10
             ax.plot(np.arange(1, 13),
                     self.month_mean[year], ls="--", color="purple", marker="o", label="PM$_{10}$")
             Rain_data, title = Rain_data_title
-            ax2.set_ylim(0, 0.5)
+            ax2.set_ylim(0, 16)
             if not ax in [axs[2], axs[5]]:
                 ax2.set_yticks(([]))
             # Ploteo del valor de lluvias
