@@ -19,9 +19,9 @@ for station, title, ax in zip(inputs["stations"], inputs["stations titles"], axs
                       station,
                       inputs["particle type"])
     PM_10.read_data(inputs["path data"])
-    PM_10.cut_year('2020-01-01', '2020-12-31')
+    PM_10.cut_data_year('2020-01-01', '2020-12-31')
     PM_10_2020 = PM_10.section
-    PM_10.cut_year('2015-01-01', '2019-12-31')
+    PM_10.cut_data_year('2015-01-01', '2019-12-31')
     PM_10_2019 = PM_10.section
     PM_10_2019_month_mean = PM_10_2019.groupby(PM_10_2019.index.month).mean()
     PM_10_2020_month_mean = PM_10_2020.groupby(PM_10_2020.index.month).mean()

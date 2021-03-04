@@ -205,12 +205,20 @@ class SIMA_data:
                    ncol=5, frameon=False, fontsize=12)
         plt.show()
 
-    def cut_year(self, date_i, date_f):
+    def cut_data_year(self, date_i, date_f):
         """
         funcion que realiza el corte de los datos a partir de unas fechas dadas
         """
         self.section = self.data.loc[(self.data.index >= date_i) &
                                      (self.data.index <= date_f)]
+
+    def cut_data_hour_year(self, date_i, date_f):
+        """
+        funcion que realiza el corte de los datos a partir de unas fechas dadas
+        """
+        self.section = self.data_hour.loc[(self.data_hour.index >= date_i) &
+                                          (self.data_hour.index <= date_f)]
+                                          
 
     def calc_season_hour_mean(self, station):
         """

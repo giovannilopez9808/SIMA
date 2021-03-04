@@ -21,7 +21,7 @@ for station, title, color in zip(stations, stations_titles, colors):
         inputs["particle type"],
     )
     PM_data.read_data(inputs["path data"])
-    PM_data.cut_year("2018-07-01", "2018-08-01")
+    PM_data.cut_data_year("2018-07-01", "2018-08-01")
     PM_2018 = PM_data.section
     plt.plot(np.arange(len(PM_2018)), PM_2018,
              label=title, color=color)

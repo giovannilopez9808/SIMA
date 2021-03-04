@@ -15,7 +15,7 @@ class AOD_OMI_data:
 
     def clean_data(self):
         for key in self.data.keys():
-            if not key in ["Dates", self.wavelength+"nm"]:
+            if not key in [self.wavelength+"nm"]:
                 self.data = self.data.drop(key, 1)
 
     def calc_month_mean(self):
@@ -29,6 +29,6 @@ class AOD_OMI_data:
                                                          "nm"][month_consecutive]
                 month_consecutive += 1
 
-    def cut_year(self, date_i, date_f):
+    def cut_data_year(self, date_i, date_f):
         self.section = self.data.loc[(self.data.index >= date_i) &
                                      (self.data.index < date_f)]
