@@ -1,10 +1,10 @@
 \subsubsection{Algortimo para determinar el AOD correspondiente a la medición}
-En cada estación de monitoreo no necesariamente miden sin nubosidad al mismo tiempo, esto provoca que la selección de días de cielo despejado no sea la misma en todas las estaciones. A partir de la selección de los días de cielo despejado se creó una base de datos que contiene: día, mes y año en formato yymmdd y el TOC. Se escribió un código en el lenguaje \textit{Python}, el cual crea el archivo de input para el modelo SMARTS haciendo uso de la base de datos de días de cielo despejado usando un AOD de 0.5 ($AOD=0.5$), enseguida ejecutará el modelo para obtener como resultado una matriz de espectros solares por cada minuto entre las 9 y 16 horas, para calcular la irradiancia solar con base a la ecuación \ref{eq:irradiance}.
+A partir de la selección de los días de cielo despejado se creó una base de datos que contiene: día, mes y año en formato yymmdd y el TOC. Se escribió un código en el lenguaje \textit{Python}, el cual crea el archivo de input para el modelo SMARTS haciendo uso de la base de datos de días de cielo despejado usando un AOD de 0.5 ($AOD=0.5$), enseguida ejecutará el modelo para obtener como resultado una matriz de espectros solares por cada minuto entre las 9 y 16 horas, para calcular la irradiancia solar con base a la ecuación \ref{eq:irradiance}.
 \begin{equation}
     I(t) = \int\limits_{285}^{2800} E(\lambda,t) d\lambda
     \label{eq:irradiance}
 \end{equation}
-Al tener la irradiancia solar diaria, se establece el valor máximo de irradiancia solar y se calcula el promedio centrado en 1 hora. Se obtiene la diferencia relativa entre el promedio de la irradiancia solar máxima medida y la irradiancia solar obtenida con el modelo por medio de la ecuación \ref{eq:rd}.
+Se obtiene el valor máximo de irradiancia solar y se calcula el promedio centrado en 1 hora, en seguida se calcula la diferencia relativa entre el promedio de la irradiancia solar máxima medida y la irradiancia solar obtenida con el modelo usando la ecuación \ref{eq:rd}.
 \begin{equation}
     RD = \left(\frac{Model-Measurement}{Measurement}\right)*100\%
     \label{eq:rd}
@@ -12,7 +12,7 @@ Al tener la irradiancia solar diaria, se establece el valor máximo de irradianc
 Inicialmente el límite inferior y superior en la búsqueda del AOD es de 0 y 1 respectivamente $(AOD_i=0, AOD_f=1)$, dependiendo del valor de la diferencia relativa se calcula un valor al AOD y de los límites de la búsqueda, este procedimiento realiza el siguiente algoritmo:
 \begin{enumerate}
     \item Si la diferencia relativa tiene un valor mayor a 11\% $(RD>11)$, entonces el límite inferior de la búsqueda es el AOD con el cual se produjo es diferencia relativa $(AOD_i=AOD)$.
-    \item Si la diferencia relativa tiene un valor menor a 9\% $(RD<94)$, entonces el límite superior de la búsqueda es el AOD con el cual se produjo esa diferencia relativa $(AOD_f=AOD)$.
+    \item Si la diferencia relativa tiene un valor menor a 9\% $(RD<9)$, entonces el límite superior de la búsqueda es el AOD con el cual se produjo esa diferencia relativa $(AOD_f=AOD)$.
 \end{enumerate}
 En cualquiera de los dos casos, el valor de AOD de la siguiente iteración se calcula de la siguiente manera:
 \begin{equation*}
