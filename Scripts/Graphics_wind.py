@@ -1,8 +1,10 @@
-from functions_SIMA import *
 from functions_season import *
+from functions_SIMA import *
 import plotly.express as px
 import pandas as pandas
+from functions import *
 import numpy as np
+import os
 
 
 def obtain_direction_and_speed(data):
@@ -38,44 +40,49 @@ def plot_wind_rose(data, title, path, name):
 
 inputs = {"year i": 2015,
           "year f": 2020,
-          "station": "NORESTE",
+          "dir stations": "../Stations/",
           "path data": "../Archivos/",
           "dir graphics": "../Graphics/"}
 
-WSR = SIMA_data(inputs["year i"],
-                inputs["year f"],
-                inputs["station"],
-                'WSR')
-WDR = SIMA_data(inputs["year i"],
-                inputs["year f"],
-                inputs["station"],
-                'WDR')
-WDR.read_data(inputs['path data'])
-WSR.read_data(inputs['path data'])
-years = WDR.years
-data = {'WSR': WSR.data[inputs["station"]],
-        'WDR': WDR.data[inputs["station"]]}
-wind_data = pd.concat(data, axis=1)
-obtain_direction_and_speed(wind_data)
-rose_data = obtain_rose_data(wind_data)
-plot_wind_rose(rose_data,
-               inputs["station"].capitalize(),
-               inputs["dir graphics"]+"Wind_rose/General/",
-               inputs["station"].capitalize())
-for year in years:
-    rose_data = wind_data.loc[(wind_data.index >= str(year)+'-01-01')
-                              & (wind_data.index < str(year+1)+'-01-01')]
-    rose_data = obtain_rose_data(rose_data)
+stations = [station.capitalize()
+            for station in sorted(os.listdir(inputs["dir stations"]))]
+for station in stations:
+    print("Analizando la estacion {}".format(station))
+    mkdir(station, path=inputs["dir graphics"]+"Wind_rose/")
+    WSR = SIMA_data(inputs["year i"],
+                    inputs["year f"],
+                    station.upper(),
+                    'WSR')
+    WDR = SIMA_data(inputs["year i"],
+                    inputs["year f"],
+                    station.upper(),
+                    'WDR')
+    WDR.read_data(inputs['path data'])
+    WSR.read_data(inputs['path data'])
+    years = WDR.years
+    data = {'WSR': WSR.data[station.upper()],
+            'WDR': WDR.data[station.upper()]}
+    wind_data = pd.concat(data, axis=1)
+    obtain_direction_and_speed(wind_data)
+    rose_data = obtain_rose_data(wind_data)
     plot_wind_rose(rose_data,
-                   inputs["station"].capitalize()+" "+str(year),
-                   inputs["dir graphics"]+"Wind_rose/"+inputs["station"]+"/",
-                   str(year))
-data_season = season_data(wind_data)
-data_season.calc_season_data()
-for season in data_season.seasons:
-    data = data_season.obtain_season_data(season)
-    rose_data = obtain_rose_data(data)
-    plot_wind_rose(rose_data,
-                   inputs["station"].capitalize()+" "+season,
-                   inputs["dir graphics"]+"Wind_rose/"+inputs["station"]+"/",
-                   season)
+                   station.capitalize(),
+                   inputs["dir graphics"]+"Wind_rose/General/",
+                   station.capitalize())
+    for year in years:
+        rose_data = wind_data.loc[(wind_data.index >= str(year)+'-01-01')
+                                  & (wind_data.index < str(year+1)+'-01-01')]
+        rose_data = obtain_rose_data(rose_data)
+        plot_wind_rose(rose_data,
+                       station.capitalize()+" "+str(year),
+                       inputs["dir graphics"]+"Wind_rose/"+station+"/",
+                       str(year))
+    data_season = season_data(wind_data)
+    data_season.calc_season_data()
+    for season in data_season.seasons:
+        data = data_season.obtain_season_data(season)
+        rose_data = obtain_rose_data(data)
+        plot_wind_rose(rose_data,
+                       station.capitalize()+" "+season,
+                       inputs["dir graphics"]+"Wind_rose/"+station+"/",
+                       season)
