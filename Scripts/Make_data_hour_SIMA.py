@@ -1,6 +1,6 @@
 import pandas as pd
 dir_data = "../Archivos/"
-particle_type = "RAINF"
+particle_type = "WSR"
 hour_select = 13
 data = pd.read_csv(dir_data+particle_type+"_SIMA.csv")
 data["Dates"] = pd.to_datetime(data["Dates"])

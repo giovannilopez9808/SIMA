@@ -218,7 +218,6 @@ class SIMA_data:
         """
         self.section = self.data_hour.loc[(self.data_hour.index >= date_i) &
                                           (self.data_hour.index <= date_f)]
-                                          
 
     def calc_season_hour_mean(self, station):
         """
