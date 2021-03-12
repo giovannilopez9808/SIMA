@@ -101,6 +101,22 @@ class SIMA_data:
                     data_mean[self.station][month_consecutive], 1)
                 month_consecutive += 1
 
+    def calc_hourly_day_mean(self):
+        self.days = {
+            0: "monday",
+            1: "tuesday",
+            2: "wednesday",
+            3: "thursday",
+            4: "friday",
+            5: "saturday",
+            6: "sunday",
+        }
+        days_names = [self.days[day] for day in self.days]
+        self.hourly_day_mean = pd.DataFrame(columns=days_names)
+        for day in self.days:
+            self.hourly_day_mean[self.days[day]
+                      ] = self.data.loc[self.data.index.weekday == day]
+
     def plot_month_means_AOD(self, AOD_list, MODIS_list):
         """
         Funcion que grafica en diferentes subplots el promedio mensual en
