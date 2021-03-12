@@ -39,9 +39,11 @@ for station in stations:
     ax1.set_title("PRE-COVID", fontsize=14)
     ax2.set_title("COVID", fontsize=14)
     for season in PM10_COVID.seasons:
-        ax1.plot(list(PM10_PRE_COVID.hourly_season_mean.index), list(PM10_PRE_COVID.hourly_season_mean[season]),
+        ax1.plot(list(PM10_PRE_COVID.hourly_season_mean.index),
+                 list(PM10_PRE_COVID.hourly_season_mean[season]),
                  label=season, lw=2.5)
-        ax2.plot(list(PM10_COVID.hourly_season_mean.index), list(PM10_COVID.hourly_season_mean[season]),
+        ax2.plot(list(PM10_COVID.hourly_season_mean.index),
+                 list(PM10_COVID.hourly_season_mean[season]),
                  label=season, lw=2.5)
     lines, labels = fig.axes[-1].get_legend_handles_labels()
     fig.legend(lines, labels, loc="upper center",
