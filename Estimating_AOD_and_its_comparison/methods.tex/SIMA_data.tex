@@ -1,21 +1,21 @@
 \subsection{Study Area}
-El área metropolitana de Monterrey (MMA) se encuentra en la parte noreste de México, con una población de 4.7 millones de personas distribuidas 18 municipios que en total abarcan 7,657 m$^2$ \cite{inegi2015}. Las principales actividades económicas se encuentran comercio, servicios inmobiliarios, construcción y fabricación de maquinaria y equipo, el estado de Nuevo León concentra 213 grupos industriales, la mayoría con sede en el MMA. El MMA está rodeado por la Sierra Madre Oriental, el Cerro de la Silla, el Cerro de las Mitras y el Cerro del Topo Chico (figura \ref{fig:map}), las cuales crean una barrera física natural para la circulación del viento que impiden el desalojo del aire contaminado hacia el exterior de la zona.\cite{proaire2008}
+El área metropolitana de Monterrey (MMA) se localiza en la parte noreste de México, con una población de 4.7 millones de personas distribuidas 18 municipios que en total abarcan 7,657 m$^2$ \cite{inegi2015}. Las principales actividades económicas se encuentran comercio, servicios inmobiliarios, construcción y fabricación de maquinaria y equipo que se realizan 213 grupos industriales, la mayoría con sede en el MMA. El MMA está rodeado por la Sierra Madre Oriental, el Cerro de la Silla, el Cerro de las Mitras y el Cerro del Topo Chico (figura \ref{fig:map}), las cuales crean una barrera física natural para la circulación del viento que impiden el desalojo del aire contaminado hacia el exterior de la zona.\cite{proaire2008}
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.2]{images/map.png}
     \caption{Área Metropolitana de Monterrey con sus principales cerros y sierras.}
     \label{fig:map}
 \end{figure}
-El Sistema Integral de Monitoreo Ambiental (SIMA) inició sus operaciones en el año 1992 con cinco estaciones de monitoreo , para el año 2017 el número de estaciones en operación aumentó a 13, siendo las estaciones Universidad, Serena y Cadereyta las últimas construidas en este año \cite{simapage}. La localización geográfica y clasificación de las estaciones de monitoreo se encuentran en la tabla \ref{table:stations_loc}. La clasificación de las estaciones está dada por la descripción dada por la Secretaría de Medio Ambiente y Recursos Natuales (SEMARNAT). \cite{proaire2016}
+El Sistema Integral de Monitoreo Ambiental (SIMA) inició sus operaciones en el año 1992 con cinco estaciones de monitoreo. En el año 2017 el número de estaciones en operación aumentó a 13, siendo las estaciones Universidad, Serena y Cadereyta las últimas instaladas en este año \cite{simapage}. La localización geográfica y clasificación de las estaciones de monitoreo se encuentran en la Tabla \ref{table:stations_loc}. La clasificación de las estaciones corresponde con la descripción dada por la Secretaría de Medio Ambiente y Recursos Natuales (SEMARNAT). \cite{proaire2016}
 \input{table_stations.tex}
 \subsection{Meteorology, solar irradiance and PM\textsubscript{10} measurements}
-En la tabla \ref{table:measurements_SIMA} se muestra el porcentaje de mediciones anuales en cada estación de la red del SIMA, se relleno en rojo las estaciones que tienen un porcentaje menor a 75\%, ya que con esto se considera que las mediciones no son representativas \cite{molina2019}.
+En la Tabla \ref{table:measurements_SIMA} se muestra el porcentaje de mediciones anuales disponibles en cada estación de la red del SIMA. En rojo se representan las estaciones que tienen un porcentaje menor a 75\%, ya que con esto se considera que las mediciones son insuficientes para una estadística anual \cite{molina2019}.
 \input{table_distribution.tex}
-Se seleccionaron las estaciones de San Nicolás y San Bernabé ya que el radiómetro instalado es el Pyranometer Model 095 \cite{MetOne}. Se seleccionaron los días de cielo despejado a partir de las gráficas, el criterio de selección consiste en grafícar los datos de irradiancia solar por día y si forma una función gaussiana (figura \ref{fig:clear_days}) entonces ese día contiene datos de cielo despejado.
+Se seleccionaron las estaciones de San Nicolás y San Bernabé ya que el radiómetro instalado es el Pyranometer Model 095. Se seleccionaron los días de cielo despejado, el criterio de clasificación consiste en grafícar la irradiancia solar diaria y si forma una función gaussiana (figura \ref{fig:clear_days}) entonces ese día contiene hubo cielo despejado.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.5]{images/Clear_days.png}
-    \caption{Promedio de las mediciones de irradiancia solar para cada epoca del año sobre el MMA en las estaciones San Nicolás y San Bernabé.}
+    \caption{Promedio de la irradiancia solar para cada epoca del año en las estaciones San Nicolás y San Bernabé.}
     \label{fig:clear_days}
 \end{figure}
 En cada estación de monitoreo no necesariamente miden sin nubosidad al mismo tiempo, esto provoca que la selección de días de cielo despejado no sea la misma en todas las estaciones.
