@@ -16,11 +16,11 @@ class SIMA_data:
 
     def read_data_SIMA(self,path_data):
         self.data=pd.read_csv(path_data + self.file + '_SIMA.csv')
-        self.data['Hours'] = self.data['Hours'].astype(str).str.zfill(2)
-        self.data['Datetime'] = self.data["Dates"] + ' ' + self.data['Hours']
-        self.data['Datetime']=pd.to_datetime(self.data['Datetime'])
+        # self.data['Hours'] = self.data['Hours'].astype(str).str.zfill(2)
+        # self.data['Datetime'] = self.data["Dates"] + ' ' + self.data['Hours']
+        self.data['Datetime']=pd.to_datetime(self.data['Dates'])
         self.data.index=self.data['Datetime']
-        self.data=self.data.drop(['Dates','Hours','Datetime'], axis=1)
+        self.data=self.data.drop(['Dates','Datetime'], axis=1)
 
     def calc_month_mean(self,station,year_i,year_f):
         self.years = [year for year in range(year_i, year_f+1)]
