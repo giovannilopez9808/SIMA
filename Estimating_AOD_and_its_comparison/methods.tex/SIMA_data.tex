@@ -11,11 +11,13 @@ El Sistema Integral de Monitoreo Ambiental (SIMA) inició sus operaciones en el 
 \subsection{Meteorology, solar irradiance and PM\textsubscript{10} measurements}
 En la Tabla \ref{table:measurements_SIMA} se muestra el porcentaje de mediciones anuales disponibles en cada estación de la red del SIMA. En rojo se representan las estaciones que tienen un porcentaje menor a 75\%, ya que con esto se considera que las mediciones son insuficientes para una estadística anual \cite{molina2019}.
 \input{table_distribution.tex}
-Se seleccionaron las estaciones de San Nicolás y San Bernabé ya que el radiómetro instalado es el Pyranometer Model 095, el radiómetro mide en el rango 285nm a 2800nm. Se realizó una catálogo de los datos de irradiancia solar para obtener los días de cielo despejado, el criterio de clasificación consiste en graficar la irradiancia solar a lo largo de las horas y si forma una función gaussiana (figura \ref{fig:clear_days}) entonces el conjunto de datos representa un cielo despejado.
+Se seleccionaron las estaciones de San Nicolás y San Bernabé ya que el radiómetro instalado es el Pyranometer Model 095, el radiómetro mide en el rango 285nm a 2800nm. Se realizó una catálogo de los datos de irradiancia solar para obtener los días de cielo despejado, el criterio de clasificación consiste en graficar la irradiancia solar a lo largo de las horas y si forma una función gaussiana (figura \ref{fig:clear_days}) entonces el conjunto de datos representa un cielo despejado. En cada estación de monitoreo no necesariamente miden sin nubosidad al mismo tiempo, esto provoca que la selección de días de cielo despejado no sea la misma en todas las estaciones.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.5]{images/Clear_days.png}
     \caption{Promedio de la irradiancia solar para cada epoca del año en las estaciones San Nicolás y San Bernabé.}
     \label{fig:clear_days}
 \end{figure}
-En cada estación de monitoreo no necesariamente miden sin nubosidad al mismo tiempo, esto provoca que la selección de días de cielo despejado no sea la misma en todas las estaciones.
+Los instrumentos y unidades de medida que se usaron para realizar la medición de la dirección y velocidad del viento, la precipitación y las partículas suspendidas menores a 10$\mu m$ (PM\textsubscript{10}) estan enlistados en la Tabla \ref{table:instruments}.
+\input{table_instruments.tex}
+La información recabada en los instrumentos es monitoreada continuamente y resumida en promedios para cada hora. La calibración y mantenimiento esta regida por los protocolos NOM-156-SEMARNAT-2012 \cite{SEMARNAT2012} y NOM-172-SEMARNAT-2019 \cite{SEMARNAT2019}.
