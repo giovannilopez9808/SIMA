@@ -6,6 +6,64 @@ from functions_AOD import *
 import pandas as pd
 
 
+def plot_month_means_AOD(data_list, years):
+    """
+    Funcion que grafica en diferentes subplots el promedio mensual en
+    cada año junto con los datos de AOD promedio mensual
+    """
+    # Calculo de los nombres de los meses a imprimir
+    choose_months = np.arange(1, 11, 3)
+    choose_months = np.append(choose_months, 12)
+    month_names = obtain_month_names(choose_months)
+    # Divisón de las graficas
+    fig, axs = plt.subplots(2, 3,
+                            sharex=True,
+                            sharey=True,
+                            figsize=(12, 9))
+    plt.subplots_adjust(left=0.083, right=0.9, top=0.9)
+    axs = np.reshape(axs, 6)
+    for year, ax in zip(years, axs):
+        ax2 = ax.twinx()
+        ax.set_xticks(choose_months)
+        ax.set_xticklabels(month_names, rotation=45, fontsize=12)
+        ax.set_xlim(1, 12)
+        ax.set_ylim(20, 140)
+        ax.set_yticks(np.arange(20, 160, 20))
+        ax.set_title("Year: {}".format(year))
+        ax.grid(ls="--", color="grey", alpha=0.5, lw=2)
+        for data, color, label, ax_data in data_list:
+            if ax_data == "AOD":
+                ax_plot = ax2
+            else:
+                ax_plot = ax
+            months, data = data_to_plot(data, year)
+            ax_plot.plot(months, data,
+                         ls="--", color=color,
+                         marker="o", label=label, alpha=0.5)
+        ax2.set_ylim(0, 1.2)
+        if not ax in [axs[2], axs[5]]:
+            ax2.set_yticks(([]))
+        else:
+            ax2.set_yticks(np.linspace(0, 1.2, 5))
+    fig.text(0.02, 0.5, "PM$_{10}$", rotation=90, fontsize=14)
+    fig.text(0.95, 0.5, "AOD$_{550nm}$", rotation=-90, fontsize=14)
+    lines, labels = fig.axes[0].get_legend_handles_labels()
+    lines.append(fig.axes[-1].get_legend_handles_labels()[0][0])
+    labels.append(fig.axes[-1].get_legend_handles_labels()[1][0])
+    fig.legend(lines, labels, loc="upper center",
+               ncol=7, frameon=False, fontsize=8)
+
+
+def data_to_plot(data, year):
+    data_plot = []
+    months = []
+    for month in range(1, 13):
+        if data[year][month] != 0:
+            data_plot.append(data[year][month])
+            months.append(month)
+    return months, data_plot
+
+
 def read_data(PM, MODIS, OMI, path):
     MODIS.read_data(path)
     OMI.read_data(path)
@@ -23,47 +81,53 @@ inputs = {
     "year initial": 2015,
     "year final": 2020,
     "path data": "../Archivos/",
-    "station": "NORESTE",
     "path stations": "../Stations/",
+    "path graphics": "../Graphics/",
+    "stations names file": "Stations_name",
     "particle type": "PM10",
     "AOD MODIS file": "MODIS_AOD",
     "AOD MODIS type": "AOD Deep Blue",
     "AOD OMI scale": "1",
     "AOD OMI wavelength": "500"
 }
-PM_data = SIMA_data(
-    inputs["year initial"],
-    inputs["year final"],
-    inputs["station"],
-    inputs["particle type"],
-)
-AOD_data_list = AOD_list(
-    inputs["path stations"],
-    inputs["station"],
-    inputs["year initial"],
-    inputs["year final"]
-)
-MODIS_data_list = MODIS_data(
-    inputs["AOD MODIS file"],
-    inputs["year initial"],
-    inputs["year final"],
-    inputs["AOD MODIS type"],
-)
+stations = pd.read_csv(
+    inputs["path data"]+inputs["stations names file"]+".csv")
+stations_len = stations["Nombre"].count()
+colors = ['firebrick',
+          'deeppink',
+          'darkorange',
+          'gold',
+          'limegreen',
+          'darkgreen',
+          'darkslategrey',
+          'darkturquoise',
+          'dodgerblue',
+          'saddlebrown',
+          'indigo',
+          'blueviolet',
+          'lightsalmon']
+data_plot = []
+for station, color in zip(range(stations_len), colors):
+    PM_data = SIMA_data(
+        inputs["year initial"],
+        inputs["year final"],
+        stations["Nombre"][station],
+        inputs["particle type"],
+    )
+    PM_data.read_data(inputs["path data"])
+    PM_data.calc_month_hour_mean()
+    data_plot.append([PM_data.month_hour_mean,
+                      color,
+                      stations["Name"][station].capitalize(),
+                      "PM10"])
 OMI_data_list = AOD_OMI_data(
     inputs["year initial"],
     inputs["year final"],
     inputs["AOD OMI wavelength"],
     inputs["AOD OMI scale"],
 )
-read_data(PM_data, MODIS_data_list, OMI_data_list, inputs["path data"])
-calc_month_mean_of_data(PM_data, AOD_data_list, MODIS_data_list, OMI_data_list)
-print(PM_data.month_hour_mean.head())
-PM_data.plot_month_means_AOD([
-    [AOD_data_list.pristine.month_mean, "Pristine", "#f46188"],
-    [AOD_data_list.moderate.month_mean, "Moderate", "#505bda"],
-    [AOD_data_list.SSAAER_pristine.month_mean, "SSA Pristine", "#ffaac3"],
-    [AOD_data_list.SSAAER_moderate.month_mean, "SSA Moderate", "#1a2849"], ],
-    [[MODIS_data_list.month_mean, "MODIS", "red"],
-     [OMI_data_list.month_mean, "OMI", "green"]],)
-# PM_data.calc_season_hour_mean("NORESTE")
-# PM_data.plot_season_means()
+OMI_data_list.read_data(inputs["path data"])
+OMI_data_list.calc_month_mean()
+data_plot.append([OMI_data_list.month_mean, "green", "OMI", "AOD"])
+plot_month_means_AOD(data_plot, PM_data.years)
+plt.savefig(inputs["path graphics"]+"PM10_AOD_OMI.png", dpi=400)
