@@ -15,7 +15,7 @@ class AOD_OMI_data:
 
     def clean_data(self):
         for key in self.data.keys():
-            if not key in [self.wavelength+"nm"]:
+            if not key in [self.wavelength]:
                 self.data = self.data.drop(key, 1)
 
     def calc_month_mean(self):
