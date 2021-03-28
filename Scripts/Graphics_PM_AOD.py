@@ -52,6 +52,7 @@ def plot_month_means_AOD(data_list, years):
     labels.append(fig.axes[-1].get_legend_handles_labels()[1][0])
     fig.legend(lines, labels, loc="upper center",
                ncol=7, frameon=False, fontsize=8)
+    plt.show()
 
 
 def data_to_plot(data, year):
@@ -82,13 +83,13 @@ inputs = {
     "year final": 2020,
     "path data": "../Archivos/",
     "path stations": "../Stations/",
-    "path graphics": "../Graphics/",
+    "path graphics": "../Graphics/PM10/",
     "stations names file": "Stations_name",
     "particle type": "PM10",
     "AOD MODIS file": "MODIS_AOD",
     "AOD MODIS type": "AOD Deep Blue",
     "AOD OMI scale": "1",
-    "AOD OMI wavelength": "500"
+    "AOD OMI wavelength": "500nm"
 }
 stations = pd.read_csv(
     inputs["path data"]+inputs["stations names file"]+".csv")
@@ -130,4 +131,4 @@ OMI_data_list.read_data(inputs["path data"])
 OMI_data_list.calc_month_mean()
 data_plot.append([OMI_data_list.month_mean, "green", "OMI", "AOD"])
 plot_month_means_AOD(data_plot, PM_data.years)
-plt.savefig(inputs["path graphics"]+"PM10_AOD_OMI.png", dpi=400)
+plt.savefig(inputs["path graphics"]+"AOD_OMI.png", dpi=400)

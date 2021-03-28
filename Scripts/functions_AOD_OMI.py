@@ -21,12 +21,12 @@ class AOD_OMI_data:
     def calc_month_mean(self):
         self.month_mean = pd.DataFrame(
             columns=self.years, index=[i for i in range(1, 13)])
+        print(self.data)
         data_mean = self.data.resample("MS").mean()
         month_consecutive = 0
         for year in self.years:
             for month in range(1, 13):
-                self.month_mean[year][month] = data_mean[self.wavelength +
-                                                         "nm"][month_consecutive]
+                self.month_mean[year][month] = data_mean[self.wavelength][month_consecutive]
                 month_consecutive += 1
 
     def cut_data_year(self, date_i, date_f):
