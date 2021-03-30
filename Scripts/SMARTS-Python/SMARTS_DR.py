@@ -11,7 +11,7 @@ input_parameters = {
     "path results": "Results_SMARTS_DR_pristine/",
     "file results": "Data_found_pristine.csv",
     "file data": "datos.txt",
-    "stations": ["noroeste","noreste"],
+    "stations": ["suroeste", "centro"],
     "hour initial": 9,
     "hour final": 16,
     "lon initial": 285,
