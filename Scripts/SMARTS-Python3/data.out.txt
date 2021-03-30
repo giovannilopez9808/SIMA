@@ -1,0 +1,194 @@
+
+******************   SMARTS, version 2.9.5   *******************
+
+ Simple Model of the Atmospheric Radiative Transfer of Sunshine
+     Chris A. Gueymard, Solar Consulting Services
+                    December 2005
+
+    This model is documented in FSEC Report PF-270-95
+ and in a Solar Energy paper, vol. 71, No.5, 325-346 (2001)
+
+ NOTE: These references describe v. 2.8 or earlier!!!
+ See the User's Manual for details on the considerable 
+ changes that followed...
+
+****************************************************************
+
+   Reference for this run: AOD=0.134                                                       
+
+----------------------------------------------------------------
+
+* ATMOSPHERE : USSA        AEROSOL TYPE: USER                                                            
+
+* INPUTS:
+     Pressure (mb) =  953.270   Ground Altitude (km) =   0.5120
+     Height above ground (km) =   0.0000
+     Relative Humidity (%) = 47.648   Precipitable Water (cm) =  1.1395
+     Ozone (atm-cm) = 0.2550 or 255.0 Dobson Units
+   AEROSOLS:  Optical Depth at 500 nm = 0.1474      Optical depth at 550 nm = 0.1340
+       Angstrom's Beta = 0.0737       Schuepp's B = 0.0640
+     Meteorological Range (km) =   61.0   Visibility (km) =   46.7
+     Alpha1 = 1.0000  Alpha2 = 1.0000   Mean Angstrom's Alpha = 1.0000
+     Season = SPRING/SUMMER           
+
+* TEMPERATURES:
+     Instantaneous at site's altitude = 284.8 K
+     Daily average (reference) at site's altitude = 284.8 K
+     Stratospheric Ozone and NO2 (effective) = 225.2 K
+
+** WARNING #13 *********
+\\ Ground reflectance data for CONCRETE                
+\\ extend only from 0.3000 to 1.3000 �m,
+\\ whereas the wavelength limits for this run are 0.2850 and 2.8000 �m.
+\\ Consequently, reflectance is fixed at 0.186 below 0.3000 �m and at 0.486 above 1.3000 �m.
+
+
+
+The following spectral variables will be output to file: data.ext.txt            
+
+ * Global_horizn_irradiance
+
+
+      Spectral ZONAL albedo data: CONCRETE                
+      with a reflection process: NON_LAMBERTIAN          
+
+
+* GEOMETRY (half-angles) OF THE SIMULATED RADIOMETER (deg.):
+   Slope =  0.00      Aperture =  2.90   Limit =  0.00
+
+** WARNING #11*********
+\\ The radiometer's Slope and Limit angles are not provided.
+\\ Circumsolar calculations will therefore be performed for
+\\ an average geometry corresponding to the Aperture angle.
+
+
+
+      Spectral LOCAL albedo data: DRY_LONG_GRASS          
+      with a reflection process: NON_LAMBERTIAN          
+
+
+
+====================================================================================================
+====================================================================================================
+
+* SOLAR POSITION (deg.):
+    Zenith Angle (apparent) = 56.071  Azimuth (from North) =  215.42
+
+      RELATIVE OPTICAL MASSES:
+  - Rayleigh =  1.788
+  - Water Vapor =  1.791
+  - Ozone =  1.784
+  - NO2 =  1.787
+  - Aerosols =  1.791
+
+  Results below are for this specific day:
+ Year = 2017   Month =  1  Day = 12   Hour (LST) = 14.900   Day of Year =  12
+   In Universal Time:
+   Day (UT) = 12   Hour (UT) = 20.900
+   Julian Day =  2457766.250  Declination = -21.521 deg.  Radius vector = 0.98351   Equation of Time (min) =  -8.463
+   Local Apparent Time (or Solar Time):  14.076
+
+
+
+ CO2 Mixing Ratio (ppmv):  390.0
+
+
+
+ Total column abundances (atm-cm) for all gases except H2O, and for normal/standard conditions:
+
+    BrO       CH2O        CH4      ClNO3         CO        CO2       HNO2       HNO3        NH3
+
+0.2500E-05 0.3000E-03 0.1244E+01 0.1200E-03 0.8171E-01 0.2948E+03 0.1000E-03 0.3610E-03 0.1521E-03
+
+
+     NO        NO2        NO3         N2        N2O         O2         O3         O4        SO2
+
+0.3005E-03 0.2034E-03 0.5000E-04 0.3427E+06 0.2318E+00 0.1580E+06 0.2550E+00 0.1580E+06 0.9620E-04
+
+
+
+ Corrected total column abundances for all gases (atm-cm)
+ with these realistic conditions: PRISTINE ATMOSPHERE     
+
+    BrO       CH2O        CH4      ClNO3         CO        CO2       HNO2       HNO3        NH3
+
+0.2500E-05 0.0000E+00 0.1244E+01 0.1200E-03 0.7171E-01 0.2948E+03 0.1000E-05 0.1561E-02 0.1521E-03
+
+
+     NO        NO2        NO3         N2        N2O         O2         O3         O4        SO2
+
+0.3005E-03 0.2034E-03 0.1000E-05 0.3427E+06 0.2318E+00 0.1580E+06 0.2543E+00 0.1580E+06 0.9620E-04
+
+
+
+
+* ANGLES (deg.) FOR TILTED SURFACE CALCULATIONS: 
+   Surface Tilt =  37.000   Surface Azimuth (from North) = 180.000
+   Incidence Angle =  31.491
+
+  Diffuse irradiance ratios (tilted plane/horizontal):
+      0.8993  (isotropic approximate conversion--for reference)
+      1.2464  (anisotropic conversion model--used here)
+
+
+
+*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
+
+** SPECTRUM:
+   Total (0-100 �m) Extraterrestrial Irradiance used here = 1412.29 W/m2
+  (i.e., 1.0338 times the selected solar constant, 1366.10 W/m2, due to the actual Sun-Earth distance.)
+   Source for selected solar spectrum: Gueymard_2003                                                   
+
+
+Wavelength Range =  280.0 to 2800.0 nm;  Number of Wavelengths =  1762
+
+*** BROADBAND IRRADIANCES (W/m2):
+
+* DIRECT BEAM AT NORMAL INCIDENCE:
+  Extraterrestrial = 1371.87   Terrestrial =  820.01   Atmospheric Transmittance = 0.5977
+
+* FOR THE HORIZONTAL PLANE:
+  Direct Beam =  457.70   Diffuse = 120.98   Global =  578.68   Clearness index, KT = 0.4097
+  Diffuse irradiance origination details:
+   Sky diffuse = 104.69   Back-scattered diffuse =  16.29
+
+* FOR THE TILTED PLANE: 
+  Direct Beam =  699.24   Sky Diffuse = 150.06   Ground Reflected =  18.28   Global =  849.30
+
+* EXPERIMENTAL (WITH CIRCUMSOLAR CORRECTION):
+  Direct Beam, Normal Incidence =  824.47   Diffuse Horizontal = 118.49   Global Horizontal =  578.68
+
+
+
+
+*** UV IRRADIANCES (W/m2):
+
+ TOTAL UV-A IRRADIANCE (315-400 nm) =  31.21952
+ TOTAL UV-B IRRADIANCE (280-315 nm) =  0.66620
+
+ TOTAL UV-A IRRADIANCE (320-400 nm) =  30.50234
+ TOTAL UV-B IRRADIANCE (280-320 nm) =  1.37060
+
+
+*** ACTION-WEIGHTED DOSE RATES (W/m2) USING SELECTED ACTION CURVES
+
+ ERYTHEMAL C.I.E. (McKinley & Diffey, 1987) = 0.8566E-01
+ ERYTHEMAL from Green et al. (1974) = 0.5072E-01
+ ERYTHEMAL from Green et al. (1975) = 0.6212E-01
+ ERYTHEMAL from Diffey (1982) modified by Bjorn (1989) = 0.1020E+00
+ DNA DAMAGE from Setlow (1974) = 0.1255E-02
+ PHOTOSYNTHESIS INHIBITION from Caldwell et al. (1986) = 0.7667E+00
+ ACGIH SAFETY SPECTRUM from Wester (1981) = 0.1351E-01
+ BIOLOGICAL ACTION from Caldwell (1971) and Green (1974) = 0.2295E-01
+ POLYCHROMATIC ACTION FOR HIGHER PLANTS from Caldwell et al. (1986) = 0.8326E-01
+ SYSTEMIC IMMUNOSUPPRESSION from deFabo et al. (1990)    = 0.1647E+00
+ DNA TO PROTEIN CROSSLINKS from Peak & Peak (1986) = 0.1386E-01
+ SKIN CARCINOGENESIS from deGruijl & VanderLeun (1994) = 0.1947E+00 (humans); 0.6574E-01 (mice)
+
+
+*** DOSE RATE IN MED/h from an ideal Robertson-Berger instrument = 0.1469E+01
+
+
+*** UV Index =   3.426
+
+
