@@ -94,5 +94,5 @@ for station in input_parameters["stations"]:
                         var = True
                     iter += 1
             else:
-                var = False
+                var = True
     AOD_file.close()
