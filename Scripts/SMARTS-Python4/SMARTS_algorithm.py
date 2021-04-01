@@ -120,12 +120,12 @@ class SMARTS:
         igas  ----> Card 6a
         """
         file = open("data.inp.txt", "w")
-        file.write(" 'AOD={}'\n".format(aod))
+        file.write(" 'AOD={} '\n".format(aod))
         # Card 2
         file.write(" 2\n")
         # Card 2a
         # lat,altit,height
-        file.write(" {} {} {}\n".format(self.lat, self.height, 0))
+        file.write(" {:.3f} {} {}\n".format(self.lat, self.height, 0))
         # Card 3
         # IATMOS
         file.write(" 1\n")
@@ -170,7 +170,7 @@ class SMARTS:
         file.write(" 2\n")
         # Card 12a
         # Wave min, Wave max, inter wave
-        file.write(" {} {} {}".format(self.lon_i, self.lon_f, 1))
+        file.write(" {} {} {}\n".format(self.lon_i, self.lon_f, 1))
         # Card 12b
         file.write(" 1\n")
         # Card 12c
@@ -190,7 +190,7 @@ class SMARTS:
         file.write(" 3\n")
         # Card 17a
         # Year, month, day, hour, latit, longit, zone
-        file.write(" {} {} {} {} {} {} {}".format(
+        file.write(" {} {} {} {} {} {} {}\n".format(
             year, month, day, hour, self.lat, self.lon, -6))
         file.close()
 
@@ -257,11 +257,11 @@ class SMARTS_DR(SMARTS):
 
 
 class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
-    def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta, igas):
+    def __init__(self, staton, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta, igas):
         SMARTS_DR.__init__(self, hour_i, hour_f, lon_i,
                            lon_f, RD_lim, RD_delta, igas)
 
-    def write_data_input_SMARTS(self, day, month, year, hour, ozono, aod):
+    def write_data_input_SMARTS(self, station, day, month, year, hour, ozono, aod):
         """
         Formato del input del modelo SMARTS
         day   ----> Dia del año
