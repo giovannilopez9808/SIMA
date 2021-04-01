@@ -22,8 +22,8 @@ input_parameters = {
     "AOD limite": 1,
     "RD limite": 10,
     "RD delta": 1,
-    "Igas": 1,
-    #   "Igas": 3,
+    # "Igas": 1,
+    "Igas": 3,
 }
 
 for station in input_parameters["stations"]:
