@@ -1,18 +1,22 @@
 from functions_CONS import *
 import plotly.express as px
 
+#Datos de entrada
 inputs = {"year i": 2015,
           "year f": 2020,
           "path data": "../Archivos/"}
 
+#Lee los archivos correspondientes (speed & direction)
 WSR=SIMA_data('WSR')
 WSR.read_data_SIMA(inputs['path data'])
 WDR=SIMA_data('WDR')
 WDR.read_data_SIMA(inputs['path data'])
 
+#Juntar ambos datos en una misma tabla
 frames={'WSR':WSR.data,'WDR':WDR.data}
 wind_data=pd.concat(frames,axis=1).swaplevel(axis=1)
 
+#Bins para agrupar
 bins_dir= [  0. ,  11.25, 33.75,  56.25,  78.75, 101.25, 123.75, 146.25, 168.75,
        191.25, 213.75, 236.25, 258.75, 281.25, 303.75, 326.25, 348.75, 360]
 cardinals=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW','temp']
@@ -21,12 +25,14 @@ bins_speed=[  0,  0.3,  1.6,  5.5, 10.8,  17.2,  24.5, np.inf]
 for station in WSR.data.columns:
     wind_data_st=wind_data[station]
     wind_data_st=wind_data[station]
+    #Agrupar los datos primero por direccion y luego por velocidad
     wind_data_st['direction'] = pd.cut(wind_data_st['WDR'], bins_dir, labels=cardinals)
     wind_data_st['direction'] = wind_data_st['direction'].replace('temp','N')
     wind_data_st['speed']=pd.cut(wind_data_st['WSR'], bins_speed)
-
+    #Crea un dataframe con los grupos y cuenta la frecuencia de cada uno
     df = wind_data_st.groupby(['direction','speed'],as_index=False).count()
     df['WSR']=df['WSR']/(360*24)
+    #Plot
     fig = px.bar_polar(df, r="WSR", theta="direction",
                     color="speed", template="plotly",
                     color_discrete_sequence= px.colors.sequential.Plasma_r,

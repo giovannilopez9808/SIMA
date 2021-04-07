@@ -46,7 +46,8 @@ for station in stations:
         ax2.plot(list(PM10_COVID.hourly_day_mean.index), list(PM10_COVID.hourly_day_mean[day]),
                  label=day, lw=2.5)
     lines, labels = fig.axes[-1].get_legend_handles_labels()
-    fig.legend(lines, labels, loc="upper center",
+    fig.legend(lines, labels, loc='upper right',
                ncol=7, frameon=False, fontsize=10)
+    fig.suptitle(station,fontsize=12, x=0.1)
     plt.savefig(inputs["path graphics"] +
-                "/PM10/COVID_compare_"+station+".png")
+                "/PM10/COVID_compare_"+station+".png",bbox_inches='tight')

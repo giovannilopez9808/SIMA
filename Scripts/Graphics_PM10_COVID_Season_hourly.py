@@ -31,7 +31,7 @@ for station in stations:
     fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(10, 6))
     for ax in (ax1, ax2):
         ax.set_xlim(0, 23)
-        ax.set_ylim(20, 110)
+        ax.set_ylim(20, 140)
         ax.grid(ls="--", alpha=0.5, color="#000000")
         ax.set_xticks(hours)
     fig.text(0.45, 0.03, "Local Time (h)", fontsize=12)
@@ -46,7 +46,8 @@ for station in stations:
                  list(PM10_COVID.hourly_season_mean[season]),
                  label=season, lw=2.5)
     lines, labels = fig.axes[-1].get_legend_handles_labels()
-    fig.legend(lines, labels, loc="upper center",
+    fig.legend(lines, labels, loc='upper right',
                ncol=7, frameon=False, fontsize=10)
+    fig.suptitle(station,fontsize=12, x=0.1)
     plt.savefig(inputs["path graphics"] +
                 "/PM10/COVID_season_compare_"+station+".png")
