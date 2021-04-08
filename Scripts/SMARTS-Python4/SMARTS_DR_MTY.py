@@ -8,10 +8,12 @@ para el uso de las estaciones noroeste y noreste del SIMA en el periodo
 """
 input_parameters = {
     "path stations": "../../Stations/",
+    # "path results": "Results_SMARTS_DR_SSAAER_pristine/",
     "path results": "Results_SMARTS_DR_SSAAER_moderate/",
+    # "file results": "Data_found_SSAAER_pristine.csv",
     "file results": "Data_found_SSAAER_moderate.csv",
     "file data": "datos.txt",
-    "stations": ["noreste", "noroeste"],
+    "stations": ["noreste", "noroeste", "centro", "suroeste"],
     "hour initial": 9,
     "hour final": 16,
     "lon initial": 285,
@@ -20,18 +22,20 @@ input_parameters = {
     "AOD limite": 1,
     "RD limite": 10,
     "RD delta": 1,
+    # "Igas": 1,
     "Igas": 3,
 }
-# Inicialización del objeto que contiene a la clase SMARTS con sus parametros de entrada
-SMARTS_Model = SMARTS_DR_SSAAER_CUSTOM(input_parameters["hour initial"],
-                                       input_parameters["hour final"],
-                                       input_parameters["lon initial"],
-                                       input_parameters["lon final"],
-                                       input_parameters["RD limite"],
-                                       input_parameters["RD delta"],
-                                       input_parameters["Igas"])
 
 for station in input_parameters["stations"]:
+    # Inicialización del objeto que contiene a la clase SMARTS con sus parametros de entrada
+    SMARTS_Model = SMARTS_DR_SSAAER_CUSTOM(station,
+                                           input_parameters["hour initial"],
+                                           input_parameters["hour final"],
+                                           input_parameters["lon initial"],
+                                           input_parameters["lon final"],
+                                           input_parameters["RD limite"],
+                                           input_parameters["RD delta"],
+                                           input_parameters["Igas"])
     print("Calculando estacion "+station)
     # Direccion donde se encuentran los datos de cada estacion
     dir_station = input_parameters["path stations"]+station+"/"

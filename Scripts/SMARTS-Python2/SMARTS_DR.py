@@ -3,15 +3,16 @@ from functions import *
 import numpy as np
 """
 Parametros para interactuar con el modelo, esto esta modificado
-para el uso de las estaciones noroeste y noreste del SIMA en el periodo
-2015-2020
+para el uso de las estaciones SIMA en el periodo 2015-2020
 """
 input_parameters = {
     "path stations": "../../Stations/",
+    # "path results": "Results_SMARTS_DR_pristine/",
     "path results": "Results_SMARTS_DR_moderate/",
+    # "file results": "Data_found_pristine.csv",
     "file results": "Data_found_moderate.csv",
     "file data": "datos.txt",
-    "stations": ["noroeste", "noreste"],
+    "stations": ["noreste", "noroeste", "centro", "suroeste"],
     "hour initial": 9,
     "hour final": 16,
     "lon initial": 285,
@@ -20,18 +21,20 @@ input_parameters = {
     "AOD limite": 1,
     "RD limite": 10,
     "RD delta": 1,
+    # "Igas": 1,
     "Igas": 3,
 }
-# Inicialización del objeto que contiene a la clase SMARTS con sus parametros de entrada
-SMARTS_Model = SMARTS_DR(input_parameters["hour initial"],
-                         input_parameters["hour final"],
-                         input_parameters["lon initial"],
-                         input_parameters["lon final"],
-                         input_parameters["RD limite"],
-                         input_parameters["RD delta"],
-                         input_parameters["Igas"])
 
 for station in input_parameters["stations"]:
+    # Inicialización del objeto que contiene a la clase SMARTS con sus parametros de entrada
+    SMARTS_Model = SMARTS_DR(station,
+                             input_parameters["hour initial"],
+                             input_parameters["hour final"],
+                             input_parameters["lon initial"],
+                             input_parameters["lon final"],
+                             input_parameters["RD limite"],
+                             input_parameters["RD delta"],
+                             input_parameters["Igas"])
     print("Calculando estacion "+station)
     # Direccion donde se encuentran los datos de cada estacion
     dir_station = input_parameters["path stations"]+station+"/"
@@ -64,7 +67,7 @@ for station in input_parameters["stations"]:
         iter = 0
         while not(var):
             # Inicio del calculo del AOD
-            if iter < 40:
+            if iter < 10:
                 # Ejecucion del modelo SMARTS con los parametros de cada dia
                 SMARTS_Model.run_SMARTS(day, month, year, o3, aod,
                                         date, path=dir_results)
@@ -94,5 +97,5 @@ for station in input_parameters["stations"]:
                         var = True
                     iter += 1
             else:
-                var = False
+                var = True
     AOD_file.close()

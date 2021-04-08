@@ -1,19 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-dir_stations = "../Stations/"
-stations = sorted(os.listdir(dir_stations))
-dates = np.loadtxt(dir_stations+"noreste/days.txt", dtype=str, skiprows=400)
+dir_station = "../Stations/sureste2/"
+dates = sorted(os.listdir(dir_station+"Mediciones/"))
 for date in dates:
     plt.title(date)
-    for station in stations:
-        try:
-            hour, data = np.loadtxt(dir_stations+station +
-                                    "/Mediciones/"+date+".txt", unpack=True)
-            plt.plot(hour, data, label=station)
-        except:
-            pass
+    hour, data = np.loadtxt(dir_station +
+                            "Mediciones/"+date, unpack=True)
+    plt.plot(hour, data)
     plt.ylim(0, 1200)
     plt.xlim(5, 20)
-    plt.legend(frameon=False)
-    plt.show()
+    plt.savefig(dir_station+"Graphics/"+date.replace(".txt", ".png"))
+    plt.clf()

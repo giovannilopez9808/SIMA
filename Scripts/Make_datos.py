@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import datetime
 o3data = pd.read_csv("../Archivos/Ozono_OMI.csv")
-stations = ["noroeste", "noreste"]
+stations = ["noreste", "noroeste", "suroeste", "centro"]
 dir_stations = "../Stations/"
 for station in stations:
     dir_station = dir_stations+station+"/"

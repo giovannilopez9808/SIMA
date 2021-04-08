@@ -8,10 +8,11 @@ class SMARTS:
     Clase que contiene las funciones que interactuaran con el modelo SMARTS
     """
 
-    def __init__(self, hour_i, hour_f, lon_i, lon_f, igas):
+    def __init__(self, station, hour_i, hour_f, lon_i, lon_f, igas):
         """
         Valores con los cuales se inicializa el modelo SMARTS
         Descripción de las variables
+        station      ----> Estacion que se analizara
         hour_i       ----> Hora inicial para correr el modelo
         hour_f       ----> Hora final para correr el modelo
         lon_ i       ----> Longitud de onda inicial para el modelo
@@ -29,6 +30,34 @@ class SMARTS:
         self.delta_lon = lon_i-280+1
         self.delta_hour = int(hour_f-hour_i)
         self.total_minute = int((hour_f-hour_i)*60)
+        self.define_location(station)
+
+    def define_location(self, station):
+        stations = {
+            "centro": {
+                "Lat": 25.670,
+                "Lon": -100.338,
+                "Height": 0.560},
+            "noreste": {
+                "Lat": 25.750,
+                "Lon": -100.255,
+                "Height": 0.476},
+            "noroeste": {
+                "Lat": 25.757,
+                "Lon": -100.366,
+                "Height": 0.571},
+            "sureste2": {
+                "Lat": 25.646,
+                "Lon": -100.096,
+                "Height": 0.387},
+            "suroeste": {
+                "Lat": 25.676,
+                "Lon": -100.464,
+                "Height": 0.694}
+        }
+        self.lat = stations[station]["Lat"]
+        self.lon = stations[station]["Lon"]
+        self.height = stations[station]["Height"]
 
     def run_SMARTS(self, day, month, year, o3, aod, name, path=""):
         """
@@ -50,7 +79,7 @@ class SMARTS:
             self.write_data_input_SMARTS(day, month, year,
                                          minutes, o3, aod)
             os.system("./smarts.out")
-            # Resultado de la integral a partir de los resultaos del modelo SMARTS
+            # Resultado de la in7tegral a partir de los resultaos del modelo SMARTS
             integral = self.read_results_SMARTS()
             # Escritura de los resultados
             file_date.write(minutes+" "+integral+"\n")
@@ -91,12 +120,12 @@ class SMARTS:
         igas  ----> Card 6a
         """
         file = open("data.inp.txt", "w")
-        file.write(" 'AOD="+str(aod)+"'\n")
+        file.write(" 'AOD={} '\n".format(aod))
         # Card 2
         file.write(" 2\n")
         # Card 2a
         # lat,altit,height
-        file.write(" 25.750 0.512 0\n")
+        file.write(" {:.3f} {} {}\n".format(self.lat, self.height, 0))
         # Card 3
         # IATMOS
         file.write(" 1\n")
@@ -109,13 +138,13 @@ class SMARTS:
         file.write(" 0\n")
         # Card 5
         # Ozono
-        file.write(" 1 "+str(round(ozono/1000, 4))+"\n")
+        file.write(" {} {:.4f}\n".format(1, ozono/1000))
         # Card 6
         file.write(" 0\n")
         # Card 6a
         # Pristine ----> 1
         # Moderate ----> 3
-        file.write(" "+self.igas+"\n")
+        file.write(" {}\n".format(self.igas))
         # Card 7
         # Co2
         file.write(" 390\n")
@@ -126,22 +155,22 @@ class SMARTS:
         # Card 9
         file.write(" 5\n")
         # Card 9a
-        file.write(" "+str(aod)+" 2\n")
+        file.write(" {} {}\n".format(aod, 2))
         # Card 10
         file.write(" 18\n")
         # Card 10b
         file.write(" 1\n")
         # Card 10d
         # IALBDG, TILT,WAZIM
-        file.write(" 51 37. 180.\n")
+        file.write(" {} {} {}\n".format(51, 37., 180.))
         # Card 11---
         # Wave min, Wave max, suncor, solar cons
-        file.write(" "+str(self.lon_i)+" "+str(self.lon_f)+" 1 1366.1\n")
+        file.write(" {} {} {} {}\n".format(self.lon_i, self.lon_f, 1, 1366.1))
         # ------Card 12---
         file.write(" 2\n")
         # Card 12a
         # Wave min, Wave max, inter wave
-        file.write(" "+str(self.lon_i)+" "+str(self.lon_f)+" 1\n")
+        file.write(" {} {} {}\n".format(self.lon_i, self.lon_f, 1))
         # Card 12b
         file.write(" 1\n")
         # Card 12c
@@ -161,8 +190,8 @@ class SMARTS:
         file.write(" 3\n")
         # Card 17a
         # Year, month, day, hour, latit, longit, zone
-        file.write(" "+str(year)+" "+str(month)+" "+str(day) +
-                   " "+hour+" 25.75 -100.25 -6\n")
+        file.write(" {} {} {} {} {} {} {}\n".format(
+            year, month, day, hour, self.lat, self.lon, -6))
         file.close()
 
 
@@ -172,7 +201,7 @@ class SMARTS_DR(SMARTS):
     que calcula el AOD a partir de las mediciones y una RD dada
     """
 
-    def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta, igas):
+    def __init__(self, station, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta, igas):
         """
         Valores con los cuales se inicializa el modelo SMARTS
         Descripción de las variables
@@ -186,7 +215,7 @@ class SMARTS_DR(SMARTS):
         RD_lim       ----> RD al cual se quiere llegar
         RD_delta     ----> Mas menos del RD
         """
-        SMARTS.__init__(self, hour_i, hour_f, lon_i, lon_f, igas)
+        SMARTS.__init__(self, station, hour_i, hour_f, lon_i, lon_f, igas)
         self.RD_lim = RD_lim
         self.RD_delta = RD_delta
 
@@ -228,11 +257,11 @@ class SMARTS_DR(SMARTS):
 
 
 class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
-    def __init__(self, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta, igas):
+    def __init__(self, staton, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta, igas):
         SMARTS_DR.__init__(self, hour_i, hour_f, lon_i,
                            lon_f, RD_lim, RD_delta, igas)
 
-    def write_data_input_SMARTS(self, day, month, year, hour, ozono, aod):
+    def write_data_input_SMARTS(self, station, day, month, year, hour, ozono, aod):
         """
         Formato del input del modelo SMARTS
         day   ----> Dia del año
@@ -244,12 +273,12 @@ class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
         igas  ----> Card 6a
         """
         file = open("data.inp.txt", "w")
-        file.write(" 'AOD="+str(aod)+"'\n")
+        file.write(" 'AOD={}'\n".format(aod))
         # Card 2
         file.write(" 2\n")
         # Card 2a
         # lat,altit,height
-        file.write(" 25.750 0.512 0\n")
+        file.write(" {} {} {}\n".format(self.lat, self.height, 0))
         # Card 3
         # IATMOS
         file.write(" 1\n")
@@ -262,13 +291,13 @@ class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
         file.write(" 0\n")
         # Card 5
         # Ozono
-        file.write(" 1 "+str(round(ozono/1000, 4))+"\n")
+        file.write(" {} {:.4f}\n".format(1, ozono/1000))
         # Card 6
         file.write(" 0\n")
         # Card 6a
         # Pristine ----> 1
         # Moderate ----> 3
-        file.write(" "+self.igas+"\n")
+        file.write(" {}\n".format(self.igas))
         # Card 7
         # Co2
         file.write(" 390\n")
@@ -279,26 +308,26 @@ class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
         # Card 8a
         # SSAAER Palancar
         # Asymmetry Promedio de 550 nm y humedad ente 50-70%
-        file.write(" 1 1 0.8 0.68\n")
+        file.write(" {} {} {} {}".format(1, 1, 0.8, 0.68))
         # Card 9
         file.write(" 5\n")
         # Card 9a
-        file.write(" "+str(aod)+" 2\n")
+        file.write(" {} {}\n".format(aod, 2))
         # Card 10
         file.write(" 18\n")
         # Card 10b
         file.write(" 1\n")
         # Card 10d
         # IALBDG, TILT,WAZIM
-        file.write(" 51 37. 180.\n")
+        file.write(" {} {} {}\n".format(51, 37., 180.))
         # Card 11---
         # Wave min, Wave max, suncor, solar cons
-        file.write(" "+str(self.lon_i)+" "+str(self.lon_f)+" 1 1366.1\n")
+        file.write(" {} {} {} {}\n".format(self.lon_i, self.lon_f, 1, 1366.1))
         # ------Card 12---
         file.write(" 2\n")
         # Card 12a
         # Wave min, Wave max, inter wave
-        file.write(" "+str(self.lon_i)+" "+str(self.lon_f)+" 1\n")
+        file.write(" {} {} {}".format(self.lon_i, self.lon_f, 1))
         # Card 12b
         file.write(" 1\n")
         # Card 12c
@@ -318,6 +347,6 @@ class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
         file.write(" 3\n")
         # Card 17a
         # Year, month, day, hour, latit, longit, zone
-        file.write(" "+str(year)+" "+str(month)+" "+str(day) +
-                   " "+hour+" 25.75 -100.25 -6\n")
+        file.write(" {} {} {} {} {} {} {}".format(
+            year, month, day, hour, self.lat, self.lon, -6))
         file.close()

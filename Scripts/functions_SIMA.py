@@ -117,69 +117,6 @@ class SIMA_data:
             self.hourly_day_mean[self.days[day]
                       ] = self.data.loc[self.data.index.weekday == day]
 
-    def plot_month_means_AOD(self, AOD_list, MODIS_list):
-        """
-        Funcion que grafica en diferentes subplots el promedio mensual en
-        cada año junto con los datos de AOD promedio mensual
-        """
-        # Calculo de los nombres de los meses a imprimir
-        choose_months = np.arange(1, 11, 3)
-        choose_months = np.append(choose_months, 12)
-        month_names = obtain_month_names(choose_months)
-        # Divisón de las graficas
-        fig, axs = plt.subplots(2, 3,
-                                sharex=True,
-                                sharey=True,
-                                figsize=(10, 12))
-        plt.subplots_adjust(left=0.083, right=0.9, top=0.9)
-        axs = np.reshape(axs, 6)
-        for year, ax in zip(self.years, axs):
-            ax2 = ax.twinx()
-            ax.set_xticks(choose_months)
-            ax.set_xticklabels(month_names, rotation=45, fontsize=12)
-            ax.set_xlim(1, 12)
-            ax.set_ylim(30, 110)
-            ax.set_yticks(np.linspace(30, 110, 5))
-            ax.set_title("Year: {}".format(year))
-            ax.grid(ls="--", color="grey", alpha=0.5, lw=2)
-            # Ploteo del valor de PM10
-            ax.plot(np.arange(1, 13), list(self.month_hour_mean[year]),
-                    ls="--", color="purple",
-                    marker="o", label="PM$_{10}$", alpha=0.75)
-            ax2.set_ylim(0, 1.2)
-            ax2.set_yticks(np.linspace(0, 1.2, 5))
-            if not ax in [axs[2], axs[5]]:
-                ax2.set_yticks(([]))
-            # Ploteo de la lista de AOD de los data found
-            self.plot_month_another_stuff(ax2, AOD_list, year)
-            # Ploteo de la lista de AOD de MODIS y de OMI
-            self.plot_month_another_stuff(ax2, MODIS_list, year)
-        fig.text(0.02, 0.5, "PM$_{10}$", rotation=90, fontsize=14)
-        fig.text(0.95, 0.5, "AOD$_{550nm}$", rotation=-90, fontsize=14)
-        lines, labels = fig.axes[-1].get_legend_handles_labels()
-        lines.append(fig.axes[0].get_legend_handles_labels()[0][0])
-        labels.append(fig.axes[0].get_legend_handles_labels()[1][0])
-        fig.legend(lines, labels, loc="upper center",
-                   ncol=7, frameon=False, fontsize=11)
-        plt.show()
-
-    def plot_month_another_stuff(self, ax, data_list, year):
-        """
-        funcion que grafica los promedios mensuales de diferentes datos datos por una lista
-        que cotiene los datos, el titulo y color a plotear respectivamente
-        """
-        for data_title in data_list:
-            data, title, color = data_title
-            data_to_plot = []
-            months = []
-            for month in range(1, 13):
-                if data[year][month] != 0:
-                    data_to_plot.append(data[year][month])
-                    months.append(month)
-            ax.plot(months, data_to_plot,
-                    label=title, ls="--", marker="o",
-                    color=color, alpha=0.75)
-
     def plot_month_means_Rainfall(self, Rain_data_title):
         """
         Funcion que grafica en diferentes subplots el promedio mensual en
