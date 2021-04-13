@@ -12,7 +12,7 @@ input_parameters = {
     # "file results": "Data_found_pristine.csv",
     "file results": "Data_found_moderate.csv",
     "file data": "datos.txt",
-    "stations": ["noreste", "noroeste", "centro", "suroeste"],
+    "stations": ["suroeste"],
     "hour initial": 9,
     "hour final": 16,
     "lon initial": 285,

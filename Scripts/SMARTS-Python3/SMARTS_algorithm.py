@@ -257,11 +257,11 @@ class SMARTS_DR(SMARTS):
 
 
 class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
-    def __init__(self, staton, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta, igas):
-        SMARTS_DR.__init__(self, hour_i, hour_f, lon_i,
+    def __init__(self, station, hour_i, hour_f, lon_i, lon_f, RD_lim, RD_delta, igas):
+        SMARTS_DR.__init__(self,station, hour_i, hour_f, lon_i,
                            lon_f, RD_lim, RD_delta, igas)
 
-    def write_data_input_SMARTS(self, station, day, month, year, hour, ozono, aod):
+    def write_data_input_SMARTS(self, day, month, year, hour, ozono, aod):
         """
         Formato del input del modelo SMARTS
         day   ----> Dia del año
@@ -308,7 +308,7 @@ class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
         # Card 8a
         # SSAAER Palancar
         # Asymmetry Promedio de 550 nm y humedad ente 50-70%
-        file.write(" {} {} {} {}".format(1, 1, 0.8, 0.68))
+        file.write(" {} {} {} {}\n".format(1, 1, 0.8, 0.68))
         # Card 9
         file.write(" 5\n")
         # Card 9a
@@ -327,7 +327,7 @@ class SMARTS_DR_SSAAER_CUSTOM(SMARTS_DR):
         file.write(" 2\n")
         # Card 12a
         # Wave min, Wave max, inter wave
-        file.write(" {} {} {}".format(self.lon_i, self.lon_f, 1))
+        file.write(" {} {} {}\n".format(self.lon_i, self.lon_f, 1))
         # Card 12b
         file.write(" 1\n")
         # Card 12c
