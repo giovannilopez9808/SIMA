@@ -1,9 +1,9 @@
 \subsubsection{Algortimo para determinar el AOD utilizando medicioness in situ}
-Se escribió un código en el lenguaje \textit{Python}, el cual crea el archivo de input para el funcionamiento del modelo SMARTS, utilizando la base de datos de días de cielo despejado que contiene el día, el mes y el año (en formato yymmdd) y la TOC correspondiente. El modelo de búsqueda del AOD tiene un límite inferior y superior, al inicio se establece que estos límites son 0 y 1 $(AOD_{i,0}=0, AOD_{f,0}=1)$ respectivamente, el AOD de cada iteración en la búsqueda se calcula de la siguiente manera:
+Se escribió un código en el lenguaje \textit{Python}, el cual crea el archivo de input para el funcionamiento del modelo SMARTS, utilizando la base de datos de días de cielo despejado que contiene el día, el mes y el año (en formato yymmdd) y la TOC correspondiente. La secuencia de búsqueda del AOD tiene inicialmente como límites inferior y superior, AOD\textsubscript{i,0}=0 y AOD\textsubscript{f,0}=1 respectivamente. El AOD\textsubscript{n} de cada iteración en la búsqueda se calcula de la siguiente manera:
 \begin{equation*}
     AOD_{n}=\frac{AOD_{i,n}+AOD_{f,n}}{2}
 \end{equation*}
-La búsqueda inicia con un AOD\textsubscript{0} de 0.5 , enseguida se ejecuta el modelo para obtener como resultado una matriz de espectros solares cada minuto entre las 9 y 16 horas. Posteriormente se calcula la irradiancia solar total con base a la ecuación \ref{eq:irradiance}.
+Para la primera iteracción el AOD\textsubscript{0} es igual a 0.5. Enseguida se ejecuta el modelo SMARTS con el valor de AOD\textsubscript{0} obtenido para generar una matriz de espectros solares cada minuto entre las 9 y 16 horas. Posteriormente se calcula la irradiancia solar total con base a la ecuación \ref{eq:irradiance}.
 \begin{equation}
     I(t) = \int\limits_{285}^{2800} E(\lambda,t) d\lambda
     \label{eq:irradiance}
@@ -13,9 +13,9 @@ A partir de la irradiancia solar obtenida con el modelo, minuto a minuto en func
     RD = \left(\frac{Model-Measurement}{Measurement}\right)*100\%
     \label{eq:rd}
 \end{equation}
-Dependiendo del valor de RD se calcula un nuevo valor de AOD y de los límites de la búsqueda. El criterio para determinar el AOD de la siguiente iteracción, se basa en las siguientes condiciones:
+Dependiendo del valor de RD se calcula un nuevo valor de AOD\textsubscript{n} y de los límites de la búsqueda. El criterio para determinar el AOD\textsubscript{n+1} de la siguiente iteracción, se basa en las siguientes condiciones:
 \begin{enumerate}
     \item Si $RD>11\%$, entonces $AOD_{i,n+1}=AOD_{n}$ y $AOD_{f,n+1}=AOD_{f,n}$.
     \item Si $RD<9\%$, entonces $AOD_{f,n+1}=AOD_{n}$ y $AOD_{i,n+1}=AOD_{i,n}$.
 \end{enumerate}
-Este proceso termina cuando se obtiene una diferencia relativa entre 9\% y 11\% y el valor de AOD se guarda en la base de datos de días de cielo despejado.
+El proceso termina cuando $9\%  \leq RD \leq 11\%$. Finalmente el valor del AOD\textsubscript{n} se guarda en la base de datos de días de cielo despejado.
