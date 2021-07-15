@@ -1,43 +1,49 @@
 from SMARTS_algorithm import *
-from numpy import loadtxt
+from pandas import read_csv
 from functions import *
 """
 Parametros para interactuar con el modelo, esto esta modificado para el uso
 de las estaciones noroeste y noreste del SIMA en el periodo 2015-2020
 """
-input_parameters = {
-    "file data": "DataAOD_moderate.csv",
+parameters = {
+    "file data": "Data_found_pristine.csv",
     "folder results": "Results_SMARTS_DM",
     "path stations": "../../Stations/",
-    "stations": ["noroeste"],
+    "igas": 1,
+    "stations": ["noreste"],
     "hour initial": 8,
     "hour final": 17,
-    "lon initial": 285,
-    "lon final": 2800,
+    "wavelength initial": 285,
+    "wavelength final": 2800,
 }
-# Inicialización del objeto que contiene a la clase SMARTS con sus parametros de entrada
-SMARTS_Model = SMARTS(input_parameters["hour initial"],
-                      input_parameters["hour final"],
-                      input_parameters["lon initial"],
-                      input_parameters["lon final"],
-                      )
-
-for station in input_parameters["stations"]:
+for station in parameters["stations"]:
+    # Inicialización del objeto que contiene a la clase SMARTS con sus parametros de entrada
+    SMARTS_Model = SMARTS(parameters,
+                          station
+                          )
     # Direccion donde se encuentran los datos de cada estacion
-    dir_station = input_parameters["path stations"]+station+"/"
+    station_path = "{}{}/".format(parameters["path stations"],
+                                  station)
     # Creacion de la carpeta resultados si es que no existe, si existe no hace nada
-    mkdir(input_parameters["folder results"], path=dir_station)
+    mkdir(parameters["folder results"],
+          path=station_path)
     # Lectura de los parametros de entrada de cada dia
-    dates, years, months, days, o3_list, aod_list, dr_list = loadtxt(
-        dir_station+input_parameters["file data"], unpack=True)
+    data = read_csv("{}{}".format(station_path,
+                                  parameters["file data"]))
     # Direccion de los resultados
-    dir_results = dir_station + input_parameters["file data"]
-    # <-----------------------------Ciclo para variar los dias--------------------------------------->
-    for date, year, month, day, o3, aod in zip(dates, years, months, days, o3_list, aod_list):
-        date = str(int(date))
-        # Formato de los dias
-        year, month, day = int_dates(year, month, day)
-        print("Calculando el dia ", year, month, day)
+    path_results = "{}{}/".format(station_path,
+                                  parameters["folder results"])
+    # Ciclo para variar los dias
+    for index in data.index:
+        print("Calculando el dia {}-{}-{}".format(data["year"][index],
+                                                  str(data["month"]
+                                                      [index]).zfill(2),
+                                                  str(data["day"][index]).zfill(2)))
         # Ejecucion del modelo SMARTS
-        SMARTS_Model.run_SMARTS(day, month, year, o3,
-                                aod, date, path=dir_results)
+        SMARTS_Model.run(data["day"][index],
+                         data["month"][index],
+                         data["year"][index],
+                         data["ozone"][index],
+                         data["AOD"][index],
+                         data["Date"][index],
+                         path=path_results)
